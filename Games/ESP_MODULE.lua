@@ -2,6 +2,10 @@
 -- Made by 0x74_Dev / _Ben#6969 / Mr.Grubhub --
 -----------------------------------------------
 
+local ErrorHandlerTing = function(err)
+    return warn(err)
+end
+
 getgenv().ESP_TESTING = false
 do
     local Camera = workspace:WaitForChild("Camera", 5)
@@ -357,7 +361,7 @@ do
         RunService.Heartbeat:Connect(function()
             for _, Function in pairs(getgenv()["UpdateCache"]) do
                 if type(Function) == "function" then
-                    pcall(Function)
+                    xpcall(Function, ErrorHandlerTing)
                 end
             end
         end)

@@ -1,6 +1,17 @@
 do
     xpcall(function()
         if tostring(game.PlaceId) == "185655149" then
+            
+            local UILibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/GrubHub/main/modules/VenyXUI", true))()
+    
+            for i,v in pairs(game:GetService("CoreGui"):GetDescendants()) do
+                pcall(function()
+                    if v.Name == "Glow" then
+                        v.Parent.Parent:Destroy()
+                    end
+                end)
+            end
+
             getgenv()["USE_GRUBHUB_UNIVERSAL"] = false
             getgenv()["UpdateLoop"] = type(getgenv()["UpdateLoop"]) == "boolean" and getgenv()["UpdateLoop"] or false;
             getgenv()["UpdateCache"] = type(getgenv()["UpdateCache"]) == "table" and getgenv()["UpdateCache"] or {};
@@ -66,7 +77,7 @@ do
             local WorkLable = PlayerGui:FindFirstChild("WorkLabel", true)
             local Format, Split, GSUB, gmatch, match = string["format"], string["split"], string["gsub"], string["gmatch"], string["match"]
 
-            Window = UILibrary.new("GrubHub V6 ~ Bloxburg", 5013109572)
+            Window = UILibrary.new("GrubHub V6 ~ Free Release ~ Bloxburg", 5013109572)
 
             local AutoFarmWindow = Window:addPage("Auto Farm", 5012544693)
             local AutoFarmSection = AutoFarmWindow:addSection("Features")

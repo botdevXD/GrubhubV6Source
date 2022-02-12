@@ -15,7 +15,7 @@ do
         local Timber_Axe_HookedWait = false
         local Timber_Axe_Swinging = false
         
-        local Window = UILibrary.new("GrubHub V6 ~ Timber", 5013109572)
+        Window = UILibrary.new("GrubHub V6 ~ Timber", 5013109572)
         
         local VarTable = {
             Bools = {

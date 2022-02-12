@@ -8,7 +8,9 @@ do
         getgenv()["GAME_HOOKS_CACHE"] = type(getgenv()["GAME_HOOKS_CACHE"]) == "table" and getgenv()["GAME_HOOKS_CACHE"] or {};
         getgenv()["DRAWED_OBJECTS"] = type(getgenv()["DRAWED_OBJECTS"]) == "table" and getgenv()["DRAWED_OBJECTS"] or {};
         
-        getgenv()["PF_SETTINGS_GRUBHUB"] = {
+        Settings_Name = "PF_SETTINGS_GRUBHUB"
+
+        getgenv()[Settings_Name] = {
             NO_FALL_DAMAGE = false,
             WALKSPEED = nil,
             JUMPPOWER = nil,
@@ -34,7 +36,7 @@ do
         local PlrMouse = Player:GetMouse()
         local Format, Split, GSUB, gmatch, match = string["format"], string["split"], string["gsub"], string["gmatch"], string["match"]
 
-        local Window = UILibrary.new("GrubHub V6 ~ Phantom Forces", 5013109572)
+        Window = UILibrary.new("GrubHub V6 ~ Phantom Forces", 5013109572)
 
         local PlayerWindow = Window:addPage("Player", 5012544693)
         local PlayerSection = PlayerWindow:addSection("Main")
@@ -115,7 +117,7 @@ do
         
                             getgenv()["FUNCTION_BACKUPS"]["player"] = hookfunction(AnimationPlayerCheck.player, function(...)
                                 local args = {...}
-                                if getgenv()["PF_SETTINGS_GRUBHUB"].INSTANT_RELOAD == true then
+                                if getgenv()[Settings_Name].INSTANT_RELOAD == true then
                                     if type(args[2]) == "table" then
                                         if args[2].IS_RELOAD_ANIMATION == true then
                                             return function()end
@@ -146,7 +148,7 @@ do
 
                     getgenv()["FUNCTION_BACKUPS"]["Send"] = hookfunction(Key.send, function(self, ...)
                         local args = {...}
-                        if args[1] == "falldamage" and getgenv()["PF_SETTINGS_GRUBHUB"].NO_FALL_DAMAGE == true then
+                        if args[1] == "falldamage" and getgenv()[Settings_Name].NO_FALL_DAMAGE == true then
                             return true
                         end
                         return getgenv()["FUNCTION_BACKUPS"]["Send"](self, unpack(args))
@@ -160,7 +162,7 @@ do
 
                     getgenv()["FUNCTION_BACKUPS"]["SetWalkSpeed"] = hookfunction(Key.setbasewalkspeed, function(self, ...)
                         local args = {...}
-                        return getgenv()["FUNCTION_BACKUPS"]["SetWalkSpeed"](self, type(getgenv()["PF_SETTINGS_GRUBHUB"].WALKSPEED) == "number" and getgenv()["PF_SETTINGS_GRUBHUB"].WALKSPEED > 0 and getgenv()["PF_SETTINGS_GRUBHUB"].WALKSPEED or unpack(args))
+                        return getgenv()["FUNCTION_BACKUPS"]["SetWalkSpeed"](self, type(getgenv()[Settings_Name].WALKSPEED) == "number" and getgenv()[Settings_Name].WALKSPEED > 0 and getgenv()[Settings_Name].WALKSPEED or unpack(args))
                     end)
                 end
 
@@ -173,7 +175,7 @@ do
 
                     getgenv()["FUNCTION_BACKUPS"]["JUMP"] = hookfunction(Key.jump, function(self, ...)
                         local args = {...}
-                        return getgenv()["FUNCTION_BACKUPS"]["JUMP"](self, type(getgenv()["PF_SETTINGS_GRUBHUB"].JUMPPOWER) == "number" and getgenv()["PF_SETTINGS_GRUBHUB"].JUMPPOWER > 0 and getgenv()["PF_SETTINGS_GRUBHUB"].JUMPPOWER or unpack(args))
+                        return getgenv()["FUNCTION_BACKUPS"]["JUMP"](self, type(getgenv()[Settings_Name].JUMPPOWER) == "number" and getgenv()[Settings_Name].JUMPPOWER > 0 and getgenv()[Settings_Name].JUMPPOWER or unpack(args))
                     end)
                 end
 
@@ -268,12 +270,12 @@ do
                 getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Visible = false
 
                 getgenv()["UpdateCache"]["FOV_CIRCLE"] = function()
-                    if getgenv()["PF_SETTINGS_GRUBHUB"].FOV_ENABLED == true then
+                    if getgenv()[Settings_Name].FOV_ENABLED == true then
                         if getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"] ~= nil then
-                            getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Visible = type(getgenv()["PF_SETTINGS_GRUBHUB"].FOV_ENABLED) == "boolean" and getgenv()["PF_SETTINGS_GRUBHUB"].FOV_ENABLED or false
+                            getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Visible = type(getgenv()[Settings_Name].FOV_ENABLED) == "boolean" and getgenv()[Settings_Name].FOV_ENABLED or false
                             getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Radius = 90
                             getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-                            getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Color = getgenv()["PF_SETTINGS_GRUBHUB"].ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                            getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"].Color = getgenv()[Settings_Name].ESP_COLOR or Color3.fromRGB(255, 255, 255)
                         end
                     else
                         if getgenv()["DRAWED_OBJECTS"]["FOV_CIRCLE"] ~= nil then
@@ -286,15 +288,15 @@ do
         end
 
         PlayerSection:addSlider("WalkSpeed Boost", 0, 0, 100, function(Value)
-            getgenv()["PF_SETTINGS_GRUBHUB"].WALKSPEED = tonumber(Value)
+            getgenv()[Settings_Name].WALKSPEED = tonumber(Value)
         end)
 
         PlayerSection:addSlider("JumpPower Boost", 0, 0, 100, function(Value)
-            getgenv()["PF_SETTINGS_GRUBHUB"].JUMPPOWER = tonumber(Value)
+            getgenv()[Settings_Name].JUMPPOWER = tonumber(Value)
         end)
 
         PlayerSection:addToggle("No fall damage", false, function(Bool)
-            getgenv()["PF_SETTINGS_GRUBHUB"].NO_FALL_DAMAGE = Bool
+            getgenv()[Settings_Name].NO_FALL_DAMAGE = Bool
         end)
 
         PlayerSection:addKeybind("Toggle Keybind", Enum.KeyCode.Delete, function()
@@ -302,21 +304,21 @@ do
         end, function()end)
         
         CombatSelection:addToggle("Instant Reload", false, function(Bool)
-            getgenv()["PF_SETTINGS_GRUBHUB"].INSTANT_RELOAD = Bool
+            getgenv()[Settings_Name].INSTANT_RELOAD = Bool
         end)
 
         CombatSelection:addSlider("FireRate amount", 100, 100, 10000, function(Value)
-            getgenv()["PF_SETTINGS_GRUBHUB"].FIRERATE_SPEED = Value
+            getgenv()[Settings_Name].FIRERATE_SPEED = Value
 
-            if getgenv()["PF_SETTINGS_GRUBHUB"].FIRERATE_ENABLED == true then
+            if getgenv()[Settings_Name].FIRERATE_ENABLED == true then
                 SetFireRate(Value, false)
             end
         end)
 
         CombatSelection:addToggle("FireRate enabler", false, function(Bool)
-            getgenv()["PF_SETTINGS_GRUBHUB"].FIRERATE_ENABLED = Bool
+            getgenv()[Settings_Name].FIRERATE_ENABLED = Bool
             if Bool then
-                SetFireRate(getgenv()["PF_SETTINGS_GRUBHUB"].FIRERATE_SPEED, false)
+                SetFireRate(getgenv()[Settings_Name].FIRERATE_SPEED, false)
             else
                 SetFireRate(nil, true)
             end
@@ -351,11 +353,11 @@ do
         end)
         
         CombatSelection:addToggle("Spot all players", false, function(Bool)
-            getgenv()["PF_SETTINGS_GRUBHUB"].SPOT_ALL_PLAYERS = Bool
+            getgenv()[Settings_Name].SPOT_ALL_PLAYERS = Bool
             
             if Bool then
                 task.spawn(function()
-                    while getgenv()["PF_SETTINGS_GRUBHUB"].SPOT_ALL_PLAYERS == true do
+                    while getgenv()[Settings_Name].SPOT_ALL_PLAYERS == true do
                         for _, Object in ipairs(Players:GetPlayers()) do
                             table.insert(SpotTable, Object)
                         end
@@ -370,7 +372,7 @@ do
         end)
 
         VisualsSelection:addToggle("FOV Circle", false, function(Bool)
-            getgenv()["PF_SETTINGS_GRUBHUB"].FOV_ENABLED = Bool
+            getgenv()[Settings_Name].FOV_ENABLED = Bool
         end)
 
         VisualsSelection:addToggle("ESP Teamcheck", false, function(Bool)
@@ -405,10 +407,10 @@ do
             end
         end)
 
-        VisualsSelection:addColorPicker("ESP Color", getgenv()["PF_SETTINGS_GRUBHUB"].ESP_COLOR, function(newcolor)
+        VisualsSelection:addColorPicker("ESP Color", getgenv()[Settings_Name].ESP_COLOR, function(newcolor)
             local R, G, B = math.floor(newcolor.R * 255), math.floor(newcolor.G * 255), math.floor(newcolor.B * 255)
-            getgenv()["PF_SETTINGS_GRUBHUB"].ESP_COLOR = Color3.fromRGB(R, G, B)
-            getgenv()["ESP_CACHE"].UpdateColor(getgenv()["PF_SETTINGS_GRUBHUB"].ESP_COLOR)
+            getgenv()[Settings_Name].ESP_COLOR = Color3.fromRGB(R, G, B)
+            getgenv()["ESP_CACHE"].UpdateColor(getgenv()[Settings_Name].ESP_COLOR)
         end)
 
         VisualsSelection:addButton("Unload ESP", function(Bool)

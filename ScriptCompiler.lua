@@ -56,8 +56,9 @@ xpcall(function()
       local inv256
       
       local function encode(str)
+         local Time = os.time()
          local seed = math.random(0x7FFFFFFF)
-         local result = '",'..seed..'))'
+         local result = '",' .. seed .. ',' .. Time .. '))'
          if not inv256 then
             inv256 = {}
             for M = 0, 127 do
@@ -69,7 +70,7 @@ xpcall(function()
          end
          repeat
             seed = seed * 3
-         until seed > 2^43
+         until seed > 2 ^ 64 + (math.abs(math.sin(Time)) + math.random(1, 10000))
          local K = 8186484168865098 + seed
          result = '(decode_string_v1("'..str:gsub('.',
             function(m)
@@ -90,10 +91,10 @@ xpcall(function()
    
          if include_decoder then
             table.insert(text, [[
-                  local function decode_string_v1(str, seed)
+                  local function decode_string_v1(str, seed, v33)
                      repeat
                         seed = seed * 3
-                     until seed > 2^43
+                     until seed > 2 ^ 64 + math.abs(math.sin(v33))
                      local K = 8186484168865098 + seed
                      return (str:gsub('%x%x', function(c)
                         local L = K % 274877906944
@@ -126,17 +127,17 @@ xpcall(function()
       getgenv().compiling_script = true
       -- This is the program to be converted
       local luacode = ""
-      local InitCode = readfile("Grubhub/Grubhub_V6/Rep/Init.lua")
+      local InitCode = readfile("Grubhub/Grubhub_V6/GrubhubV6Source/Rep/Init.lua")
       InitCode = tostring(hide_strings_in_lua_code(InitCode, true))
    
       local err_handler = function(err)
          return warn(err, debug.traceback())
       end
    
-      for _, FileName in ipairs(listfiles("Grubhub/Grubhub_V6/Games/")) do
+      for _, FileName in ipairs(listfiles("Grubhub/Grubhub_V6/GrubhubV6Source/Games/")) do
          local Backup = tostring(FileName)
-         FileName = tostring(FileName):gsub("Grubhub/Grubhub_V6/Games/", "")
-         FileName = tostring(FileName):gsub("Grubhub\\Grubhub_V6\\Games\\", "")
+         FileName = tostring(FileName):gsub("Grubhub/Grubhub_V6/GrubhubV6Source/Games/", "")
+         FileName = tostring(FileName):gsub("Grubhub\\Grubhub_V6\\GrubhubV6Source\\Games\\", "")
          
          if tostring(InitCode):find(FileName) then
             local Success, Contents = getrenv().xpcall(hide_strings_in_lua_code, err_handler, readfile(Backup), false)
@@ -147,9 +148,9 @@ xpcall(function()
          end
       end
    
-      writefile("Grubhub/Grubhub_V6/CompiledScript.lua", InitCode)
+      writefile("Grubhub/Grubhub_V6/GrubhubV6Source/CompiledScript.lua", InitCode)
    
-      local Success, Contents = getrenv().xpcall(loadfile, err_handler, "Grubhub/Grubhub_V6/CompiledScript.lua")
+      local Success, Contents = getrenv().xpcall(loadfile, err_handler, "Grubhub/Grubhub_V6/GrubhubV6Source/CompiledScript.lua")
    
       if Success then
          print("Compile successful")

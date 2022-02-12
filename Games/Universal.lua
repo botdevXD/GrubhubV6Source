@@ -3,16 +3,28 @@ do
     local Player = Players["LocalPlayer"]
     local Format, Split, GSUB, gmatch, match = string["format"], string["split"], string["gsub"], string["gmatch"], string["match"]
 
-    local Window = UILibrary.new("GrubHub V6 ~ Universal", 5013109572)
+    Window = UILibrary.new("GrubHub V6 ~ Universal", 5013109572)
 
     local VisualsWindow = Window:addPage("Visuals", 5012544693)
     local VisualsSelection = VisualsWindow:addSection("Main")
 
-    VisualsSelection:addToggle("ESP Teamcheck", false, function(Bool)
+    local GameConfigFile = GetGameConfig(FixName(tostring("Universal")) .. ".json")
+    Settings_Name = "UNIVERSAL_GRUBHUB_SETTINGS"
+
+    getgenv()[Settings_Name] = {
+        Teamcheck = GameConfigFile.Teamcheck or false,
+        Boxes = GameConfigFile.Boxes or false,
+        Tracers = GameConfigFile.Tracers or false,
+        Color = GameConfigFile.Color or {R = 255, G = 255, B = 255}
+    }
+
+    VisualsSelection:addToggle("ESP Teamcheck", getgenv()[Settings_Name].Teamcheck, function(Bool)
+        getgenv()[Settings_Name].Teamcheck = Bool
         getgenv()["ESP_CACHE"].SetTeamCheck(Bool)
     end)
 
-    VisualsSelection:addToggle("ESP Boxes", false, function(Bool)
+    VisualsSelection:addToggle("ESP Boxes", getgenv()[Settings_Name].Boxes, function(Bool)
+        getgenv()[Settings_Name].Boxes = Bool
         if Bool then
             for _, Plr in ipairs(Players:GetPlayers()) do
                 if Plr ~= Player then
@@ -26,7 +38,8 @@ do
         end
     end)
 
-    VisualsSelection:addToggle("ESP Tracers", false, function(Bool)
+    VisualsSelection:addToggle("ESP Tracers", getgenv()[Settings_Name].Tracers, function(Bool)
+        getgenv()[Settings_Name].Tracers = Bool
         if Bool then
             for _, Plr in ipairs(Players:GetPlayers()) do
                 if Plr ~= Player then
@@ -40,8 +53,17 @@ do
         end
     end)
 
-    VisualsSelection:addColorPicker("ESP Color", Color3.fromRGB(255, 255, 255), function(newcolor)
+    local ESP_COLOR_LOCAL = getgenv()[Settings_Name].Color
+
+    getgenv()["ESP_CACHE"].UpdateColor(Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B))
+
+    VisualsSelection:addColorPicker("ESP Color", Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B), function(newcolor)
         local R, G, B = math.floor(newcolor.R * 255), math.floor(newcolor.G * 255), math.floor(newcolor.B * 255)
+
+        getgenv()[Settings_Name].Color.R = R
+        getgenv()[Settings_Name].Color.G = G
+        getgenv()[Settings_Name].Color.B = B
+
         getgenv()["ESP_CACHE"].UpdateColor(Color3.fromRGB(R, G, B))
     end)
 
