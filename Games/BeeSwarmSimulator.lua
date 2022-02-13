@@ -1,13 +1,17 @@
 do
     if tostring(game.PlaceId) == "1537690962" then
         getgenv()["USE_GRUBHUB_UNIVERSAL"] = false
+        getgenv()["UpdateLoop"] = type(getgenv()["UpdateLoop"]) == "boolean" and getgenv()["UpdateLoop"] or false;
+        getgenv()["UpdateCache"] = type(getgenv()["UpdateCache"]) == "table" and getgenv()["UpdateCache"] or {};
+        getgenv()["DRAWED_OBJECTS"] = type(getgenv()["DRAWED_OBJECTS"]) == "table" and getgenv()["DRAWED_OBJECTS"] or {};
         Settings_Name = "BSS_SETTINGS_GRUBHUB"
 
         local promoCodesEvent = game:GetService("ReplicatedStorage").Events.promoCodesCodeEvent
 
         getgenv()[Settings_Name] = {
             PollenAutoFarm = false,
-            AutoTPToSprouts = false
+            AutoTPToSprouts = false,
+            ESP_COLOR = Color3.fromRGB(255, 255, 255)
         }
 
         function startPollenFarm()
@@ -112,6 +116,12 @@ do
         local FarmingWindow = Window:addPage("Farming", 5012544693)
         local FarmingSection = FarmingWindow:addSection("Farming")
 
+        local VisualsWindow = Window:addPage("Visuals", 5012544693)
+        local VisualsSelection = VisualsWindow:addSection("Visuals")
+
+        local CodesWindow = Window:addPage("Codes", 5012544693)
+        local CodesSection = CodesWindow:addSection("Codes")
+
         FarmingSection:addToggle("Auto Farm Pollen", false, function(Bool)
             if Bool then
                 getgenv()[Settings_Name].PollenAutoFarm = true
@@ -134,11 +144,52 @@ do
             end
         end)
 
-        local CodesWindow = Window:addPage("Codes", 5012544693)
-        local CodesSection = CodesWindow:addSection("Codes")
-
         CodesSection:addButton("Redeem All Codes", function(Bool)
             redeemAllCodes();
         end)
+
+        VisualsSelection:addToggle("ESP Teamcheck", false, function(Bool)
+            getgenv()["ESP_CACHE"].SetTeamCheck(Bool)
+        end)
+
+        VisualsSelection:addToggle("ESP Boxes", false, function(Bool)
+            if Bool then
+                for _, Plr in ipairs(game:GetService("Players"):GetPlayers()) do
+                    if Plr ~= game:GetService("Players").LocalPlayer then
+                        getgenv()["ESP_CACHE"].LoadBox(Plr)
+                    end
+                end
+                getgenv()["ESP_CACHE"].SetBoxVisibility(true)
+            else
+                getgenv()["ESP_CACHE"].UnLoadType("_ESP_BOXES")
+                getgenv()["ESP_CACHE"].SetBoxVisibility(false)
+            end
+        end)
+
+        VisualsSelection:addToggle("ESP Tracers", false, function(Bool)
+            if Bool then
+                for _, Plr in ipairs(game:GetService("Players"):GetPlayers()) do
+                    if Plr ~= game:GetService("Players").LocalPlayer then
+                        getgenv()["ESP_CACHE"].LoadTracers(Plr)
+                    end
+                end
+                getgenv()["ESP_CACHE"].SetTracersVisibility(true)
+            else
+                getgenv()["ESP_CACHE"].UnLoadType("_ESP_TRACERS")
+                getgenv()["ESP_CACHE"].SetTracersVisibility(false)
+            end
+        end)
+
+        VisualsSelection:addColorPicker("ESP Color", getgenv()[Settings_Name].ESP_COLOR, function(newcolor)
+            local R, G, B = math.floor(newcolor.R * 255), math.floor(newcolor.G * 255), math.floor(newcolor.B * 255)
+            getgenv()[Settings_Name].ESP_COLOR = Color3.fromRGB(R, G, B)
+            getgenv()["ESP_CACHE"].UpdateColor(getgenv()[Settings_Name].ESP_COLOR)
+        end)
+
+        VisualsSelection:addButton("Unload ESP", function(Bool)
+            getgenv()["ESP_CACHE"].UnLoad()
+        end)
+
+        Window:SelectPage(Window.pages[1], true)
     end
 end
