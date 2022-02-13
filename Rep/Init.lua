@@ -718,19 +718,17 @@ xpcall(function()
 			end))
 		end
 
-		if not syn then
+		if not getgenv()["syn"] then
 			getgenv()["syn"] = {}
-			getgenv()["syn"].string
 		end
 
 		local StringTable = getfenv(pcall)["string"]
 
-		-- More Security Updates.
+		-- More Security updates.
 
 		Backup = getgenv()["syn"].string or getmetatable(newproxy(true))
 		
 		getgenv()["syn"].string = getgenv()["syn"].string or StringTable
-		getgenv()["syn"].string.__index = getgenv()["syn"].string
 
 		local function Convert_v1(Offset, Text)
 			local Result = ""

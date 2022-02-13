@@ -19,15 +19,14 @@ do
             }
 
             local HairStyleData = {
-                -- old
+
                 ["rbxassetid://2134922793"] = 13332444, ["rbxassetid://2134786243"] = 16627529,
                 ["rbxassetid://2134786004"] = 82186393, ["rbxassetid://2134785788"] = 26400959,
                 ["rbxassetid://2134785492"] = 19999424, ["rbxassetid://2134785137"] = 19999424,
                 ["rbxassetid://2134784893"] = 13070796, ["rbxassetid://2134784708"] = 31309506,
                 ["rbxassetid://2134784523"] = 74878559, ["rbxassetid://2134784337"] = 47963332,
                 ["rbxassetid://2134784122"] = 11412443,
-        
-                -- new
+
                 ["rbxassetid://2134922767"] = 13332444, ["rbxassetid://2134786236"] = 16627529,
                 ["rbxassetid://2134785997"] = 82186393, ["rbxassetid://2134785777"] = 26400959,
                 ["rbxassetid://2134785130"] = 19999424, ["rbxassetid://2134784889"] = 13070796,
@@ -136,7 +135,7 @@ do
                                                     getgenv()[Settings_Name].HAIR_DRESSER_TABLE.DoneFunction()
                                                 end
                                             else
-                                                -- colour
+
                                                 getgenv()[Settings_Name].HAIR_DRESSER_COLOR = V.ImageColor3
                                                 local ColorVal = getgenv()[Settings_Name].HAIR_DRESSER_COLOR
                                                 local R, G, B = math.floor(ColorVal.R * 255), math.floor(ColorVal.G * 255), math.floor(ColorVal.B * 255)

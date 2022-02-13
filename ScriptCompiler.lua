@@ -1,6 +1,12 @@
 xpcall(function()
    local StringsToEncrypt = {
-      "syn", "char", "gsub", "sub", "players", "replicatedstorage", "key", "byte"
+      "syn",
+      "char",
+      "gsub",
+      "sub",
+      "players",
+      "replicatedstorage",
+      "string"
    }
 
    if getgenv().compiling_script == false or getgenv().compiling_script == nil then
@@ -117,15 +123,15 @@ xpcall(function()
          strings_and_comments(lua_code,
             function (object_type, value, start_pos, end_pos)
                if object_type == "string" then
-                  table.insert(text, lua_code:sub(pos, start_pos - 1))
-                  
                   if table.find(StringsToEncrypt, tostring(value):lower()) then
-                     table.insert(text, encode(value))
+                     table.insert(text, lua_code:sub(pos, start_pos - 1))
+                     table.insert(text, encode(value, false))
+                     pos = end_pos + 1
                   else
-                     table.insert(text, value)
+                     table.insert(text, lua_code:sub(pos, start_pos - 1))
+                     table.insert(text, encode(value, true))
+                     pos = end_pos + 1
                   end
-
-                  pos = end_pos + 1
                end
             end)
          table.insert(text, lua_code:sub(pos))
