@@ -6,7 +6,7 @@ do
         local promoCodesEvent = game:GetService("ReplicatedStorage").Events.promoCodesCodeEvent
 
         getgenv()[Settings_Name] = {
-            PollonAutoFarm = false,
+            PollenAutoFarm = false,
             AutoTPToSprouts = false
         }
 
