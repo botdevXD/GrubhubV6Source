@@ -492,7 +492,7 @@ do
             if info.Creator.Name == "World // Zero" then
                 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer ~= nil and game.Players.LocalPlayer.Character ~= nil
                 task.delay(10, function()
-                    loadfile("Grubhub/Grubhub_V6/GrubhubV6Source/CompiledScript.lua")()
+                    loadfile("Grubhub/GrubhubV6Source/CompiledScript.lua")()
                 end)
             end
         end
