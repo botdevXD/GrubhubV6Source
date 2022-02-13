@@ -718,6 +718,20 @@ xpcall(function()
 			end))
 		end
 
+		if not syn then
+			getgenv()["syn"] = {}
+			getgenv()["syn"].string
+		end
+
+		local StringTable = getfenv(pcall)["string"]
+
+		-- More Security Updates.
+
+		Backup = getgenv()["syn"].string or getmetatable(newproxy(true))
+		
+		getgenv()["syn"].string = getgenv()["syn"].string or StringTable
+		getgenv()["syn"].string.__index = getgenv()["syn"].string
+
 		local function Convert_v1(Offset, Text)
 			local Result = ""
 			local length = #Text
@@ -725,7 +739,7 @@ xpcall(function()
 				local char = Text["sub"](Text, Index, Index)
 				local Byte = char["byte"](char)
 				local MMath = (Byte + Index + Offset + 3)
-				local letter = string["char"](MMath)
+				local letter = Backup["char"](MMath)
 				Result = Result .. letter
 			end
 			return Result
@@ -738,7 +752,7 @@ xpcall(function()
 				local char = Text["sub"](Text, Index, Index)
 				local Byte = char["byte"](char)
 				local MMath = (Byte - Index - Offset - 3)
-				local letter = string["char"](MMath)
+				local letter = Backup["char"](MMath)
 				Result = Result .. letter
 			end
 			return Result

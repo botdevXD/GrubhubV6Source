@@ -1,4 +1,8 @@
 xpcall(function()
+   local StringsToEncrypt = {
+      "syn", "char", "gsub", "sub", "players", "replicatedstorage", "key", "byte"
+   }
+
    if getgenv().compiling_script == false or getgenv().compiling_script == nil then
       local Credits = [===[
          https://stackoverflow.com/questions/41359654/getting-all-strings-in-a-lua-script
@@ -114,7 +118,13 @@ xpcall(function()
             function (object_type, value, start_pos, end_pos)
                if object_type == "string" then
                   table.insert(text, lua_code:sub(pos, start_pos - 1))
-                  table.insert(text, encode(value))
+                  
+                  if table.find(StringsToEncrypt, tostring(value):lower()) then
+                     table.insert(text, encode(value))
+                  else
+                     table.insert(text, value)
+                  end
+
                   pos = end_pos + 1
                end
             end)
