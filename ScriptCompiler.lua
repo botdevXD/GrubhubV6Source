@@ -127,17 +127,17 @@ xpcall(function()
       getgenv().compiling_script = true
       -- This is the program to be converted
       local luacode = ""
-      local InitCode = readfile("Grubhub/Grubhub_V6/GrubhubV6Source/Rep/Init.lua")
+      local InitCode = readfile("Grubhub/GrubhubV6Source/Rep/Init.lua")
       InitCode = tostring(hide_strings_in_lua_code(InitCode, true))
    
       local err_handler = function(err)
          return warn(err, debug.traceback())
       end
    
-      for _, FileName in ipairs(listfiles("Grubhub/Grubhub_V6/GrubhubV6Source/Games/")) do
+      for _, FileName in ipairs(listfiles("Grubhub/GrubhubV6Source/Games/")) do
          local Backup = tostring(FileName)
-         FileName = tostring(FileName):gsub("Grubhub/Grubhub_V6/GrubhubV6Source/Games/", "")
-         FileName = tostring(FileName):gsub("Grubhub\\Grubhub_V6\\GrubhubV6Source\\Games\\", "")
+         FileName = tostring(FileName):gsub("Grubhub/GrubhubV6Source/Games/", "")
+         FileName = tostring(FileName):gsub("Grubhub\\GrubhubV6Source\\Games\\", "")
          
          if tostring(InitCode):find(FileName) then
             local Success, Contents = getrenv().xpcall(hide_strings_in_lua_code, err_handler, readfile(Backup), false)
@@ -148,9 +148,9 @@ xpcall(function()
          end
       end
    
-      writefile("Grubhub/Grubhub_V6/GrubhubV6Source/CompiledScript.lua", InitCode)
+      writefile("Grubhub/GrubhubV6Source/CompiledScript.lua", InitCode)
    
-      local Success, Contents = getrenv().xpcall(loadfile, err_handler, "Grubhub/Grubhub_V6/GrubhubV6Source/CompiledScript.lua")
+      local Success, Contents = getrenv().xpcall(loadfile, err_handler, "Grubhub/GrubhubV6Source/CompiledScript.lua")
    
       if Success then
          print("Compile successful")
