@@ -177,7 +177,7 @@ do
                                         print(STR_IDX)
 
                                         local Root = getgenv()["GAME_MODULES_CACHE"]["JOB_MODULE"].Modules.CharacterHandler:GetRoot()
-                                        table.insert(getgenv()["JOB_CONNECTIONS"], true) -- Stops it from being spammed
+                                        table.insert(getgenv()["JOB_CONNECTIONS"], true)
 
                                         GetHairDresserData()
                                         task.wait(.2)

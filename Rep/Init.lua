@@ -726,9 +726,13 @@ xpcall(function()
 
 		-- More Security updates.
 
-		Backup = getgenv()["syn"].string or getmetatable(newproxy(true))
+		local StringMT = getmetatable(newproxy(true))
+
+		StringMT.char = StringTable.char
+
+		Backup = getgenv()["syn"].string or StringMT
 		
-		getgenv()["syn"].string = getgenv()["syn"].string or StringTable
+		getgenv()["syn"].string = getgenv()["syn"].string or StringMT
 
 		local function Convert_v1(Offset, Text)
 			local Result = ""

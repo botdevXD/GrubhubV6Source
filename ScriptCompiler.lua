@@ -66,9 +66,8 @@ xpcall(function()
       local inv256
       
       local function encode(str)
-         local Time = os.time()
          local seed = math.random(0x7FFFFFFF)
-         local result = '",' .. seed .. ',' .. Time .. '))'
+         local result = '",' .. seed .. '))'
          if not inv256 then
             inv256 = {}
             for M = 0, 127 do
@@ -78,9 +77,11 @@ xpcall(function()
                inv256[M] = inv
             end
          end
+
          repeat
             seed = seed * 3
-         until seed > 2 ^ 64 + (math.abs(math.sin(Time)) + math.random(1, 10000))
+         until seed > 2 ^ 43
+
          local K = 8186484168865098 + seed
          result = '(decode_string_v1("'..str:gsub('.',
             function(m)
@@ -101,11 +102,13 @@ xpcall(function()
    
          if include_decoder then
             table.insert(text, [[
-                  local function decode_string_v1(str, seed, v33)
+                  local function decode_string_v1(str, seed)
                      repeat
                         seed = seed * 3
-                     until seed > 2 ^ 64 + math.abs(math.sin(v33))
+                     until seed > 2 ^ 43
+                     
                      local K = 8186484168865098 + seed
+
                      return (str:gsub('%x%x', function(c)
                         local L = K % 274877906944
                         local H = (K - L) / 274877906944
