@@ -16,79 +16,26 @@
                      end))
                   end
             xpcall(function()
-
-	local Env = getfenv(1);
-	local FEnv = getfenv
-
-	if Env then
-		local OldEnv = Env
-		local NewEnv = {
-			_G = _G,
-			getfenv = FEnv,
-			pairs = pairs,
-			ipairs = ipairs,
-			print = print,
-			string = string,
-			xpcall = xpcall,
-			package = package,
-			tostring = tostring,
-			tonumber = tonumber,
-			rawget = rawget,
-			rawset = rawset,
-			pcall = pcall,
-			coroutine = coroutine,
-			spawn = spawn,
-			newproxy = newproxy,
-			loadstring = loadstring
-		}
-	
-		NewEnv.__index = function(A, B)
-			return rawget(_G, B)
-		end
-	
-		NewEnv.__newindex = function(A, B, C)
-			return rawset(A, B, C)
-		end
-	
-		NewEnv.__metatable = (decode_string_v1("544cf527811891",1703181796))
-	
-		local NewMeta = setmetatable({}, NewEnv)
-		
-		setfenv(1, NewMeta)
-	
-		for Index, Value in pairs(_G) do
-			if NewEnv[Index] == nil then
-				_G[Index] = nil
-			end
-		end
-	
-		for Index, Value in pairs(NewEnv) do
-			print(Index, Value)
-		end
-	end
-
-	print(setfenv)
-
 	do
-		getgenv().Key = (decode_string_v1("0d4156c798c8aa764892819b73f6ac0c86489ed7ab84353efd",172313935));
-		getgenv().DiscordWebhook = (decode_string_v1("f3ccc7b7",1839044914));
+		getgenv().Key = (decode_string_v1("ae968d7dbd451b89e8ee8e0fe5c08075c6195c85812451af4c",724708601));
+		getgenv().DiscordWebhook = (decode_string_v1("53c3c4a5",1002119559));
 		getgenv().WebhookEnabled = false;
-		getgenv().GubVersion = (decode_string_v1("ac37d9",271133260));
+		getgenv().GubVersion = (decode_string_v1("4b8196",1577020875));
 
 		local CLIENT_DEOBF_OFFSET = 3;
 		local SERVER_DEOBF_OFFSET = 1;
 		local StartTimer = os.time()
-		local UILibrary = loadstring(game:HttpGet((decode_string_v1("4fb8f7847fd780507a978b20295cda4cc2b61c48084120b3395d5ced3d4da94388dd4d842350b7dab569140743ae15232c36d0251c7273c1afdc0eb1591510ea3c5f5d67f67dc1670c08c1e596",657908405)), true))()
-		local library = loadstring(game:HttpGet((decode_string_v1("2091ca0fc161f254544061348810baaa46b9741459ae523512a76eefd87c0d0950b1a90e1892d901390fdbf701a2a33c7bf488b10f3c988a48c38ca6f80294e10f4f361d06fc51670c6165c417b420c5dac686b37ed703f302d268b5ad0f9b81e8f0",1369135718))))()
-		library:Notification((decode_string_v1("e6a943fb5e233d",1931896249)), (decode_string_v1("3de6490f22417e23fd7ecd121d5798aa6ed9c4125c4c0ce865e26b542b11269fa90fb60af1d8f55baf30dab1d525",628451054)), 10, Color3.fromRGB(255, 255, 255))
+		local UILibrary = loadstring(game:HttpGet((decode_string_v1("30fdbd53ec4e34394d73445203e33ebcaf2f1797f317ea30e5a1480f7e8e03a71e836dc5a9a742e1447ba74bafefd2650a5f691c6fafb3b0dccade5a8bb993c9a21ac16e9a8cee413fa8925c60",1397841749)), true))()
+		local library = loadstring(game:HttpGet((decode_string_v1("20c09b72ea470bc72196e38cfd48ca5d8f176d13032ee6e053324f8400c2e88bf8406539065d007e9e2be404be4150c2247fb4a87d145cf3b65625407001b8eeb6407b638e62b835fc968b270ac6f0210ad7da282ad936976677c70485988087f300",149903639))))()
+		library:Notification((decode_string_v1("eec7fc5a048d74",2103148567)), (decode_string_v1("7940bcba0ba6fefaaf7b9a0b8b929e043cacaa8631209dfe5f53c9a7ffecbd4d18afaaf59df58421bc5516f31a33",734728224)), 10, Color3.fromRGB(255, 255, 255))
 
-		if not isfolder((decode_string_v1("6813efe245b65916bbfed452fe8d",960970241))) then
-			makefolder((decode_string_v1("f44cb496bf3e13b297b58774f8ab",720670181)))
+		if not isfolder((decode_string_v1("3bac95f91b9647cb80cc61d510a5",454930185))) then
+			makefolder((decode_string_v1("9db2fa5bace03bf1dd69bff938fe",20140243)))
 		end
 
-		for i, v in pairs(game:GetService((decode_string_v1("0541b45e1add17",1372009019))):GetDescendants()) do
+		for i, v in pairs(game:GetService((decode_string_v1("d200ce65caabdd",252745938))):GetDescendants()) do
 			pcall(function()
-				if v.Name == (decode_string_v1("9bd01df4",447086497)) then
+				if v.Name == (decode_string_v1("60eda02c",2058163147)) then
 					v.Parent.Parent:Destroy()
 				end
 			end)
@@ -97,80 +44,80 @@
 		local function identify()
 			local Executor = string.lower(identifyexecutor())
 			local ExecutorTable = nil
-			if string.find(Executor, (decode_string_v1("ceb218208fb01b",93502853))) then
+			if string.find(Executor, (decode_string_v1("01c169e83755b1",60306478))) then
 				ExecutorTable = {
-					(decode_string_v1("ac1a2f0012d7f7",119505781)),
+					(decode_string_v1("687e9485005f32",1274407784)),
 					syn.request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("9b7dd43f",537000801))) then
+			if string.find(Executor, (decode_string_v1("9b73e0c7",1596426301))) then
 				ExecutorTable = {
-					(decode_string_v1("7d2d65b0",1405589576)),
+					(decode_string_v1("5cc96bd4",1128738710)),
 					request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("c5e1cb6e",1845705646))) then
+			if string.find(Executor, (decode_string_v1("26f85893",1500640728))) then
 				ExecutorTable = {
-					(decode_string_v1("b97cc6b42375",314080613)),
+					(decode_string_v1("2577550d4b9e",1838026321)),
 					request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("822026684699",759586014))) then
+			if string.find(Executor, (decode_string_v1("a5523e1dac14",1730587885))) then
 				ExecutorTable = {
-					(decode_string_v1("8e26c75b254a0b37572b4a",1834117542)),
+					(decode_string_v1("c80fded81e6fdbb22d5b00",1054465844)),
 					http.request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("364fed",298930347))) then
+			if string.find(Executor, (decode_string_v1("5a8dc4",700148172))) then
 				ExecutorTable = {
-					(decode_string_v1("5778562c4c9efcda",1351616377)),
+					(decode_string_v1("88014b0a360b298d",1810469885)),
 					request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("c75948",1288450009))) then
+			if string.find(Executor, (decode_string_v1("879aa1",2113371087))) then
 				ExecutorTable = {
-					(decode_string_v1("a76ae81cfec7c00acc60b7ac",1002596695)),
+					(decode_string_v1("a70f2596a00f4f59c1b8ab92",780797789)),
 					http_request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("7f78c14c",1038088569))) then
+			if string.find(Executor, (decode_string_v1("4fe1aa19",369082815))) then
 				ExecutorTable = {
-					(decode_string_v1("647b18b9c5a5ed3048cb",800031261)),
+					(decode_string_v1("044a2027fae7ef577acc",342362987)),
 					http_request
 				}
 			end
-			if string.find(Executor, (decode_string_v1("2ec9cc2f",929319624))) then
+			if string.find(Executor, (decode_string_v1("0ea4377e",231855025))) then
 				ExecutorTable = {
-					(decode_string_v1("5e27de7fbc6eff",1790061235)),
+					(decode_string_v1("e3d0d9ba7616ee",513133728)),
 					httprequest
 				}
 			end
-			if string.find(Executor, (decode_string_v1("7121850c81849c41",1371109566))) then
+			if string.find(Executor, (decode_string_v1("aaf056185ce5e222",857433424))) then
 				ExecutorTable = {
-					(decode_string_v1("308f67d9b3706a8b",25059997)),
+					(decode_string_v1("f0440fe4987cf1b2",1123070359)),
 					http_request
 				}
 			end
 			if getgenv().WRD_LOADED ~= nil then
 				ExecutorTable = {
-					(decode_string_v1("fd9c3debdcb55e36",1888292501)),
+					(decode_string_v1("1d1f6960bcd3e360",966060064)),
 					http_request
 				}
 			end
 			if getgenv().unlock_module ~= nil and getgenv().setscriptable ~= nil and getgenv().import ~= nil then
 				ExecutorTable = {
-					(decode_string_v1("80a3931c5690039dd776bda63170c6",1224733927)),
+					(decode_string_v1("68166e397d676ab1adcdb6a625bbd4",1271741240)),
 					http_request
 				}
 			end
 			if getgenv().OXYGEN_LOADED ~= nil then
 				ExecutorTable = {
-					(decode_string_v1("9fe9e9fd000d085c",1593201205)),
+					(decode_string_v1("72d7798c40bee0e7",779980209)),
 					http_request
 				}
 			end
 			if ExecutorTable == nil then
-				library:Notification((decode_string_v1("cf7c37561c17bc770379e93440",474182903)), (decode_string_v1("bdb98569506d56ebcc8d4df84433d371aee1972f1b91fd4ec09b46e0112e4be8d7e099bc882373a09bb9ad711d8e83d51c583e84486f93bc2636e55551cde259d7addee9d27478ee",1446479726)), 10, Color3.fromRGB(255, 255, 255))
+				library:Notification((decode_string_v1("5e6abc73a5b89efead167e8eab",1764091377)), (decode_string_v1("28148a74986fa517e19e9cc901f00ffd050f0980d1e0577777b90a8e2aee61a523ef2fe209910ee6bb749375a7112c469e2eb62a2cdaaf37200aa42baf3b1a359a6cc3b91f61d255",1855380802)), 10, Color3.fromRGB(255, 255, 255))
 				while true do
 				end
 			else
@@ -184,51 +131,51 @@
 
 		local function sendError(serverData, clientData)
 			if string.len(serverData) == 64 then
-				library:Notification((decode_string_v1("a4d60a5b94fd873fdd6231b57f85",2079597755)), (decode_string_v1("ac8714260e54cdf72ff505520e88c1928a2e0de75fc8795b41dfe0051d43d4aa2504e6e2e77c04573b01abed4fb142da5c943025bb44df8b2b2ac53e282fc38d9c1ea1d1dd",997260648)), 15, Color3.fromRGB(255, 255, 255))
-			elseif serverData == (decode_string_v1("04174a2a92e2888d9553de7c399b39279684b167912c034ff3097a942c5123ef25c128f6d7bed734d4dac573077d9bf8",1127396962)) then
-				library:Notification((decode_string_v1("d8ed8720ca42f1176e1f45fe4023",1793279344)), (decode_string_v1("8e994d0a26dcc01eff881c533d13dc8b0153a6c22c4c1dddac73ff87a48114c987fa693227b5c6cc18bcbe2b46122e9cbea49ba0ea13319e38",1023053655)), 15, Color3.fromRGB(255, 255, 255))
-			elseif serverData == (decode_string_v1("6185828bac1888723753a977f30b141c969f70c992e7f7b179",1462755258)) then
-				library:Notification((decode_string_v1("8b4b175b164ffa48fdb1e1cd3600",1455031074)), (decode_string_v1("555d97d854646011fdf16a1145b8d650ba93b57f43c32ed40bb2ff3e09a74a8f74029a0eb3a15e72ecbc60d5abe7664156896ed2631ba94778cc7041e7",1695711817)), 15, Color3.fromRGB(255, 255, 255))
-			elseif serverData == (decode_string_v1("0e6cd92d43994651b169feca1e410cfdc6c1ada9",916193722)) then
-				library:Notification((decode_string_v1("122803bc48730f68e966ce6d4d301d02",1514732791)), (decode_string_v1("e0bfe951da5ec7920e72046ddd378d199e8c1f32e77f0c18fd445cb0bb94a0ef24a6a434b2242c824855af66d62f1782c57fe0f3d89226c36a9b7d3bd031df13bcfbe9a659",2108912679)), 15, Color3.fromRGB(255, 255, 255))
+				library:Notification((decode_string_v1("6f7efa44c56c9e4feb1e9d6d8f15",1504738882)), (decode_string_v1("88c6460a19ebe76c8e3efe592b014b3b6988df5cb7621fee1f7558ac32956c5b3bb3ff683650f8658bde6fc2bad65b7decefa89d09a6eab13dd898201329b3eb3b4f263f02",359191410)), 15, Color3.fromRGB(255, 255, 255))
+			elseif serverData == (decode_string_v1("4cd8568c8bac67bc2acde48d7ca94823092a5166b3a94dbb2935917929fa6d895b2fb5a9b5d37fd6ea1634a7596b4bf0",1064068759)) then
+				library:Notification((decode_string_v1("7156cde65b933ff8572007768e01",1642475419)), (decode_string_v1("5f87621dce4ca2430105bb3da536d5080d6ad3111cac049a4db77c5ff305df308c078d856163a4811f5701736a8d573f29e4edf6d5afeeea61",1389786445)), 15, Color3.fromRGB(255, 255, 255))
+			elseif serverData == (decode_string_v1("e8d39d8a239ddc9b78a4aa58175a47fcc96b11bddc7cf5d08a",135838770)) then
+				library:Notification((decode_string_v1("bed25f5273a30491e8a142e7541f",1873030169)), (decode_string_v1("203cbc31cd82ff3d32d034323e8449b02673a45ddda1735d00461b18d912114a232ab798df5c40a0b5e7c0197208bdc3e121d1ff7d06c54fb7e53d7cf2",1042871120)), 15, Color3.fromRGB(255, 255, 255))
+			elseif serverData == (decode_string_v1("bfe9bfcfad5712207d854181620963fc72101ff0",1740787181)) then
+				library:Notification((decode_string_v1("f6597ae13257098ac302ea94168e8ac6",1388836065)), (decode_string_v1("b5ffffc723b28ef543e218d8d6bc641582a1667fb6af46c10ff9cdf2bc1f432245eba0577f7b96c7a4d2af88664d8b9c3de75741b8747ad11006e945be0a794a1a2b23595f",1359899687)), 15, Color3.fromRGB(255, 255, 255))
 			else
-				library:Notification((decode_string_v1("3ae3f31f151db335630702cb6604",1259616315)), (decode_string_v1("761d2bfc986782c9c7daed17ef1396e8056b4eb4641a02c48fb7b0577756a0602fbf0d124a52285d1e27fa022ba244af824197d7f91c6ffd06446a0516f9c17a50c18165034ab1d4358d11f5e1865f449d5dbc7f08aa361a3099bd8542335054e6a6967b3732b2b6c8f95372e82d3fac5b4f4130f48455c9c0",1957540228)), 15, Color3.fromRGB(255, 255, 255))
-				setclipboard((decode_string_v1("58a06f8701c94a73565ebfcc22eb7db9ef3810c38d890e1223fa3c0cb01a66ab4486883c626149b13516c2a46f20f9ec1ae5dc556997b045a07c8a570c47",68049063)) .. clientData .. (decode_string_v1("b80d7c83b03317a0b79b8bdd",511195257)) .. exploit .. (decode_string_v1("f89ff945d3827ccb",1387241268)) .. Key .. (decode_string_v1("f7b65a940eedadd14f7e8dddf821ab7c",1189386558)) .. serverData .. (decode_string_v1("3755d821fdee909d11b23d17b5149449b8",7321243)) .. tostring(newtime))
+				library:Notification((decode_string_v1("50c8bb260bfda75f7cdbd7f2598b",1215639833)), (decode_string_v1("25b5927ddf92ce8ed4c5e19690d8de6b7d495835d069d94eb855cab6bf55a9db8b12bd0dba2437051688ca7a7bca88100e2ecfe3b097e4c2d337d11924b6ac3f608dcf913dd94668abab42fb9eed3213961968858d3bc5c06ce89b367dc062ef1c85392517b517c2e51d96a3f906050ee6d99d6d94acdc69b3",486272543)), 15, Color3.fromRGB(255, 255, 255))
+				setclipboard((decode_string_v1("84c91ba8652e70a203d7dfe3d1dff2992506c98f9d49c3657a3c985851b2480dc713adc0adecc38b2855d29271732c6c64995612597dfd10de07beeba4ad",326170811)) .. clientData .. (decode_string_v1("78b298454d3c7768433275e0",1650165892)) .. exploit .. (decode_string_v1("b8bb59b181679e3e",1685580051)) .. Key .. (decode_string_v1("37028ea291cc94b65019e07fecc9c3fc",103007247)) .. serverData .. (decode_string_v1("b73aee3156df8499c9570a15accbf2f032",1292872807)) .. tostring(newtime))
 			end
 
 			specialisedrequest({
-				Url = (decode_string_v1("bf59122344c68bd36794e16cb00ccb1083d4ba3766e14c10b39f7a9c60",328342303)),
-				Method = (decode_string_v1("c7f7b155",1141423689)),
+				Url = (decode_string_v1("5f3f47b482f7949b5f38799ce9c0cd70011ebfcb872a1aafd10852a2f6",427668886)),
+				Method = (decode_string_v1("07b6dfc2",881079203)),
 				Headers = {
-					[(decode_string_v1("c01424303187d494b2432be3",1989115555))] = (decode_string_v1("9a2a16090bd8cb1fd800d6b01b5b66c4",1100267760));
-					[(decode_string_v1("22d440dc15ba",1124281876))] = (decode_string_v1("eff0a6cd05e21ca1a78953915f6e60b4269f98",1195237881));
+					[(decode_string_v1("686faddd196f3deb1743a194",1165843383))] = (decode_string_v1("c222e2a68466f67e0b9d16f0b82ca734",829635173));
+					[(decode_string_v1("8108a3cf8967",1555290267))] = (decode_string_v1("108fea9ecd5bc08d762a966072aa720d3a5519",163002743));
 				},
-				Body = game:GetService((decode_string_v1("6f3a713ad45533a8b0db9a",1216991668))):JSONEncode({
-					[(decode_string_v1("7cda72",858495211))] = (decode_string_v1("3ef6534e998af5713423b85ff5e6",2081608574));
-					[(decode_string_v1("a4a9584d",837136785))] = {
-						[(decode_string_v1("5ea75119",624393270))] = (decode_string_v1("286735541b517e93097d",1878972256))
+				Body = game:GetService((decode_string_v1("2fac4840397b6d6fd3716f",609060300))):JSONEncode({
+					[(decode_string_v1("b03344",1213431840))] = (decode_string_v1("427723a07f3a20955386568c4cb4",406708042));
+					[(decode_string_v1("b772ea53",1731411087))] = {
+						[(decode_string_v1("247f8b65",3728788))] = (decode_string_v1("f4bd73cec94e6ca0411d",1277630384))
 					};
-					[(decode_string_v1("b54bccbde4",760180332))] = (decode_string_v1("a03931ab9abd781df42a24889c2349a9c09dad1dd17fd2b6ed13e358cc4ede85f2a94e85",1320028290));
+					[(decode_string_v1("45c338e53e",1263091424))] = (decode_string_v1("4aa06c3733f26f2396f7765b2f5caba96664039c234563d24c27b34736b80f32ec0b58c0",1980281920));
 				})
 			})
 		end
 
 		local random = Random.new()
-		local letters = {(decode_string_v1("dd",1345992203)),(decode_string_v1("a2",1686395969)),(decode_string_v1("20",653878496)),(decode_string_v1("3b",1147811136)),(decode_string_v1("9c",1255213966)),(decode_string_v1("f1",803649932)),(decode_string_v1("e2",1175182411)),(decode_string_v1("f0",1561501442)),(decode_string_v1("78",645183158)),(decode_string_v1("e1",2108237114)),(decode_string_v1("d8",295309316)),(decode_string_v1("7b",2131893131)),(decode_string_v1("c2",1081165397)),(decode_string_v1("e1",1326826450)),(decode_string_v1("70",1907392717)),(decode_string_v1("47",137648077)),(decode_string_v1("94",1847874222)),(decode_string_v1("75",747309210)),(decode_string_v1("99",1469677983)),(decode_string_v1("93",1830024384)),(decode_string_v1("c8",22676949)),(decode_string_v1("3d",987651186)),(decode_string_v1("28",23521438)),(decode_string_v1("1f",2081272159)),(decode_string_v1("45",62065434)),(decode_string_v1("dd",415886689))}
+		local letters = {(decode_string_v1("6b",181074706)),(decode_string_v1("01",1115781540)),(decode_string_v1("bc",1298141265)),(decode_string_v1("ab",430622491)),(decode_string_v1("ae",1267934686)),(decode_string_v1("0d",872943069)),(decode_string_v1("b1",1726715241)),(decode_string_v1("2f",1128497970)),(decode_string_v1("fe",908770802)),(decode_string_v1("ae",576071221)),(decode_string_v1("94",23459170)),(decode_string_v1("73",782271534)),(decode_string_v1("ca",1239469041)),(decode_string_v1("c9",2068458455)),(decode_string_v1("cc",2129312579)),(decode_string_v1("88",471768852)),(decode_string_v1("94",1841676711)),(decode_string_v1("12",1346901044)),(decode_string_v1("e8",606394400)),(decode_string_v1("83",1305411738)),(decode_string_v1("fe",1056564547)),(decode_string_v1("f6",508419768)),(decode_string_v1("11",1382294918)),(decode_string_v1("7f",881839869)),(decode_string_v1("c6",1188301432)),(decode_string_v1("bd",910707828))}
 
 		function getRandomLetter()
 			return letters[random:NextInteger(1, #letters)]
 		end
 		local function FixName(GameName)
-			return GameName:gsub((decode_string_v1("5a0944933757bebfae635992",1939866944)), (decode_string_v1("",955931867)))
+			return GameName:gsub((decode_string_v1("8099ed37c39d98dbefaa75ae",275645610)), (decode_string_v1("",478987320)))
 		end
 
 		local function GetGameConfig(GameName)
 			local Table = {}
-			if isfolder((decode_string_v1("9dc58a269984d54e648d4f6bc017",1664924677))) then
-				if isfile((decode_string_v1("0c56f9f7d3ea3a0d952d96adfdd919",441268044)) .. tostring(GameName)) then
-					local HttpServices = game:GetService((decode_string_v1("a0399532debc67cfe21533",539495076)))
-					local ConfigContents = readfile((decode_string_v1("92bfc563276d13260b68e79ef15d76",1846773419)) .. tostring(GameName))
+			if isfolder((decode_string_v1("e44bff82d1952e72cf5432fcba63",1822881582))) then
+				if isfile((decode_string_v1("21e80f0157e0dd7ffcb2ce8632f6be",1378448642)) .. tostring(GameName)) then
+					local HttpServices = game:GetService((decode_string_v1("1fa42381cfd7fd1a2d15ad",95888139)))
+					local ConfigContents = readfile((decode_string_v1("d67c108f1ee74a33830ee8671d327f",1203391254)) .. tostring(GameName))
 					local DecodedSuccess, DecodedContents = pcall(HttpServices.JSONDecode, HttpServices, tostring(ConfigContents))
 					if DecodedSuccess then
 						Table = DecodedContents
@@ -239,11 +186,11 @@
 		end
 
 		local function SaveGameConfig(GameName, ConfigTable)
-			if isfolder((decode_string_v1("b884bf900cab595a63ebf22af43f",1908530825))) then
-				local HttpServices = game:GetService((decode_string_v1("1f4a7dda32d9ff2da11bf9",1092656890)))
+			if isfolder((decode_string_v1("d5fb722c99667e091f3b98c2604f",486524386))) then
+				local HttpServices = game:GetService((decode_string_v1("b0a1e13bdc5ea055781309",1466641933)))
 				local EncodedSuccess, EncodedContents = pcall(HttpServices.JSONEncode, HttpServices, ConfigTable)
 				if EncodedSuccess then
-					writefile((decode_string_v1("7ea037f19be610489fc845d2c5f2bc",593572992)) .. tostring(GameName), tostring(EncodedContents))
+					writefile((decode_string_v1("40369af150edff9f6937ac6ef9003f",685765780)) .. tostring(GameName), tostring(EncodedContents))
 					return true
 				end
 			end
@@ -252,7 +199,7 @@
 
 		function getRandomString(length, includeCapitals)
 			local length = length or 10
-			local str = (decode_string_v1("",529003268))
+			local str = (decode_string_v1("",242887583))
 			for i = 1, length do
 				local randomLetter = getRandomLetter()
 				if includeCapitals and random:NextNumber() > .5 then
@@ -347,13 +294,13 @@
 			}
 
 			local function str2hexa(s)
-				return (str_gsub(s, (decode_string_v1("d1",1817389305)), function(c)
-					return str_fmt((decode_string_v1("363af6c3",1000642260)), str_byte(c))
+				return (str_gsub(s, (decode_string_v1("36",538003118)), function(c)
+					return str_fmt((decode_string_v1("89bea629",1534419019)), str_byte(c))
 				end))
 			end
 
 			local function num2s(l, n)
-				local s = (decode_string_v1("",1479061411))
+				local s = (decode_string_v1("",899553971))
 				for i = 1, n do
 					local rem = l % 256
 					s = str_char(rem) .. s
@@ -373,7 +320,7 @@
 			local function preproc(msg, len)
 				local extra = 64 - ((len + 9) % 64)
 				len = num2s(8 * len, 8)
-				msg = msg .. (decode_string_v1("97",836962388)) .. str_rep((decode_string_v1("17",1210520333)), extra) .. len
+				msg = msg .. (decode_string_v1("97",743920435)) .. str_rep((decode_string_v1("17",391387506)), extra) .. len
 				assert(#msg % 64 == 0)
 				return msg
 			end
@@ -435,8 +382,8 @@
 			end;
 		end
 
-		if getgenv().Key == (decode_string_v1("",1925789350)) or nil then
-			Key = (decode_string_v1("2192f6fc",993273677))
+		if getgenv().Key == (decode_string_v1("",1164938911)) or nil then
+			Key = (decode_string_v1("6e2383c0",1523789081))
 		else
 			Key = getgenv().Key
 		end;
@@ -476,13 +423,13 @@
 			spawn(function()
 				math.randomseed(os.time() / 4);
 			end)
-			local charset = (decode_string_v1("c64581133b1615774fa8c9378aabb446df998e32f0187da99240db6eec02987ecb5a593109b1bd0d02d901177111578187b39998a03caa1ceb0f9e9e90",684910141))
-			if type(v1) == (decode_string_v1("50901a5c8086",1993731134)) and type(v2) == (decode_string_v1("a5234f6e6b0e",1731580802)) then
+			local charset = (decode_string_v1("add387f82a7c16abce67a18b82a8c60b5d5f4e3d84d7abefa1bb4fe4eadbf2221a461c20d975f102d99f7f458a35e9a1e2dbff2bf82e2b154a7983ce73",1676042509))
+			if type(v1) == (decode_string_v1("867399953269",112537583)) and type(v2) == (decode_string_v1("f238ac2358b6",1087464012)) then
 				local length1, length2, chars_1, chars_2 = #v1, #v2, {}, {}
-				v1:gsub((decode_string_v1("b2",1491954977)), function(s)
+				v1:gsub((decode_string_v1("ea",576993199)), function(s)
 					chars_1[#chars_1 + 1] = s
 				end)
-				v2:gsub((decode_string_v1("15",1322279660)), function(s)
+				v2:gsub((decode_string_v1("da",1554509008)), function(s)
 					chars_2[#chars_2 + 1] = s
 				end)
 				if (length1 ~= length2) then
@@ -563,55 +510,55 @@
 			end
 		end
 		local secret = (function(args)
-			local Pos, Finished, charCodes, Key, arglen = 1, (decode_string_v1("",1130840760)), {}, 447 - #((decode_string_v1("9f31a3f214342a9975fecbe9008767f60329eca06fc73c4a4d9914d060a9d365c5",1006936994))), 35 - #((decode_string_v1("8a007a",629901061)))
+			local Pos, Finished, charCodes, Key, arglen = 1, (decode_string_v1("",1869586440)), {}, 447 - #((decode_string_v1("4f8d2c65a109ce0d8df80de479b97fef873da461145ad7428370784a4a408780a5",1972350935))), 35 - #((decode_string_v1("fa284e",396871928)))
 			local schar = Finished.char
 			local Keys = {
-				233 + #((decode_string_v1("64a362",326356620))),
-				781 - #((decode_string_v1("67ea9ddb",1440272730))),
-				785 - #((decode_string_v1("28d3dd11a4fd",383014121))),
-				876 - #((decode_string_v1("679bce262503a5",477147852))),
-				350 - #((decode_string_v1("2b9ce0c36721ed239d2dddef2cb02f3c7c1b9d",624478657))),
-				23 + #((decode_string_v1("5f2cf819e1facd2a0aca278771d9fef8fdddc9f9fa0133e9c6401c3d7b31eb5160",1871055903))),
-				111 + #((decode_string_v1("8f833cc7864710f597956ffd75a1382e454cd6968c34e47e6d702e34dcc66b9c9b",820542771))),
-				440 + #((decode_string_v1("e460ae79207c2c1fef9e6178",1020187500))),
-				341 + #((decode_string_v1("c24580e8",3937850))),
-				322 - #((decode_string_v1("27e5cda2e95fa09c0f598d8c655d9f9dafb27d57471575fd93eeac1ab31c767059dd06e76b272ee402442ed7d350af118061848b1467e7ab65baffbd0092e338a7f5a432bca8fac3be394fcdfc331a8b76a479b6bf8176fa5daf9e204d904c4583daf4ba2388af1811005e83",1070964028))),
-				117 + #((decode_string_v1("40198333d79c2f39f336cb60",2050375189))),
-				196 + #((decode_string_v1("f990e989475a7f59ceb664ff7e0ff72b73dbcf",1089731473))),
-				272 - #((decode_string_v1("d10f69e445d393597989",1649685918))),
-				653 - #((decode_string_v1("5a6859f764cd96ba03cff493",2019315663))),
-				510 + #((decode_string_v1("b03a8c31ee63",216447977))),
-				61 + #((decode_string_v1("fee1c55bb6590ba8f6c3",836290441))),
-				61 - #((decode_string_v1("0ae169f5323ac0c4c7",967000296))),
-				283 - #((decode_string_v1("a3bfaa78",557456049))),
-				568 - #((decode_string_v1("536772c30915",1600002150))),
-				933 + #((decode_string_v1("4e66dfbeb3fa0b7414a97274264b",317202265))),
-				642 - #((decode_string_v1("5bfc5e7c89a431272c6a",214283342))),
-				651 - #((decode_string_v1("702c71d286610cee4ac8",773601081))),
-				875 - #((decode_string_v1("c6f7e4b0",383888643))),
-				882 - #((decode_string_v1("1b6fc66b9fec",1207439608))),
-				333 - #((decode_string_v1("c4ddebaa9aa0d884377f2b90bf9c767de391",300158889))),
-				245 - #((decode_string_v1("e2468efabce1",1804259614))),
-				988 - #((decode_string_v1("36298534c3c30ed487",884168513))),
-				118 + #((decode_string_v1("b4433647023e30759f4ef7ef3591183ef1b9aa",1743880559))),
-				623 + #((decode_string_v1("e54171b731d3",465932860))),
-				629 + #((decode_string_v1("59b409",2099998420))),
-				689 - #((decode_string_v1("32dfe699aeb2bdb8293a",2004888637))),
-				828 - #((decode_string_v1("e45f45a766851bef1300f213",1027495317))),
-				76 - #((decode_string_v1("8a3a4e03c72eb435dcf67036",196725361))),
-				71 - #((decode_string_v1("88ac7b285324",2139400567))),
-				85 - #((decode_string_v1("eb8a739fd5308f43a0b31e5a92902dc6bdebf8",736002241))),
-				79 - #((decode_string_v1("7742fc914eade71946230cdf",1612522915))),
-				56 + #((decode_string_v1("d67bce694fbd1bf4cef80dcc",1122218843)))
+				233 + #((decode_string_v1("e8ffe0",241049311))),
+				781 - #((decode_string_v1("9bef2f23",1518880060))),
+				785 - #((decode_string_v1("48397f2c88f7",308646548))),
+				876 - #((decode_string_v1("8cc053028f1181",1827522428))),
+				350 - #((decode_string_v1("e3b4aa801bda54ab1e872da8d0bc4a3572cee4",1818347050))),
+				23 + #((decode_string_v1("5f1ca25271c71d8da353a2a5c786405f13f31df760b06f3027bcfd5175d7131371",1059807218))),
+				111 + #((decode_string_v1("f00fde0a91e7a0c4f5db893c200bb4e6eff816425c56087309d46bf06253902a32",1540927230))),
+				440 + #((decode_string_v1("4c5bc4697799a240d76cd1cf",1911481688))),
+				341 + #((decode_string_v1("46164655",1099300190))),
+				322 - #((decode_string_v1("874fce643172611543e1b67663f33f7e7acafefce62c27034e83ad79a47f4a8feba23b26431fb283d6cc5d9ab3a5c72abfc7babdab4cf7c7fab4b6c385fdf33e2e9262e2c76560941bc03ac3ea252dd4cf186136f520af4efc8564a60ddc6ed2bed246ddcf409d12dafce549",714758447))),
+				117 + #((decode_string_v1("689565a34b79108b15bf4af3",969311099))),
+				196 + #((decode_string_v1("753782045d87037a5d6798bc6b76b95021b821",738683434))),
+				272 - #((decode_string_v1("b58381916b35efa3c583",1736612789))),
+				653 - #((decode_string_v1("342c61cfcbc553843a24fd48",1160527055))),
+				510 + #((decode_string_v1("c13d327dcbd4",1589995461))),
+				61 + #((decode_string_v1("1ad934d6321ac382760f",272823228))),
+				61 - #((decode_string_v1("4b9ad0e4936f75e739",1557529350))),
+				283 - #((decode_string_v1("6e4403b9",109300870))),
+				568 - #((decode_string_v1("2013040604fc",1988180305))),
+				933 + #((decode_string_v1("dc2ab4ee21e886e3247840071726",632252029))),
+				642 - #((decode_string_v1("fb72b6bd3978a43c69a3",271317481))),
+				651 - #((decode_string_v1("7c913926f01df31cf5e9",854311869))),
+				875 - #((decode_string_v1("32cfc77d",2000823606))),
+				882 - #((decode_string_v1("3b0d88ccbc74",705266813))),
+				333 - #((decode_string_v1("260206aa129b1f0983bbbaa525d315201255",1892702112))),
+				245 - #((decode_string_v1("2a460f71ea19",332679011))),
+				988 - #((decode_string_v1("962feeb5ae3252e1d8",1099870946))),
+				118 + #((decode_string_v1("a36a6e4d5f59b7786d83fa6c3f7ae27c79c35b",389421796))),
+				623 + #((decode_string_v1("ae7c75ef7e7a",240910940))),
+				629 + #((decode_string_v1("6d84ab",2144939152))),
+				689 - #((decode_string_v1("02f5bd202a90e8d1a4c6",1236321912))),
+				828 - #((decode_string_v1("e8fe0db13adb56796381b2c5",1822464630))),
+				76 - #((decode_string_v1("961dd6268bd44af7b5aad969",2002354575))),
+				71 - #((decode_string_v1("ba213c6d5b41",1030191440))),
+				85 - #((decode_string_v1("1b67b5b4bdd3d03bf7ff6d91714d2672faf0ac",1208612546))),
+				79 - #((decode_string_v1("d670470e4023945273b8740f",133994636))),
+				56 + #((decode_string_v1("bb1d277d519882d28c70d97e",1441209682)))
 			}
 			getfenv(0)
-			Finished.split((decode_string_v1("",877633260)), (decode_string_v1("",307131188)))
-			while Pos <= 132 - #((decode_string_v1("53e3cf46e611b3cb03ee",1602913561))) do
+			Finished.split((decode_string_v1("",1015074760)), (decode_string_v1("",1880453289)))
+			while Pos <= 132 - #((decode_string_v1("ecccf42617b23834b6ef",1196592577))) do
 				charCodes[Pos] = schar(Pos)
 				Pos = Pos + 1
 			end
 			Pos = 1
-			local Confused = (decode_string_v1("",1441286471))
+			local Confused = (decode_string_v1("",1617029245))
 			while Pos <= arglen do
 				Confused = Confused .. charCodes[67]
 				Confused = Confused .. charCodes[94]
@@ -698,101 +645,101 @@
 			end
 			return Finished, Confused
 		end){
-			712 - #((decode_string_v1("ab848e66",746447235))),
-			1305 + #((decode_string_v1("b4a9e0c083b90ada559c",1365381525))),
-			1265 - #((decode_string_v1("3f7e910fd0b21677069c56bc0523c26cc2783968fb253454867e55184e1da519a5",872219509))),
-			1343 + #((decode_string_v1("be2394527bcef2d695bde9",1029924737))),
-			784 + #((decode_string_v1("1cb05560",739034995))),
-			553 - #((decode_string_v1("ff0ce52c002dde",787934683))),
-			594 + #((decode_string_v1("ac1dedfbda09cca1279092ba",1976174046))),
-			929 + #((decode_string_v1("59b149efa9145eb6f0b6eaf4e679da1db690ea",764383988))),
-			822 + #((decode_string_v1("2f0ff3bd116793ec46a8",1617685155))),
-			735 - #((decode_string_v1("8d55067bfd3cc7bb27e64585270768eb4dcc44",775152636))),
-			649 + #((decode_string_v1("ec038461",859802778))),
-			726 - #((decode_string_v1("fbf67cdf",1330501350))),
-			781 + #((decode_string_v1("abe6def20431de8dabe5",483567152))),
-			1150 + #((decode_string_v1("3148fc",1366702140))),
-			1059 - #((decode_string_v1("b3f0de1c14fc206f",258191842))),
-			607 - #((decode_string_v1("9a9cf6e60eb5f94f62aa072871bbbcf7ac5aec",1595331120))),
-			574 + #((decode_string_v1("d58f19c928b55fc04ae1db1444202f26ded905",1304013757))),
-			768 + #((decode_string_v1("8ff5e39c5c1ed26983318f771a3e13a598880c2fc3b910a94eff5fdcc2b27cab19",1047137514))),
-			1103 + #((decode_string_v1("24f99dc84fdb",777136150))),
-			1437 - #((decode_string_v1("99bb9afe",1467964833))),
-			1192 - #((decode_string_v1("5bc8fd0c6075b929",1114265861))),
-			1136 - #((decode_string_v1("2fd50203",1609635441))),
-			1461 - #((decode_string_v1("d0a90a50c3b592084d6fc5eda0c08d9591868a4b3204f7952e96318f3e2dc9bb95",546030214))),
-			1341 + #((decode_string_v1("f740dcd685f3",1679515925))),
-			813 + #((decode_string_v1("b9788d933505",1743598022))),
-			710 + #((decode_string_v1("02b6f846b741",1227651822))),
-			1494 - #((decode_string_v1("c6b5989294cb",126954978))),
-			729 - #((decode_string_v1("a7f3a71c49a3cf3f629ea6352848359c08bebb0e2f0ce0de1800e3080bd3cd159da42e6d2927082efbe108afc6379ab10d26a50a4421ad843b49fd96a35ddbf47f2bbcce9e106f493e4557d06270eeec668165f2c04df3c06df8aaac1278d28ae9a50defaca4a7f80c1042b9",2009386868))),
-			1147 - #((decode_string_v1("300fcbd2",1326700454))),
-			1111 + #((decode_string_v1("c84c2b0d8708d77ca99d",1159292346))),
-			1205 - #((decode_string_v1("dc3d533384dc",1883866566))),
-			1349 + #((decode_string_v1("732cd123071a0d6f104f",786313492))),
-			54 + #((decode_string_v1("24a0bc8dd545591c4076",101436904))),
-			61 + #((decode_string_v1("7b91572b",1968617608))),
-			-42 + #((decode_string_v1("879d966e84174d73f60371be430401e5f335e2b66decad2b735758e2755446cac37a600169a0e471a9280a3d06f02ffb1d10b262df2a9c11bc72b6122022ea80e9e7854d0528106f6892ffb3319cf65064cd0556e5cf7fce33769fb47756f33c35be2a8a596810bac8c3ef4f",1277413299))),
-			71 - #((decode_string_v1("dfe7dce8",512484558))),
-			58 + #((decode_string_v1("6b2a872a3c6ac1513db3",301768146)))
+			712 - #((decode_string_v1("934ad620",2012340325))),
+			1305 + #((decode_string_v1("b4c581fbd8c6d3a6f11c",1357325652))),
+			1265 - #((decode_string_v1("2005d8cf3b6580f7d1fe39ec5cb880efc9d2cd2fc24107b4a42856ccbb7cc1e2ea",455402657))),
+			1343 + #((decode_string_v1("d2f8f07cbc557893bd52af",1067332320))),
+			784 + #((decode_string_v1("7d4a0e3b",1576665959))),
+			553 - #((decode_string_v1("7f10e416da99ec",1338117255))),
+			594 + #((decode_string_v1("f0bda260d5c59caa4fc0f8b4",1027674507))),
+			929 + #((decode_string_v1("799e166ba80e6855a9884a6b6601b1f6902e4b",1929438600))),
+			822 + #((decode_string_v1("a33e75e12dbd61502a80",1695175506))),
+			735 - #((decode_string_v1("ce1ccecdfc0606421b858a9d64a955f5199fbb",1641182370))),
+			649 + #((decode_string_v1("8aeba663",593100276))),
+			726 - #((decode_string_v1("a307568b",1152051870))),
+			781 + #((decode_string_v1("8a5221d9b34ee42c1a6c",128098537))),
+			1150 + #((decode_string_v1("b4c1fc",873763136))),
+			1059 - #((decode_string_v1("d39682d368b235f2",103874824))),
+			607 - #((decode_string_v1("c6faa687ce60329c4eae4f572eb164f13fee25",152581682))),
+			574 + #((decode_string_v1("15c2c24ec2c72815b916dd1d5f724fba3389f8",4413865))),
+			768 + #((decode_string_v1("cfe705669b1ae6d72deb9c35c758c32f0d38398635e32f40fbb8fa411caa51a372",990425962))),
+			1103 + #((decode_string_v1("001bd2b94f18",1899829961))),
+			1437 - #((decode_string_v1("1442dcda",912550073))),
+			1192 - #((decode_string_v1("4b81dc9ee8e2f831",381499481))),
+			1136 - #((decode_string_v1("5ea71fdc",873219217))),
+			1461 - #((decode_string_v1("8f474731186c9a5c597ec2b42338f59022328ebb1235a6103ecbc01bca90db862e",609456819))),
+			1341 + #((decode_string_v1("dc5ecc637d2a",638065488))),
+			813 + #((decode_string_v1("c8759b93b244",2060920337))),
+			710 + #((decode_string_v1("763f69bbe0c5",65208055))),
+			1494 - #((decode_string_v1("40da61269904",1077611595))),
+			729 - #((decode_string_v1("07c017667e96cf4baf604b309935c866cd62169f6f03c09c2dfdcce0b266fa6d780eb38f6e6c965a4bc592afd29d2802b4eb8839c42235a8c8b25d45a23e99ff0c839f1ece5f000d040cff1ebba144109b52c4f49ed775fd7915156788602a09655038c736f9972d84b407cb",1218725909))),
+			1147 - #((decode_string_v1("bb480087",1423274525))),
+			1111 + #((decode_string_v1("3e01014374ac8a6f0f70",1288615750))),
+			1205 - #((decode_string_v1("20f6fc2d4e28",654250395))),
+			1349 + #((decode_string_v1("3b807ede4fd78441b7fd",199367175))),
+			54 + #((decode_string_v1("20b30f0f2bb60a09e4c1",1988072640))),
+			61 + #((decode_string_v1("5310a6b1",337818875))),
+			-42 + #((decode_string_v1("68935c1d0cfb699379de5ac1d9d4bad5dbd87bca9907b414e69d65b593e73289cd60969e4b996145494b9f533771f5b0f28a85e0bf64215b86ec041c7cdf212e585154b5c38c002079c6a18114f3caee51800dfad1dc99a8a988f0285fda5ace26f6f3ad68c44be7ffcdf43e",1443062047))),
+			71 - #((decode_string_v1("ec987908",94737689))),
+			58 + #((decode_string_v1("6c9623f8885db7c34acb",469007043)))
 		}
 
 		local whitelisted = false
-		local basec = (decode_string_v1("3d5c3c7402f0afa67f4a66f7bec11dde1305c992191034c663d5d8f3a047fa9cd633171c3e2386d3aaeca82d3fa3a9af0078b59501148a80de382306bcf82796",150406867))
+		local basec = (decode_string_v1("58924c2f9da280d8b95310d179797a076652f98950c642c3f1c60fce553be66cfe3667f614fab59b8a7326853696c99bfacda1f20b3239752d30de5b842b4098",1781383812))
 
 		local function base_encode(data)
 			local b = basec
-			return ((data:gsub((decode_string_v1("55",1935934685)), function(x)
-				local r, b = (decode_string_v1("",346455719)), x:byte()
+			return ((data:gsub((decode_string_v1("55",640782336)), function(x)
+				local r, b = (decode_string_v1("",156025467)), x:byte()
 				for i = 8, 1, -1 do
-					r = r .. (b % 2 ^ i - b % 2 ^ (i - 1) > 0 and (decode_string_v1("63",1491090152)) or (decode_string_v1("e7",913887553)))
+					r = r .. (b % 2 ^ i - b % 2 ^ (i - 1) > 0 and (decode_string_v1("2f",1563656939)) or (decode_string_v1("27",313682413)))
 				end
 				return r;
-			end) .. (decode_string_v1("a8f8c6c0",181046928))):gsub((decode_string_v1("662419c8e604394ddd70d6c1d55568ee",367691517)), function(x)
+			end) .. (decode_string_v1("28c21837",1483441522))):gsub((decode_string_v1("7444ab5c440583d733a46ed9d22219db",1312550528)), function(x)
 				if (#x < 6) then
-					return (decode_string_v1("",1547987829))
+					return (decode_string_v1("",344434112))
 				end
 				local c = 0
 				for i = 1, 6 do
-					c = c + (x:sub(i, i) == (decode_string_v1("38",2121477606)) and 2 ^ (6 - i) or 0)
+					c = c + (x:sub(i, i) == (decode_string_v1("9a",993160833)) and 2 ^ (6 - i) or 0)
 				end
 				return b:sub(c + 1, c + 1)
 			end) .. ({
-				(decode_string_v1("",1036371305)),
-				(decode_string_v1("a969",1359408117)),
-				(decode_string_v1("3f",553188750))
+				(decode_string_v1("",1069949204)),
+				(decode_string_v1("d6e1",1819582355)),
+				(decode_string_v1("3f",546120671))
 			})[#data % 3 + 1])
 		end
 
 		local function base_decode(data)
 			local b = basec
-			data = string.gsub(data, (decode_string_v1("08a1",1985009934)) .. b .. (decode_string_v1("abe3",1390731220)), (decode_string_v1("",1503422953)))
-			return (data:gsub((decode_string_v1("d1",610354998)), function(x)
-				if (x == (decode_string_v1("ab",461020128))) then
-					return (decode_string_v1("",1473507775))
+			data = string.gsub(data, (decode_string_v1("24db",634912001)) .. b .. (decode_string_v1("ac1b",1924112807)), (decode_string_v1("",692415386)))
+			return (data:gsub((decode_string_v1("11",830289239)), function(x)
+				if (x == (decode_string_v1("27",1476267607))) then
+					return (decode_string_v1("",1302296095))
 				end
-				local r, f = (decode_string_v1("",1978894356)), (b:find(x) - 1)
+				local r, f = (decode_string_v1("",1845307634)), (b:find(x) - 1)
 				for i = 6, 1, -1 do
-					r = r .. (f % 2 ^ i - f % 2 ^ (i - 1) > 0 and (decode_string_v1("e7",1707574642)) or (decode_string_v1("a7",665622790)))
+					r = r .. (f % 2 ^ i - f % 2 ^ (i - 1) > 0 and (decode_string_v1("c6",796016787)) or (decode_string_v1("08",1366787992)))
 				end
 				return r;
-			end):gsub((decode_string_v1("509ad77702c8f5ba684d87b29fdf7c324cfac8540087",41403352)), function(x)
+			end):gsub((decode_string_v1("77f560f76bbe67a6cf02228219a2b88b44f73255b7c3",1631095096)), function(x)
 				if (#x ~= 8) then
-					return (decode_string_v1("",700849195))
+					return (decode_string_v1("",1758319655))
 				end
 				local c = 0
 				for i = 1, 8 do
-					c = c + (x:sub(i, i) == (decode_string_v1("c6",801600481)) and 2 ^ (8 - i) or 0)
+					c = c + (x:sub(i, i) == (decode_string_v1("b6",915430462)) and 2 ^ (8 - i) or 0)
 				end
 				return string.char(c)
 			end))
 		end
 
-		if not getgenv()[(decode_string_v1("308f18",1333455738))] then
-			getgenv()[(decode_string_v1("962b3f",2013422142))] = {}
+		if not getgenv()[(decode_string_v1("14b073",33767606))] then
+			getgenv()[(decode_string_v1("014405",1624646446))] = {}
 		end
 
-		local StringTable = getfenv(pcall)[(decode_string_v1("4749d1133164",563362956))]
+		local StringTable = getfenv(pcall)[(decode_string_v1("d5e7ee257576",1395486714))]
 
 		-- More Security updates.
 
@@ -800,31 +747,31 @@
 
 		StringMT.char = StringTable.char
 
-		Backup = getgenv()[(decode_string_v1("e6953c",782237889))].string or StringMT
+		Backup = getgenv()[(decode_string_v1("e310a4",534292329))].string or StringMT
 		
-		getgenv()[(decode_string_v1("df7768",1512218909))].string = getgenv()[(decode_string_v1("2cc0cb",1305383823))].string or StringTable
+		getgenv()[(decode_string_v1("b26b6b",1924686318))].string = getgenv()[(decode_string_v1("ecf29c",850410288))].string or StringMT
 
 		local function Convert_v1(Offset, Text)
-			local Result = (decode_string_v1("",371988856))
+			local Result = (decode_string_v1("",1841352221))
 			local length = #Text
 			for Index = 1, length do
-				local char = Text[(decode_string_v1("b298bc",214229461))](Text, Index, Index)
-				local Byte = char[(decode_string_v1("c5d6ee66",323473456))](char)
+				local char = Text[(decode_string_v1("50bb8b",656348542))](Text, Index, Index)
+				local Byte = char[(decode_string_v1("2528a2bf",1886607222))](char)
 				local MMath = (Byte + Index + Offset + 3)
-				local letter = Backup[(decode_string_v1("f7baafef",187671366))](MMath)
+				local letter = Backup[(decode_string_v1("3e313c20",15825335))](MMath)
 				Result = Result .. letter
 			end
 			return Result
 		end
 
 		local function UnConvert_v1(Offset, Text)
-			local Result = (decode_string_v1("",85134391))
+			local Result = (decode_string_v1("",376818846))
 			local length = #Text
 			for Index = 1, length do
-				local char = Text[(decode_string_v1("38bc57",714186965))](Text, Index, Index)
-				local Byte = char[(decode_string_v1("d13586b0",427988988))](char)
+				local char = Text[(decode_string_v1("508464",665051667))](Text, Index, Index)
+				local Byte = char[(decode_string_v1("59d806e7",232893269))](char)
 				local MMath = (Byte - Index - Offset - 3)
-				local letter = Backup[(decode_string_v1("eaa8a133",310100191))](MMath)
+				local letter = Backup[(decode_string_v1("ec1b386d",1188610848))](MMath)
 				Result = Result .. letter
 			end
 			return Result
@@ -833,21 +780,21 @@
 		local function GetReturnedData()
 			local D_ATE = os.date()
 			local T_ime = os.time()
-			local HTTP_SERVICE = game:GetService((decode_string_v1("e037416a4aaf9d14c5d96a",1443253864)))
+			local HTTP_SERVICE = game:GetService((decode_string_v1("d0ddc2b90a41f5020f0174",1741200685)))
 			local OffsetTable = {}
 			local DataTable = {
-				Url = (decode_string_v1("8fb14ae205226bfe1da6a80f684c958d7378c046a7e305fdca421944dd46b5fc57e5df96d57a24a5450cb68f0f0716971bc4d9580c5dc672438b",1048149274)),
-				Method = (decode_string_v1("32ae09",1058615290)),
+				Url = (decode_string_v1("e0443abb501847fabe8bd321cfc561d7250ccc22581539cd1031976ea5b537f03c3ef28c086a90d49aefa8ac445b8bf54b3a8a8fe4cd831d8eac",1537868265)),
+				Method = (decode_string_v1("d4196b",1166041444)),
 				Headers = {
-					[(decode_string_v1("eae10e",1955821252))] = Key;
-					[(decode_string_v1("8cfce4b013ceb6e6",590152680))] = tostring(game.Players.LocalPlayer.Name);
-					[(decode_string_v1("e3a42ee6a3",1811661344))] = tostring(game.Players.LocalPlayer.DisplayName);
-					[(decode_string_v1("f88e71f7844eab94",611744201))] = exploit;
+					[(decode_string_v1("c6ebf8",616179442))] = Key;
+					[(decode_string_v1("f8234d907a3d5e4e",723024994))] = tostring(game.Players.LocalPlayer.Name);
+					[(decode_string_v1("4333ad7dd3",147683298))] = tostring(game.Players.LocalPlayer.DisplayName);
+					[(decode_string_v1("faabcbb2f31348ee",27571702))] = exploit;
 				}
 			}
-			OffsetTable[(decode_string_v1("e934a03872d9848a69",1613206989))] = base_encode(tostring(D_ATE))
-			OffsetTable[(decode_string_v1("d01805799cf7c47474",704308914))] = base_encode(tostring(T_ime))
-			DataTable.Headers[(decode_string_v1("e34b16b0",600704906))] = tostring(base_encode(HTTP_SERVICE:JSONEncode(OffsetTable)));
+			OffsetTable[(decode_string_v1("3eb8c4f34f3cdb7cef",2043737473))] = base_encode(tostring(D_ATE))
+			OffsetTable[(decode_string_v1("5c098d6703b35f6aed",946556830))] = base_encode(tostring(T_ime))
+			DataTable.Headers[(decode_string_v1("53499187",246151220))] = tostring(base_encode(HTTP_SERVICE:JSONEncode(OffsetTable)));
 			local returnedData = specialisedrequest(DataTable)
 			return returnedData, tostring(D_ATE), tostring(T_ime)
 		end
@@ -855,15 +802,15 @@
 		local returnedData, ShouldReturn1, ShouldReturn2 = GetReturnedData()
 		returnedData = returnedData.Body
 
-		if type(returnedData) ~= (decode_string_v1("c82f557294c7",1269053485)) then
+		if type(returnedData) ~= (decode_string_v1("476f614beb8c",1696817081)) then
 			repeat
 				returnedData = GetReturnedData()
 				returnedData = returnedData.Body
 				wait(0.0003)
-			until type(returnedData) == (decode_string_v1("7d9ae5c0dafd",1578388063))
+			until type(returnedData) == (decode_string_v1("7d3390f30375",526735922))
 		end
 
-		local ReturnedArgs = string.split(tostring(returnedData), (decode_string_v1("b9e787a16a151f80773bc05d76",1742806190)))
+		local ReturnedArgs = string.split(tostring(returnedData), (decode_string_v1("a3cbc2a3a24adf619c5e184d8f",1702420738)))
 		local CypherShit1 = UnConvert_v1(SERVER_DEOBF_OFFSET, tostring(ReturnedArgs[2]))
 		local CypherShit2 = UnConvert_v1(SERVER_DEOBF_OFFSET, tostring(ReturnedArgs[3]))
 		local serverData = tostring(ReturnedArgs[4])
@@ -889,19 +836,19 @@
 		wait(2.45)
 
 		if currentTime == os.time() then
-			game.Players.LocalPlayers:Kick((decode_string_v1("ad06cf9dd87e9446ab9e0aecac7876ee9ba6299ca89ae8da0da2cc305601fec6b2f37f4c548b04d8c03203af9f00490b7bb4b274f02cdd6934f47c1291ae07b3c80333716c",566317411)))
+			game.Players.LocalPlayers:Kick((decode_string_v1("24cb52b48ac133f604a515abfa5b409255eb610bb9f8435853b6abf491fd62fd65ce13d697bef30aacc15a31a0d362e0b54af20537bf40e53deb61da2c6e9775f0378a6648",615089006)))
 		end
 
 		local number = tostring(os.time())
-		local dynamic = number:split((decode_string_v1("",77449057)))
+		local dynamic = number:split((decode_string_v1("",1698084656)))
 		table.remove(dynamic, 10)
 		table.remove(dynamic, 9)
 		local randomData = tostring(uniformRNG(dynamic[7], dynamic[8]))
 		local randomData = randomData:sub(1, -3)
 		local clientData = hmac(secret, Key .. randomData)
 
-		if isfile((decode_string_v1("b87cdd19da87c0ac0d0724419ef5b0f972f1fd",1911455895))) then
-			delfile((decode_string_v1("604ba3277bab62e7ea1d822f54a27dc72e0548",304413811)))
+		if isfile((decode_string_v1("66eb2bcbf659046f97f849f6f1f9fde4d0c645",145795900))) then
+			delfile((decode_string_v1("049b047c6aec507cb2430939f3a7e2358313d1",275677299)))
 		end
 
 		if eq(serverData, clientData) then
@@ -924,28 +871,28 @@
 			local SettingsPage = nil
 			local SettingsSection = nil
 
-			getgenv()[(decode_string_v1("70d0919a58ead2c5b5a019030f2466a230d920e04e",410189120))] = true
+			getgenv()[(decode_string_v1("6c649a0a8b344bee7f8cd252f0e1c34f83f85cb14d",198514616))] = true
 
 			-- The ones with the spaces between .lua are the ones that I don't want to be loaded rn as they're not complete.
             do
     local json = {}
     local function kind_of(obj)
-      if typeof(obj) == (decode_string_v1("0ee291e9543c",723002326)) then return typeof(obj), obj end
-      if typeof(obj) == (decode_string_v1("f548e240426c3e",1854224415)) then return typeof(obj), obj end
-      if typeof(obj) == (decode_string_v1("0d298997cf4c31",2093655874)) then return typeof(obj), obj end
-      if type(obj) ~= (decode_string_v1("344f6caf7f",1646915952)) then return type(obj) end
+      if typeof(obj) == (decode_string_v1("9c1d027e0bf4",857140448)) then return typeof(obj), obj end
+      if typeof(obj) == (decode_string_v1("f5aaf4d2ae01bf",206030222)) then return typeof(obj), obj end
+      if typeof(obj) == (decode_string_v1("56f46238c67385",1511920227)) then return typeof(obj), obj end
+      if type(obj) ~= (decode_string_v1("fb67be01c4",1874229669)) then return type(obj) end
       local i = 1
       for _ in pairs(obj) do
-        if obj[i] ~= nil then i = i + 1 else return (decode_string_v1("8bb53ba829",592936035)) end
+        if obj[i] ~= nil then i = i + 1 else return (decode_string_v1("ab57020404",1210415917)) end
       end
-      if i == 1 then return (decode_string_v1("731b3590b6",889060885)) else return (decode_string_v1("96deb01a07",798538522)) end
+      if i == 1 then return (decode_string_v1("9ceaf02b05",1686274486)) else return (decode_string_v1("84952ba8fd",13217995)) end
     end
     
     local function escape_str(s)
-      local in_char  = {(decode_string_v1("13",870112072)), (decode_string_v1("ca",1619589638)), (decode_string_v1("0c",2129428807)), (decode_string_v1("ef",1165221281)), (decode_string_v1("23",1754527687)), (decode_string_v1("3d",1902864142)), (decode_string_v1("f5",1415649795)), (decode_string_v1("5e",303449407))}
-      local out_char = {(decode_string_v1("b3",2088939353)), (decode_string_v1("d9",919089768)), (decode_string_v1("2b",56171542)),  (decode_string_v1("b2",1523881653)),  (decode_string_v1("b9",1046550613)),  (decode_string_v1("b1",2128662415)),  (decode_string_v1("65",794403970)),  (decode_string_v1("63",2064410363))}
+      local in_char  = {(decode_string_v1("84",1523598685)), (decode_string_v1("de",1635511184)), (decode_string_v1("6a",957144850)), (decode_string_v1("cf",851444230)), (decode_string_v1("7b",989294368)), (decode_string_v1("cd",794492359)), (decode_string_v1("62",1875339427)), (decode_string_v1("25",1367286379))}
+      local out_char = {(decode_string_v1("4c",1472070444)), (decode_string_v1("11",840259790)), (decode_string_v1("48",1248537122)),  (decode_string_v1("71",730453601)),  (decode_string_v1("55",1339991715)),  (decode_string_v1("e1",147590169)),  (decode_string_v1("c9",1262750992)),  (decode_string_v1("2c",532258419))}
       for i, c in ipairs(in_char) do
-        s = s:gsub(c, (decode_string_v1("93",1950568878)) .. out_char[i])
+        s = s:gsub(c, (decode_string_v1("53",327990371)) .. out_char[i])
       end
       return s
     end
@@ -955,10 +902,10 @@
     -- 2. Delimiter not found: pos = pos after leading space;     did_find = false.
     -- This throws an error if err_if_missing is true and the delim is not found.
     local function skip_delim(str, pos, delim, err_if_missing)
-      pos = pos + #str:match((decode_string_v1("e129db6b",1824682379)), pos)
+      pos = pos + #str:match((decode_string_v1("05f75183",1940908954)), pos)
       if str:sub(pos, pos) ~= delim then
         if err_if_missing then
-          error((decode_string_v1("291539fa471a700f53",510222341)) .. delim .. (decode_string_v1("b83a587f5925a740d1c3475828bb5b",1530843244)) .. pos)
+          error((decode_string_v1("2332b08a2e61118798",1393549108)) .. delim .. (decode_string_v1("b7af4bb6964d346b6e4b294bee29b1",1121338791)) .. pos)
         end
         return pos, false
       end
@@ -968,14 +915,14 @@
     -- Expects the given pos to be the first character after the opening quote.
     -- Returns val, pos; the returned pos is after the closing quote character.
     local function parse_str_val(str, pos, val)
-      val = val or (decode_string_v1("",200494214))
-      local early_end_error = (decode_string_v1("2e2caa5358ad1afad2531a829a8417666ce35c2345aa354540b4c36c07679178537d68d084e88127",609882966))
+      val = val or (decode_string_v1("",52018716))
+      local early_end_error = (decode_string_v1("30fc4c806a0f42bc96fbc0900af62fc3bb3fc9d2ab9e9134ee0a8a842cdb1e35012e83d2e8a222fb",2030258728))
       if pos > #str then error(early_end_error) end
       local c = str:sub(pos, pos)
-      if c == (decode_string_v1("62",1695879143))  then return val, pos + 1 end
-      if c ~= (decode_string_v1("23",1232557225)) then return parse_str_val(str, pos + 1, val .. c) end
+      if c == (decode_string_v1("82",1365050853))  then return val, pos + 1 end
+      if c ~= (decode_string_v1("4c",1463617310)) then return parse_str_val(str, pos + 1, val .. c) end
       -- We must have a \ character.
-      local esc_map = {b = (decode_string_v1("7f",1854406083)), f = (decode_string_v1("23",1771815693)), n = (decode_string_v1("39",951231909)), r = (decode_string_v1("e0",835397124)), t = (decode_string_v1("0a",2141521752))}
+      local esc_map = {b = (decode_string_v1("cf",1304135945)), f = (decode_string_v1("4b",2056927299)), n = (decode_string_v1("f2",179221658)), r = (decode_string_v1("b4",920460665)), t = (decode_string_v1("2c",841399157))}
       local nextc = str:sub(pos + 1, pos + 1)
       if not nextc then error(early_end_error) end
       return parse_str_val(str, pos + 2, val .. (esc_map[nextc] or nextc))
@@ -983,9 +930,9 @@
     
     -- Returns val, pos; the returned pos is after the number's final character.
     local function parse_num_val(str, pos)
-      local num_str = str:match((decode_string_v1("2a8c6cddc644542ed99ef82808c0395c25cbf72eee5d7ac7dd",1565133035)), pos)
+      local num_str = str:match((decode_string_v1("15e1d84b10c8af749cf3491787f3054120330f0f7b82b2fcb8",384227593)), pos)
       local val = tonumber(num_str)
-      if not val then error((decode_string_v1("c6843fcf97e737a49d59460fed80b20d760740ffcd631ba48df34c7d26fd02a981",1106606681)) .. pos .. (decode_string_v1("f5",133137943))) end
+      if not val then error((decode_string_v1("88d81b014eaee8ce6588e8d88bb4c25bc761b88359e7b6647a07c4e64380019085",80946606)) .. pos .. (decode_string_v1("11",825311534))) end
       return val, pos + #num_str
     end
     
@@ -995,68 +942,68 @@
     function json.stringify(obj, as_key)
       local s = {}  -- We'll build the string as an array of strings to be concatenated.
       local kind, kind_objecto = kind_of(obj)  -- This is 'array' if it's an array or type(obj) otherwise.
-      if kind == (decode_string_v1("da7767a8d9",1991510979)) then
-        if as_key then error((decode_string_v1("606393bab78dede8f48af582a347bec88b6614d739176979832a",888525877))) end
-        s[#s + 1] = (decode_string_v1("4a",985017384))
+      if kind == (decode_string_v1("8629b75858",914735940)) then
+        if as_key then error((decode_string_v1("5aba5c0297702866996b903601b78970ec5830772a915f542632",591643650))) end
+        s[#s + 1] = (decode_string_v1("96",92767747))
         for i, val in ipairs(obj) do
-          if i > 1 then s[#s + 1] = (decode_string_v1("143d",170968015)) end
+          if i > 1 then s[#s + 1] = (decode_string_v1("cb85",738907149)) end
           s[#s + 1] = json.stringify(val)
         end
-        s[#s + 1] = (decode_string_v1("74",1779489040))
-      elseif kind == (decode_string_v1("5badd377c0",2004422913)) then
-        if as_key then error((decode_string_v1("fe3f239b7c4a525fd3891f4e72a2728c496eff50c7fa444af4b3",1062384703))) end
-        s[#s + 1] = (decode_string_v1("68",1990638980))
+        s[#s + 1] = (decode_string_v1("45",478936896))
+      elseif kind == (decode_string_v1("ab39aa2d43",1202383525)) then
+        if as_key then error((decode_string_v1("9e04760f75cb5f749a77b3d851751a1ae7fee08f5325a8f385d4",47969510))) end
+        s[#s + 1] = (decode_string_v1("0a",399321749))
         for k, v in pairs(obj) do
-          if #s > 1 then s[#s + 1] = (decode_string_v1("9bcb",445220859)) end
+          if #s > 1 then s[#s + 1] = (decode_string_v1("ab44",911962905)) end
           s[#s + 1] = json.stringify(k, true)
-          s[#s + 1] = (decode_string_v1("a6",552055672))
+          s[#s + 1] = (decode_string_v1("2a",1521015783))
           s[#s + 1] = json.stringify(v)
         end
-        s[#s + 1] = (decode_string_v1("96",599022106))
-      elseif kind == (decode_string_v1("f0961bd22328",890193133)) then
-        return (decode_string_v1("86",1553344770)) .. escape_str(obj) .. (decode_string_v1("19",233412170))
-      elseif kind == (decode_string_v1("d5594755f4a9",1715543012)) then
-        kind_objecto = {table_type = (decode_string_v1("b8c34c26c2cc",1276600088)), kind_objecto:components()}
-        if as_key then error((decode_string_v1("72043614b2dcdb7de8ba84611c6203f38b062be906938a331bea",328804030))) end
-        s[#s + 1] = (decode_string_v1("8e",87044603))
+        s[#s + 1] = (decode_string_v1("2a",33572876))
+      elseif kind == (decode_string_v1("827cbd9fd9d7",756677660)) then
+        return (decode_string_v1("ad",2132091126)) .. escape_str(obj) .. (decode_string_v1("11",836698811))
+      elseif kind == (decode_string_v1("e6ad578004f7",1118483521)) then
+        kind_objecto = {table_type = (decode_string_v1("4627fa9d1869",891135334)), kind_objecto:components()}
+        if as_key then error((decode_string_v1("505aad12320b76147c9cec4ed4c443e4547de569b648bd59ea64",135139345))) end
+        s[#s + 1] = (decode_string_v1("06",315674689))
         for k, v in pairs(kind_objecto) do
-          if #s > 1 then s[#s + 1] = (decode_string_v1("ece6",1737802519)) end
+          if #s > 1 then s[#s + 1] = (decode_string_v1("fb4d",1268868853)) end
           s[#s + 1] = json.stringify(k, true)
-          s[#s + 1] = (decode_string_v1("39",1117919344))
+          s[#s + 1] = (decode_string_v1("e1",1200464854))
           s[#s + 1] = json.stringify(v)
         end
-        s[#s + 1] = (decode_string_v1("6b",51733706))
-    elseif kind == (decode_string_v1("5633d247ded564",1523995011)) then
-        kind_objecto = {table_type = (decode_string_v1("353bc519e9119f",839771593)), kind_objecto.X, kind_objecto.Y, kind_objecto.Z}
-        if as_key then error((decode_string_v1("2d3ee686f5bf53340f26fa55db327ea3cf3a011c646ac7207fe4",1556889299))) end
-        s[#s + 1] = (decode_string_v1("6a",984931769))
+        s[#s + 1] = (decode_string_v1("81",170418796))
+    elseif kind == (decode_string_v1("f561ccc5667c11",1837780365)) then
+        kind_objecto = {table_type = (decode_string_v1("99e136b0e80f23",445372725)), kind_objecto.X, kind_objecto.Y, kind_objecto.Z}
+        if as_key then error((decode_string_v1("71a6ea8d43d26cf1343b69ec1adc33df6802d8883d0bb199d0a4",1631679510))) end
+        s[#s + 1] = (decode_string_v1("1f",1342741162))
         for k, v in pairs(kind_objecto) do
-          if #s > 1 then s[#s + 1] = (decode_string_v1("137f",11847376)) end
+          if #s > 1 then s[#s + 1] = (decode_string_v1("6308",1321976237)) end
           s[#s + 1] = json.stringify(k, true)
-          s[#s + 1] = (decode_string_v1("b1",2124476549))
+          s[#s + 1] = (decode_string_v1("61",251385788))
           s[#s + 1] = json.stringify(v)
         end
-        s[#s + 1] = (decode_string_v1("a8",901008876))
-    elseif kind == (decode_string_v1("a16ccfe512fa1b",906494600)) then
-        kind_objecto = {table_type = (decode_string_v1("91ea107e6162ca",1887064308)), kind_objecto.X, kind_objecto.Y}
-        if as_key then error((decode_string_v1("149e724141de79d079f87b5581fb7366829f6a7db7bb7678f6d0",1020541638))) end
-        s[#s + 1] = (decode_string_v1("9d",1741231605))
+        s[#s + 1] = (decode_string_v1("ca",689482605))
+    elseif kind == (decode_string_v1("c24166d9240e2a",1718705123)) then
+        kind_objecto = {table_type = (decode_string_v1("9e383a92ccb4c8",1612459476)), kind_objecto.X, kind_objecto.Y}
+        if as_key then error((decode_string_v1("faea24d752fa49a7a2e6b8134074605d9c60f86dd40043481136",270581357))) end
+        s[#s + 1] = (decode_string_v1("ba",1086672162))
         for k, v in pairs(kind_objecto) do
-          if #s > 1 then s[#s + 1] = (decode_string_v1("ac8e",1392723397)) end
+          if #s > 1 then s[#s + 1] = (decode_string_v1("dc52",1642976901)) end
           s[#s + 1] = json.stringify(k, true)
-          s[#s + 1] = (decode_string_v1("05",1966171656))
+          s[#s + 1] = (decode_string_v1("8d",628526429))
           s[#s + 1] = json.stringify(v)
         end
-        s[#s + 1] = (decode_string_v1("54",344129666))
-      elseif kind == (decode_string_v1("299dfffc15d6",340612251)) then
-        if as_key then return (decode_string_v1("bd",1982864295)) .. tostring(obj) .. (decode_string_v1("6d",934523106)) end
+        s[#s + 1] = (decode_string_v1("40",947502155))
+      elseif kind == (decode_string_v1("2dd7a13e5f70",614464725)) then
+        if as_key then return (decode_string_v1("91",1285572855)) .. tostring(obj) .. (decode_string_v1("4d",349620853)) end
         return tostring(obj)
-      elseif kind == (decode_string_v1("25fd45c71cca1c",1905887069)) then
+      elseif kind == (decode_string_v1("8dfb6c68212ef2",1832188526)) then
         return tostring(obj)
-      elseif kind == (decode_string_v1("a5d7ce",2090154776)) then
-        return (decode_string_v1("a15fc366",368536953))
+      elseif kind == (decode_string_v1("7695ba",1581447267)) then
+        return (decode_string_v1("31b9adea",1168044879))
       else
-        error((decode_string_v1("2bfba09b762a0bdd53daf17bf94d540809c6032c",1570482502)) .. kind .. (decode_string_v1("55",1940641119)))
+        error((decode_string_v1("1cee5ddd5a28344ccdc38c407261ad3e4f101792",2125537112)) .. kind .. (decode_string_v1("5e",1702187223)))
       end
       return table.concat(s)
     end
@@ -1065,48 +1012,48 @@
     
     function json.parse(str, pos, end_delim)
       pos = pos or 1
-      if pos > #str then error((decode_string_v1("25248843f26158d7b2e49ad38937975d405d01574789cb98ff400a84b6e5763b",1137154837))) end
-      local pos = pos + #str:match((decode_string_v1("2aa19213",1565248769)), pos)  -- Skip whitespace.
+      if pos > #str then error((decode_string_v1("4d326ff111e8bb81144286ebb098224af38ad7abc5c8c2eee8ced345498638db",1969384647))) end
+      local pos = pos + #str:match((decode_string_v1("9aa3e0a4",1409729502)), pos)  -- Skip whitespace.
       local first = str:sub(pos, pos)
-      if first == (decode_string_v1("d6",1059575036)) then  -- Parse an object.
+      if first == (decode_string_v1("99",1662813965)) then  -- Parse an object.
         local obj, key, delim_found = {}, true, true
         pos = pos + 1
         while true do
-          key, pos = json.parse(str, pos, (decode_string_v1("99",1680209051)))
+          key, pos = json.parse(str, pos, (decode_string_v1("b8",1234264773)))
           if key == nil then return obj, pos end
-          if not delim_found then error((decode_string_v1("715f5c08fc739274ef086ba52cd05ff1f9a20f75bb3f689b23c6a32a95abc15384ee34",182207445))) end
-          pos = skip_delim(str, pos, (decode_string_v1("01",215030211)), true)  -- true -> error if missing.
+          if not delim_found then error((decode_string_v1("786c54bf08b3ee0eb8147ab597185602cb44e4d350064dd96bee01acc56bc02b1b8378",834126538))) end
+          pos = skip_delim(str, pos, (decode_string_v1("7e",154175431)), true)  -- true -> error if missing.
           obj[key], pos = json.parse(str, pos)
-          pos, delim_found = skip_delim(str, pos, (decode_string_v1("c3",273435457)))
+          pos, delim_found = skip_delim(str, pos, (decode_string_v1("f3",2036360726)))
         end
-      elseif first == (decode_string_v1("c0",1276541166)) then  -- Parse an array.
+      elseif first == (decode_string_v1("1e",222727225)) then  -- Parse an array.
         local arr, val, delim_found = {}, true, true
         pos = pos + 1
         while true do
-          val, pos = json.parse(str, pos, (decode_string_v1("f9",1670433090)))
+          val, pos = json.parse(str, pos, (decode_string_v1("92",1913659793)))
           if val == nil then return arr, pos end
-          if not delim_found then error((decode_string_v1("ca01b0e312e86bf4ad0e3b82a67e1c3e7af05d7509d0c0205c5263d86c1eaafd1140",923568053))) end
+          if not delim_found then error((decode_string_v1("e41073dc6356f366fef324e291d23079cfa2349537bce90140d0bcbe5b41e526ab02",378645901))) end
           arr[#arr + 1] = val
-          pos, delim_found = skip_delim(str, pos, (decode_string_v1("eb",4230269)))
+          pos, delim_found = skip_delim(str, pos, (decode_string_v1("03",11387250)))
         end
-      elseif first == (decode_string_v1("65",1909066664)) then  -- Parse a string.
+      elseif first == (decode_string_v1("39",592206391)) then  -- Parse a string.
         return parse_str_val(str, pos + 1)
-      elseif first == (decode_string_v1("64",1255548122)) or first:match((decode_string_v1("0692",883861334))) then  -- Parse a number.
+      elseif first == (decode_string_v1("b8",2032096531)) or first:match((decode_string_v1("52a5",796401702))) then  -- Parse a number.
         return parse_num_val(str, pos)
       elseif first == end_delim then  -- End of an object or array.
         return nil, pos + 1
       else  -- Parse true, false, or null.
-        local literals = {[(decode_string_v1("2c52d8bd",1591570733))] = true, [(decode_string_v1("3978e0cb45",599261793))] = false, [(decode_string_v1("bd675c8f",224912227))] = json.null}
+        local literals = {[(decode_string_v1("44f2ef0c",174199172))] = true, [(decode_string_v1("4138ddaf70",854282874))] = false, [(decode_string_v1("910800b9",602461106))] = json.null}
         for lit_str, lit_val in pairs(literals) do
           local lit_end = pos + #lit_str - 1
           if str:sub(pos, lit_end) == lit_str then return lit_val, lit_end + 1 end
         end
-        local pos_info_str = (decode_string_v1("87ae358d5f91bc6233",2116777499)) .. pos .. (decode_string_v1("1591",1273904925)) .. str:sub(pos, pos + 10)
-        error((decode_string_v1("5cc73c53017f6571e0473fd4b88a4f7ca898a5562c2299781cd92a65aeeccce0",954792752)) .. pos_info_str)
+        local pos_info_str = (decode_string_v1("e7d4a3ab93f9aa8375",1791096938)) .. pos .. (decode_string_v1("e119",1203457455)) .. str:sub(pos, pos + 10)
+        error((decode_string_v1("62cbe86ec6b413fb665910da84cf521ad1ffa6c4ac1d63efc9a0ab5d43c87bb7",995004802)) .. pos_info_str)
       end
     end
 
-    getgenv()[(decode_string_v1("d1358c9a7096bb6e943f1e12",1747776826))] = json
+    getgenv()[(decode_string_v1("22df545fa70f3bce86c0d387",949746073))] = json
 end
             -----------------------------------------------
 -- Made by 0x74_Dev / _Ben#6969 / Mr.Grubhub --
@@ -1118,50 +1065,50 @@ end
 
 getgenv().ESP_TESTING = false
 do
-    local Camera = workspace:WaitForChild((decode_string_v1("9609ca2ce514",337860836)), 5)
-    local Players = game[(decode_string_v1("e629280abee189f262da",1923699464))](game, (decode_string_v1("a71f2cea5a5028",1227822373)))
-    local GUIService = game[(decode_string_v1("3ddc835d82266dc3e59d",548932461))](game, (decode_string_v1("4ce9ef8270ad97186e76",1978575405)))
-    local LPlayer = Players[(decode_string_v1("2c2fa5d9f3c24da63241c7",1556280089))]
+    local Camera = workspace:WaitForChild((decode_string_v1("be38c4dafbd6",205532173)), 5)
+    local Players = game[(decode_string_v1("883b52305a9880f57bae",964918459))](game, (decode_string_v1("0894fe44cd75a4",553923465)))
+    local GUIService = game[(decode_string_v1("cf63b812f4e21258f676",1444175081))](game, (decode_string_v1("41fa5fa12f46c971ae37",1380717566)))
+    local LPlayer = Players[(decode_string_v1("f3d80ea80cdcd914b5028e",354153283))]
     local Mouse = LPlayer:GetMouse()
     
-    getgenv()[(decode_string_v1("c4755f4e474d20ea1fd3",1090674950))] = type(getgenv()[(decode_string_v1("40f562f0fe0c6a787c33",1126681387))]) == (decode_string_v1("bda23b37589f7b",445680306)) and getgenv()[(decode_string_v1("8843f5b1eb4698e1baac",93730688))] or false;
-    getgenv()[(decode_string_v1("284e9778eefb72c3014d9b",624529299))] = type(getgenv()[(decode_string_v1("bd48dfe6ebbef71db15c3a",1448134306))]) == (decode_string_v1("63a800d1f4",2066205488)) and getgenv()[(decode_string_v1("967dfded63a0884e8b6e3a",888618686))] or {};
-    getgenv()[(decode_string_v1("304501bb56f48e977d",2037597609))] = type(getgenv()[(decode_string_v1("c58d800afb2fd2dfdc",1617666917))]) == (decode_string_v1("ab473a235f",757825414)) and getgenv()[(decode_string_v1("9481709e92c7fe270d",1309228565))] or {};
-    getgenv()[(decode_string_v1("73e1908cb2567c61ac9d79ce205b",1189339703))] = type(getgenv()[(decode_string_v1("8bb4548dd1ab530d21accdab31c1",353889813))]) == (decode_string_v1("a4a1706392",1719248092)) and getgenv()[(decode_string_v1("6bb2359c28a5f5f10c960f5d9aaf",373593052))] or {};
-    getgenv()[(decode_string_v1("6a684163e25cf98d6726784dd62d2eed210be0e303019f",1145647396))] = type(getgenv()[(decode_string_v1("89ad59fb0e6db549660683c78cfe9bf36074970f7a1107",1490719666))]) == (decode_string_v1("2c66e0812d",535836179)) and getgenv()[(decode_string_v1("8b9c952a62b2fb27194e94fe5fb4bb4856574073ccbdbc",1420822189))] or {};
+    getgenv()[(decode_string_v1("36d20d62da89ac226b7c",1974046860))] = type(getgenv()[(decode_string_v1("fe4c5b577d3b78b1877c",1273008863))]) == (decode_string_v1("95dc61bd757d98",2078233448)) and getgenv()[(decode_string_v1("defca0f81f15bff671d3",199561034))] or false;
+    getgenv()[(decode_string_v1("55d5e8fa4673607d7368ce",1620426689))] = type(getgenv()[(decode_string_v1("7c9927c0e7bc33e361837f",920103513))]) == (decode_string_v1("6b00271efe",870423122)) and getgenv()[(decode_string_v1("28c8e8ead76db134d40cb0",1842989522))] or {};
+    getgenv()[(decode_string_v1("30080d4811849f1bd0",679831151))] = type(getgenv()[(decode_string_v1("82ff8b839acb9d0fd2",691316528))]) == (decode_string_v1("dc646f63cd",448356144)) and getgenv()[(decode_string_v1("2080f8a3e139268ad4",412373268))] or {};
+    getgenv()[(decode_string_v1("14011ab5f7b00bf638b6f040ca09",1399474699))] = type(getgenv()[(decode_string_v1("f4e75c82c45d477368145de4b45d",1547333906))]) == (decode_string_v1("eb5d750963",1097351391)) and getgenv()[(decode_string_v1("a4fc9562c5dfae37b87a21a1d87e",1632816335))] or {};
+    getgenv()[(decode_string_v1("893e62a5516b7a2242b00fea4da3c387605a7f19100ecb",1462305333))] = type(getgenv()[(decode_string_v1("42109520889a9fa7a73b1ad1f21e484dc8ba0a292d7712",1087781255))]) == (decode_string_v1("8be4283565",1034651455)) and getgenv()[(decode_string_v1("6c254228ba0fe6fbd0ae64c08c31f0e28bd2a749d20087",963001386))] or {};
 
     local PartNames = {
-        [292439477] = {Root = (decode_string_v1("03f91a76d0",304272658)), Head = (decode_string_v1("5f6938e6",1774356212))},
-        [3233893879] = {Root = (decode_string_v1("fc40c3be81",1896834690)), Head = (decode_string_v1("7fbaa0a4",902392050))}
+        [292439477] = {Root = (decode_string_v1("3c0ba25089",1355154091)), Head = (decode_string_v1("3fd8999e",81140970))},
+        [3233893879] = {Root = (decode_string_v1("281138805b",2143868178)), Head = (decode_string_v1("df9ad53b",310009900))}
     }
     
     if PartNames[game.PlaceId] ~= nil then
-        getgenv()[(decode_string_v1("dcbf7c8154df63544a7c86be080cccb1d6c6de",1302626649))] = type(getgenv()[(decode_string_v1("0c14e3eae71eb11f9abde13f06c8b1a97babbe",1195543804))]) == (decode_string_v1("445f248347",1546687836)) and getgenv()[(decode_string_v1("b00cbf9852ba1684081ed7df5c1214b2dbc000",110218433))] or {}
+        getgenv()[(decode_string_v1("0586825728c7eaf342e6df1c73e8d5f8af768c",1413008299))] = type(getgenv()[(decode_string_v1("0e8cd2c97d5710800d55af06785685a966978e",722942622))]) == (decode_string_v1("2383e003e4",1252632319)) and getgenv()[(decode_string_v1("3633cbe741b2521697304ca24dc1b5ec798fc8",1231768330))] or {}
 
         for _, V in pairs(getgc(true)) do
-            local GBPCheck = type(V) == (decode_string_v1("ebfc24325b",1926958039)) and rawget(V, (decode_string_v1("0648dee4233986bb53a46826",1926023634))) and V or nil
-            local GetCharCheck = type(V) == (decode_string_v1("13bc24e9a3",831766046)) and rawget(V, (decode_string_v1("5c4182cbf1cb4d220f1319c3",770141856))) and V or nil
-            local BadBussinessTeamCheck = type(V) == (decode_string_v1("9cc7267c3f",1703932916)) and rawget(V, (decode_string_v1("5e7d878bf09fc49dfe44bbb3a0",1780363669))) and V or nil
+            local GBPCheck = type(V) == (decode_string_v1("a3272a30d4",341544589)) and rawget(V, (decode_string_v1("ef575124b70b5bd8a5181c40",473781430))) and V or nil
+            local GetCharCheck = type(V) == (decode_string_v1("2cc78648c3",1615681642)) and rawget(V, (decode_string_v1("30e2328eb7291165e945c374",1249898910))) and V or nil
+            local BadBussinessTeamCheck = type(V) == (decode_string_v1("4b6eb59b8e",699728044)) and rawget(V, (decode_string_v1("10a745ab7cf1c588cd0a0b284a",1022502249))) and V or nil
 
             if GBPCheck then
-                getgenv()[(decode_string_v1("2ae6949b849e8e9c9a00498ce3677bf8cf026c",2114769477))][(decode_string_v1("0e1c7c0730a07a4acfb2b762",2113708411))] = getgenv()[(decode_string_v1("d27ad4db10f718bb03fd79695abc3b54b15198",84326728))][(decode_string_v1("c21afe3ad861fa9df42a5433",318023910))] or GBPCheck.getbodyparts
+                getgenv()[(decode_string_v1("28a11c32def1a28bc8939595d061606bedfcd3",2132562167))][(decode_string_v1("409d86e4dabaafabcd927f4f",687011137))] = getgenv()[(decode_string_v1("8997a72b230763a4d5b49d3a089b4be8bfa56a",493691957))][(decode_string_v1("96eecb70a26bc1f8060e6a5a",751651771))] or GBPCheck.getbodyparts
             end
 
             if GetCharCheck then
-                getgenv()[(decode_string_v1("c0aa56e8d3db1e2857eb7e12def96ad093e520",1984350565))][(decode_string_v1("5cab011ecfe306152fea78be",767585708))] = getgenv()[(decode_string_v1("0580b0585840badfbdb4d82f66471f0ee11c3f",459292093))][(decode_string_v1("0e6bfc1b6fea59811d766743",925587628))] or GetCharCheck
+                getgenv()[(decode_string_v1("68efca14176ad73b30cadfff6da9d7c5637c0e",1156942122))][(decode_string_v1("d4103fc623a8d06210c2194d",1157986436))] = getgenv()[(decode_string_v1("46d50352e02d6973ca72b106c9ee1e23ce46fc",896302913))][(decode_string_v1("f2b04efa7554df2e418b666a",1868831662))] or GetCharCheck
             end
 
             if BadBussinessTeamCheck then
-                getgenv()[(decode_string_v1("6fd90654e6f546fb9d4b63959ecfb545e7e472",167136458))][(decode_string_v1("880e2a5b6fee232ba63ccd87fe",960287265))] = getgenv()[(decode_string_v1("c8ee43224735a4f9710eb186f05b99da5d748d",933721817))][(decode_string_v1("da28cbd55cc3ce38e1a4e2f33b",298947293))] or BadBussinessTeamCheck
+                getgenv()[(decode_string_v1("28a3addda7f2a20289092aa64a2cb494b1e9bf",2127129320))][(decode_string_v1("606a8fedf215ca81cf2b647898",2067373315))] = getgenv()[(decode_string_v1("33e5344af8f25d78faa14b44bdef9574306200",1581491160))][(decode_string_v1("d474d33a1eb14ab6f85fcb6063",389303901))] or BadBussinessTeamCheck
             end
         end
     end
 
     local function GetPlrTeam(Plr)
-        if typeof(Plr) == (decode_string_v1("58e7faf002c74ca2",643520707)) then
+        if typeof(Plr) == (decode_string_v1("90d8777b5777d49f",1151902064)) then
             if game.PlaceId == 3233893879 then
-                if getgenv()[(decode_string_v1("899cd7516042a39c0882a68f72c65496fa462b",1479135269))][(decode_string_v1("8cf7347b56cb869a8e3a3377e7",1113158580))] ~= nil then
-                    return getgenv()[(decode_string_v1("fcb4711d83e268762bc70f2e0abda8f8c353fb",1903613048))][(decode_string_v1("badf9f9d6cf8726211bf2fec55",2022524466))]:GetPlayerTeam(Plr)
+                if getgenv()[(decode_string_v1("572770c6b4c1641b7efe383d66db25578c90a1",1680787161))][(decode_string_v1("baa890ba1f247952d80d9951b6",2000616960))] ~= nil then
+                    return getgenv()[(decode_string_v1("a63f14c4ddee6790067d227e3ecae66a0750e4",74985656))][(decode_string_v1("52753edb1a9eb94845c18e94e6",1293403740))]:GetPlayerTeam(Plr)
                 else
                     return Plr.Team
                 end
@@ -1172,9 +1119,9 @@ do
     end
 
     local function GetChar_Ez(Plr)
-        if typeof(Plr) == (decode_string_v1("5802210a52ca0be3",1957840645)) then
+        if typeof(Plr) == (decode_string_v1("5f464b1e95b97f9c",1399080950)) then
             if not PartNames[game.PlaceId] then
-                if Plr:IsA((decode_string_v1("861f9b8d8d",600707232))) then
+                if Plr:IsA((decode_string_v1("cb441b40a9",1742613170))) then
                     return Plr
                 else
                     return Plr.Character
@@ -1182,8 +1129,8 @@ do
             elseif game.PlaceId == 3233893879 then
                 -- Bad business moment
 
-                if type(getgenv()[(decode_string_v1("fabf605d24bf75dafb740c7463eedaccfd2a72",272447255))][(decode_string_v1("49f1dd153cff45a524a072ac",521765772))]) == (decode_string_v1("eb30549897",1952753313)) then
-                    local PlrParts = getgenv()[(decode_string_v1("f694bd33f519d4d0270e1887b2b71f121d7a0f",784493630))][(decode_string_v1("c4a929f107324214d6b1d609",1053968812))]:GetCharacter(Plr)
+                if type(getgenv()[(decode_string_v1("fc4ab4c124993be0a85963a85fdcc3a93b99ab",1889603217))][(decode_string_v1("ba15f1905cfd6c5efe9afbbb",24795720))]) == (decode_string_v1("b3db076939",407108199)) then
+                    local PlrParts = getgenv()[(decode_string_v1("74e1a0ace1a27d0a78bb471acb05a6b720848a",265612042))][(decode_string_v1("60ff04bd04a33936c4514dc6",2075690955))]:GetCharacter(Plr)
                     if PlrParts ~= nil then
                         return PlrParts.Body
                     end
@@ -1191,8 +1138,8 @@ do
             elseif game.PlaceId == 292439477 then
                 -- Phantom Forces moment
 
-                if type(getgenv()[(decode_string_v1("d820866f2a92937c44c10746cdb45f7bd7dae1",1813418619))][(decode_string_v1("83c48f0c5f82e27638c9b240",1516110296))]) == (decode_string_v1("15404e3c14e8daf7",1123541328)) then
-                    local PlrParts = getgenv()[(decode_string_v1("571abe78b62565f988acb3d505008ab0341323",1667991988))][(decode_string_v1("26f1eef29a37a6508e36d34f",96107516))](Plr)
+                if type(getgenv()[(decode_string_v1("fc8126f1ed1ffe659339c916fb77148abc45e8",1904053587))][(decode_string_v1("b12a601d6dc743cca6f82093",1740180069))]) == (decode_string_v1("2e6283884e8d80c7",1611566807)) then
+                    local PlrParts = getgenv()[(decode_string_v1("cc89ec66972b4a169f8dc581fddd5b6230d8d9",737840094))][(decode_string_v1("21c2555e2eaed94ca9454d59",462079606))](Plr)
                     if PlrParts then
                         if PlrParts.torso ~= nil then
                             return PlrParts.torso.Parent
@@ -1204,7 +1151,7 @@ do
         return nil
     end
 
-    getgenv()[(decode_string_v1("2e0b568faa8796d68e",66383030))].SETTINGS = {
+    getgenv()[(decode_string_v1("26d05f68763f129442",1336516773))].SETTINGS = {
         BOXES_ENABLED = false,
         TRACERS_ENABLED = false,
         TEAM_CHECK = false,
@@ -1213,189 +1160,189 @@ do
         ESP_COLOR = Color3.fromRGB(255, 255, 255)
     }
 
-    getgenv()[(decode_string_v1("06d07c5b03d7477ced",1961891483))].Connect = function()
-        getgenv()[(decode_string_v1("ffc0fb7c014bef93c5",1494339004))].UnLoad = function()
-            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("fed8e6bd6360321c15d8ab6194fec8100d51f4ad5fd145",352596096))]) do
+    getgenv()[(decode_string_v1("5e32074ec76941c129",2141430311))].Connect = function()
+        getgenv()[(decode_string_v1("7860008edf5f4a1f91",1294647298))].UnLoad = function()
+            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("3c4d50be1a44f94b6794ad0845b82b6656a91e6981c18e",357561058))]) do
                 pcall(function()
                     CachedItem:Remove()
-                    getgenv()[(decode_string_v1("a4db0947920d8ac769b6b22a9b52c7d3043ecaf57771c8",2053616907))][CacheName] = nil
+                    getgenv()[(decode_string_v1("577873757b71793729a3364b2f4973946c09783abd73d5",1701514585))][CacheName] = nil
                 end)
             end
     
-            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("58ca5f2b1f42bc648a0158",728509319))]) do
-                if tostring(CacheName):find((decode_string_v1("32f7441bdd",669023045))) then
-                    getgenv()[(decode_string_v1("13f8e68aeebc79395a4719",1410221447))][CacheName] = nil
+            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("562265b99442a32854c602",1327014865))]) do
+                if tostring(CacheName):find((decode_string_v1("a9e2b958e2",460241612))) then
+                    getgenv()[(decode_string_v1("2465e5521012005f1eb44d",1315536869))][CacheName] = nil
                 end
             end
         end
 
-        getgenv()[(decode_string_v1("6a3e218ff2bf15974f",1875071891))].UnLoadType = function(TypeString)
-            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("b0cf1f7e35d4124bd4cf3ff75532368565092098bf8dd6",994167755))]) do
+        getgenv()[(decode_string_v1("bc9049918e566e8f5f",817262539))].UnLoadType = function(TypeString)
+            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("d83059102b383b80bb04692ada0e59a5d66d2dcd1cba17",1804925600))]) do
                 pcall(function()
                     if tostring(CacheName):find(tostring(TypeString)) then
                         CachedItem:Remove()
-                        getgenv()[(decode_string_v1("fe7bb401288765c48108ffc04b9fe85659b7753716e37c",354764273))][CacheName] = nil
+                        getgenv()[(decode_string_v1("6fce82cfb8bb2b2c6fa0ba7837f4cfea9e877cd9d489a8",506766282))][CacheName] = nil
                     end
                 end)
             end
     
-            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("1c6188c368df83b68dcc00",2120299652))]) do
+            for CacheName, CachedItem in pairs(getgenv()[(decode_string_v1("fa9337e705ae63f60e577a",1303043511))]) do
                 if tostring(CacheName):find(tostring(TypeString)) then
-                    getgenv()[(decode_string_v1("bd5cab0d28ac0d67d292af",1451132574))][CacheName] = nil
+                    getgenv()[(decode_string_v1("04573d1260a86829216590",1931087246))][CacheName] = nil
                 end
             end
         end
         
-        getgenv()[(decode_string_v1("2e1aec3f089eef225a",599940969))].UnLoad()
+        getgenv()[(decode_string_v1("ff8fad7d7f100f54df",1488438574))].UnLoad()
 
-        getgenv()[(decode_string_v1("1887db964bd56887d2",1066597129))].UpdateColor = function(Color)
-            getgenv()[(decode_string_v1("420249e7aeaeb0a105",1131760302))].SETTINGS.ESP_COLOR = typeof(Color) == (decode_string_v1("784fcbb149ae",829317388)) and Color or Color3.fromRGB(255, 255, 255)
+        getgenv()[(decode_string_v1("262628d655f6a20dc6",442256847))].UpdateColor = function(Color)
+            getgenv()[(decode_string_v1("29736d90a0f09b3c6f",512854075))].SETTINGS.ESP_COLOR = typeof(Color) == (decode_string_v1("2d343ca69f9f",175399199)) and Color or Color3.fromRGB(255, 255, 255)
         end
 
-        getgenv()[(decode_string_v1("5c3572801276b9f0a0",1770668565))].SetTeamCheck = function(Bool)
-            getgenv()[(decode_string_v1("d3d7a54763973eab6b",1748358473))].SETTINGS.TEAM_CHECK = type(Bool) == (decode_string_v1("7d165796be8385",1977491021)) and Bool or false
+        getgenv()[(decode_string_v1("8ae5882e1d9b517f9d",1304438235))].SetTeamCheck = function(Bool)
+            getgenv()[(decode_string_v1("c55948c1cca76e511b",1584427939))].SETTINGS.TEAM_CHECK = type(Bool) == (decode_string_v1("95ac50857e6c43",2078751319)) and Bool or false
         end
         
-        getgenv()[(decode_string_v1("e4422099d64ec730ea",402543199))].SetBoxVisibility = function(Bool)
-            getgenv()[(decode_string_v1("1ce4bcf8ed42566c49",1042094554))].SETTINGS.BOXES_ENABLED = type(Bool) == (decode_string_v1("f5f76192d73341",139087220)) and Bool or false
+        getgenv()[(decode_string_v1("adfc2d49b6d632774f",1446804414))].SetBoxVisibility = function(Bool)
+            getgenv()[(decode_string_v1("d1d8c26b5ecf7016a6",450499037))].SETTINGS.BOXES_ENABLED = type(Bool) == (decode_string_v1("95eb311207acb7",2079068152)) and Bool or false
         end
 
-        getgenv()[(decode_string_v1("58050dfbf666bd57fe",1865675471))].SetTracersVisibility = function(Bool)
-            getgenv()[(decode_string_v1("3238be6d5c8dbdcb2f",89542431))].SETTINGS.TRACERS_ENABLED = type(Bool) == (decode_string_v1("5d9d8487ef9f37",766538007)) and Bool or false
+        getgenv()[(decode_string_v1("5c6fdb88a54c605bc2",1749406053))].SetTracersVisibility = function(Bool)
+            getgenv()[(decode_string_v1("294ec2757842e0bca8",1521726822))].SETTINGS.TRACERS_ENABLED = type(Bool) == (decode_string_v1("79d16732d59e7e",195228857)) and Bool or false
         end
 
-        getgenv()[(decode_string_v1("23bebb56cd7d737ff5",1385742546))].LoadTracers = function(Plr)
-            if getgenv()[(decode_string_v1("8248bdeebaa5748bc33c2a",1016601742))][Plr.Name .. (decode_string_v1("a372c085ddc5ac41d14ea83e",1687591674))] == nil then
-                if getgenv()[(decode_string_v1("2d7aacd73a35d75062f70932024175df188887e4dbd1c4",1579413924))][Plr.Name .. (decode_string_v1("e2e90a0497fcef7b4424572a",1004116046))] == nil then
-                    getgenv()[(decode_string_v1("4495adc95d02a06ccada49bde7ac76bb6281a0e03d3be9",913897032))][Plr.Name .. (decode_string_v1("5c9be92a16bbe78b59a8c008",1162311444))] = Drawing.new((decode_string_v1("bb76316a",1225169014)))
-                    getgenv()[(decode_string_v1("a04919d5d20959e4547cf64115d8a4f17109d1d994826c",1329811597))][Plr.Name .. (decode_string_v1("94d8f9d65a63a76f5ebd2f1d",1981483976))].Visible = false
-                    getgenv()[(decode_string_v1("dc7eed9d12dc1aead80aab0b505551b19139ec1c274e6c",434724698))][Plr.Name .. (decode_string_v1("86f8e3237b661c8a36b59395",2106681435))].Thickness = 2;
-                    getgenv()[(decode_string_v1("be871f3dae8bb42ff52d3e6b21e961de8bc7356d7063e9",1857205597))][Plr.Name .. (decode_string_v1("8a18e3644cf1dc37ad11b883",429916911))].From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
+        getgenv()[(decode_string_v1("1c695ffa1885af508b",1041187480))].LoadTracers = function(Plr)
+            if getgenv()[(decode_string_v1("0e116e09e4372e0b958471",2133789686))][Plr.Name .. (decode_string_v1("6a41037e08a5274651b27a06",1058120996))] == nil then
+                if getgenv()[(decode_string_v1("058568bd2e061b6560885ed8459fa6e1317b3bdfcc3644",1388746433))][Plr.Name .. (decode_string_v1("50f657bf09a0cc6700ceaabb",1190111148))] == nil then
+                    getgenv()[(decode_string_v1("6f9749a0e6981a6323a089e66f860042bbe7965bf827c8",1514080610))][Plr.Name .. (decode_string_v1("4eea3eaf4b516d42fc4f594e",28051776))] = Drawing.new((decode_string_v1("539dc76e",1013433000)))
+                    getgenv()[(decode_string_v1("a4b85e3bca0dce4f41773c199a388cda5310b35c378fb0",2074518044))][Plr.Name .. (decode_string_v1("a3992d17977064189f98d129",1670728369))].Visible = false
+                    getgenv()[(decode_string_v1("a650f0e179233b75e37b4bc4867459ed73f69141e18f46",224278670))][Plr.Name .. (decode_string_v1("a6b5b669d47ec317fadeceb3",927415302))].Thickness = 2;
+                    getgenv()[(decode_string_v1("c0824dd3f0371146ffb6fd4ffacbc1470d2eae124987f1",1972053997))][Plr.Name .. (decode_string_v1("135b66d1ec62379c97e385e4",456163351))].From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
                 end
 
-                getgenv()[(decode_string_v1("66873eeaa780877da27ac7",776103788))][Plr.Name .. (decode_string_v1("5c826c180b81a33028bea44b",385224940))] = function()
+                getgenv()[(decode_string_v1("0ecae5fb640baf6488458d",719997012))][Plr.Name .. (decode_string_v1("2af19aa2e1b229055eabc444",611140747))] = function()
                     if Players:FindFirstChild(tostring(Plr)) ~= nil then
                         local PlrChar = GetChar_Ez(Plr)
 
-                        if PlrChar and getgenv()[(decode_string_v1("6a37c9661c7825544c1d25818c6af89fa423001b0c6f93",380565554))][Plr.Name .. (decode_string_v1("4069bd0ec8639b632e8c812f",1081696189))] ~= nil then
-                            local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("d4e2e57b65",1497438510)) and PartNames[game.PlaceId].Root or (decode_string_v1("2fd63f502db9431d7336001dbae34a58",1056707098)))
-                            local Plrhead = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("dbaf474613",33425259)) and PartNames[game.PlaceId].Head or (decode_string_v1("3f4d7926",1181621520)))
+                        if PlrChar and getgenv()[(decode_string_v1("a6680dd3ad5110e08736a1af07194b769ccfea380da0e5",666782984))][Plr.Name .. (decode_string_v1("fd40ced9fe4f5d26f5c24a91",1478206387))] ~= nil then
+                            local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("03b6bdaf9c",2619564)) and PartNames[game.PlaceId].Root or (decode_string_v1("df8fe51e732218135bdc696f55632498",696584712)))
+                            local Plrhead = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("0bfe9194b8",820024030)) and PartNames[game.PlaceId].Head or (decode_string_v1("cf556995",88281469)))
                             
                             if RootCheck and Plrhead then
-                                if getgenv()[(decode_string_v1("00718977b9e0aac9fa94f947c5ea27fa9641c39987c35f",1108392462))][Plr.Name .. (decode_string_v1("2a27fad05acc28e3c4615f9b",618677714))] then
-                                    local Line = getgenv()[(decode_string_v1("a4a9f12401534100a29dab466d36442422923bc917f989",2082444555))][Plr.Name .. (decode_string_v1("5298d1c73b3ea5d53169437a",300701195))]
+                                if getgenv()[(decode_string_v1("5e3db7f4cf6cf5954b61bee081bcf92b2230e876076a52",837958483))][Plr.Name .. (decode_string_v1("e21f70375c360b8f28d9e6c6",1012578462))] then
+                                    local Line = getgenv()[(decode_string_v1("a6d6cb0eb2c978e7a9254b0b072ab5de115eb17a6c2a0f",677691542))][Plr.Name .. (decode_string_v1("7219247b43c61aea2eb76521",1119729519))]
                                     local Pos, Visible = Camera:WorldToScreenPoint(RootCheck.Position);
                                     local PosSize = Vector3.new(Pos.X, 0, Pos.Z)
                                     local LinePos, LineVisible = Camera:WorldToViewportPoint(Plrhead.Position);
                                     Line.To = Vector2.new(LinePos.X, LinePos.Y)
                                     Line.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
-                                    Line.Color = typeof(getgenv()[(decode_string_v1("293118cd9bddaac989",1527930100))].SETTINGS.ESP_COLOR) == (decode_string_v1("b8d2e93e4574",422897781)) and getgenv()[(decode_string_v1("1c901a98dedc68a480",343498847))].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                                    Line.Color = typeof(getgenv()[(decode_string_v1("82f348fe8a6fccd9af",2046824432))].SETTINGS.ESP_COLOR) == (decode_string_v1("2d9d14e76bff",57580732)) and getgenv()[(decode_string_v1("b8bf4a4ab55442bf25",836940581))].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
                                 
-                                    if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()[(decode_string_v1("be33d943a3a27fff00",940186176))].SETTINGS.TEAM_CHECK then
+                                    if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()[(decode_string_v1("78d1a1db418811dc09",429269510))].SETTINGS.TEAM_CHECK then
                                         Line.Visible = false
                                     else
-                                        Line.Visible = getgenv()[(decode_string_v1("8e552c0fa6daebeb74",829635918))].SETTINGS.TRACERS_ENABLED == true and Visible or false
+                                        Line.Visible = getgenv()[(decode_string_v1("6a8c1430aa240f0074",638263659))].SETTINGS.TRACERS_ENABLED == true and Visible or false
                                     end
                                 end
                             end
                         else
-                            if getgenv()[(decode_string_v1("4297d85f72f2254cb8bbf51819f259d613ef6fac5092da",1096619977))][Plr.Name .. (decode_string_v1("05aa95270aa79cd7f2f850d8",1646740850))] then
-                                getgenv()[(decode_string_v1("2ac244ca181c2d1f54fb3a9e6bf0562250696ed1a6e800",2093894049))][Plr.Name .. (decode_string_v1("025de888cef7cacf607a606a",409303054))].Visible = false
+                            if getgenv()[(decode_string_v1("5a5b8e7474207be68aff5d8c3700171f96db53424238c0",1760330951))][Plr.Name .. (decode_string_v1("a6d909021b9660da810f3bb3",930783422))] then
+                                getgenv()[(decode_string_v1("f641248a6de1edd5b7f46105268fe22b2f7f5904e703ff",87765955))][Plr.Name .. (decode_string_v1("fd22e1ff8d0bdf33f20882a9",1469698057))].Visible = false
                             end
                         end
                     else
-                        getgenv()[(decode_string_v1("afc2d082d5274c42a3a8ba",1483389500))][Plr.Name .. (decode_string_v1("c2cddd3fd5998f0591a935a7",791459509))] = nil -- auto erase player from updation cache
+                        getgenv()[(decode_string_v1("404a95fa4493619c72fdab",1127598499))][Plr.Name .. (decode_string_v1("a6d65c204eb8e6f149f1018a",34082847))] = nil -- auto erase player from updation cache
 
-                        if getgenv()[(decode_string_v1("747ca3e42b3ce8a6b316133572b20f35b62932e73e4932",266293160))][Plr.Name .. (decode_string_v1("b9686bcbc8201ec8a5bfd371",569959264))] then
-                            getgenv()[(decode_string_v1("b033b2891fc70b3b13f28d9cd04e7d9635b27690a3c90f",993790644))][Plr.Name .. (decode_string_v1("326209ce9d15b247e3a4257d",2038512683))]:Remove()
-                            getgenv()[(decode_string_v1("a45e88677912b0e4856f72d989fc9fc72a7cc2f2954d4b",2069035723))][Plr.Name .. (decode_string_v1("60fbc26a6bb844275494f1d5",436385353))] = nil
+                        if getgenv()[(decode_string_v1("3ac5ded91be06161858e1e39470b54d30506c25319978e",420558975))][Plr.Name .. (decode_string_v1("32c3ed2963d27e0bac6ff03a",2026174623))] then
+                            getgenv()[(decode_string_v1("a4710e54ab4a00b7c677f926c578263d46e8dcb779698c",692149193))][Plr.Name .. (decode_string_v1("7e9d95cdd30e8aaa62e0ea43",1099216464))]:Remove()
+                            getgenv()[(decode_string_v1("71f5681e77877c5db2a2d8fdf2258cfa13d18998d75f6f",1648354975))][Plr.Name .. (decode_string_v1("60f522906216bf0ce62d997b",1296377819))] = nil
                         end
                     end
                 end
             end
         end
 --GetPlayerTeam
-        getgenv()[(decode_string_v1("e8786b84b8a4aca05b",3926425))].LoadBox = function(Plr)
-            if getgenv()[(decode_string_v1("fa5def6bddeef342e5bea9",434965393))][Plr.Name .. (decode_string_v1("76b05b175bf757c73f97",1767474027))] == nil then
-                if getgenv()[(decode_string_v1("28d4cca94cf6b2d9a6c2f57661fbea5b24df5d0b87fbbc",719828687))][Plr.Name .. (decode_string_v1("a60273321da3cfb964cc",929681690))] == nil then
-                    getgenv()[(decode_string_v1("fe91e8c0d5ff4150d54918e95ab52630b1c4cddf0944da",1063786380))][Plr.Name .. (decode_string_v1("67ff8c4a35ee8324913d",472837383))] = Drawing.new((decode_string_v1("8e6a418cd74c",204696727)));
-                    getgenv()[(decode_string_v1("8b49068ef65c98b9515b8170efd2a2974335126cb4c6bc",1449827162))][Plr.Name .. (decode_string_v1("2aa6272b71d7efc605d0",205641487))].Thickness = 2;
-                    getgenv()[(decode_string_v1("0c7861636a1d75c2a10059a1b44296ca0f186d7e2e3807",1187507417))][Plr.Name .. (decode_string_v1("f806434dff33cc376cd4",340977213))].Filled = false;
-                    getgenv()[(decode_string_v1("a4395326fe5dd9b0820f996ffade27c4ba07cf9c61aa97",691469284))][Plr.Name .. (decode_string_v1("027325d229cda617e482",408920589))].Visible = false;
+        getgenv()[(decode_string_v1("d376f6847e6ff628d5",1737727039))].LoadBox = function(Plr)
+            if getgenv()[(decode_string_v1("4aa9a38a09d77b623494bd",1189457414))][Plr.Name .. (decode_string_v1("52cb51fafd88b59b0911",897635838))] == nil then
+                if getgenv()[(decode_string_v1("579e85b40cb0bac906070a7f35028da0b757bace2c858c",1695931004))][Plr.Name .. (decode_string_v1("18d1b0271ba21b441823",1245387571))] == nil then
+                    getgenv()[(decode_string_v1("863418172ad49f1128e4e6f0c2ff5ad9d88d9b40cf372c",1340197268))][Plr.Name .. (decode_string_v1("96b7647dd134c9fea925",812187284))] = Drawing.new((decode_string_v1("3983842f477d",1466300576)));
+                    getgenv()[(decode_string_v1("a42fae0f4ec5e9827d769e9c6398c3a34ae39eda464ea1",2044547281))][Plr.Name .. (decode_string_v1("8c624aa043ce8951e67d",599601352))].Thickness = 2;
+                    getgenv()[(decode_string_v1("18ff617843f9bcceecea1c6311c89785be718355e8e903",12912609))][Plr.Name .. (decode_string_v1("4023f43222eb8b4e9f01",358047765))].Filled = false;
+                    getgenv()[(decode_string_v1("0c1bd975d93196f53a419e194c6e393285955ac8d23510",1184602641))][Plr.Name .. (decode_string_v1("2a5e0af7b45d2d7bb9ed",1871424562))].Visible = false;
                 end
 
-                getgenv()[(decode_string_v1("dcf2d1cd2c339bc1f17268",381384019))][Plr.Name .. (decode_string_v1("2f70d84274e25ca56518",1609390359))] = function()
+                getgenv()[(decode_string_v1("b068ecb72129896299d107",86880532))][Plr.Name .. (decode_string_v1("e8c86aac6398052d6f41",913527816))] = function()
                     if Players:FindFirstChild(tostring(Plr)) ~= nil then
                         local PlrChar = GetChar_Ez(Plr)
 
-                        if PlrChar and getgenv()[(decode_string_v1("5ec590f8062089002891fa065ac99ee465a699a82ae0ca",278664450))][Plr.Name .. (decode_string_v1("3eea186db1ea1cf17b2d",1955749061))] ~= nil then
-                            local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("4b2603199d",2091987644)) and PartNames[game.PlaceId].Root or (decode_string_v1("7f2cf6634f19b90915c1ff92b72b036a",1115947405)))
+                        if PlrChar and getgenv()[(decode_string_v1("5a74e1c5309d6bdb997bf34c0cdf571bdb1d2848ecac7c",591373797))][Plr.Name .. (decode_string_v1("8a11d2abbda59c46d0ab",1291699401))] ~= nil then
+                            local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("eb3ab1026d",1940442500)) and PartNames[game.PlaceId].Root or (decode_string_v1("7faee2a18160629cd514211db0f44b6e",2034372352)))
                             
                             if RootCheck then
-                                if getgenv()[(decode_string_v1("5a4fa17fdc720c934fb4908cec8ddd9a7cbe25cfd95f8f",1755371947))][Plr.Name .. (decode_string_v1("3053d7a0c816c1ffb123",324451555))] then
+                                if getgenv()[(decode_string_v1("be01c9f67b8ace7e750d6f6b47b016b131323458c04af4",622302882))][Plr.Name .. (decode_string_v1("a3d2bed5f80ac60d2b6d",1677024987))] then
                                     local Inset = GUIService:GetGuiInset();
-                                    local Box = getgenv()[(decode_string_v1("575dd8502ced371ac1c83f33806c1f3f2ce57fb5f412b6",564085985))][Plr.Name .. (decode_string_v1("965bd367de566ad5cf17",269818287))]
+                                    local Box = getgenv()[(decode_string_v1("4ef99d519b7f5d7381a386f29b08a98f522c881e80716e",1181532127))][Plr.Name .. (decode_string_v1("08faa0de67cdc73b9252",378424708))]
                                     local Pos, Visible = Camera:WorldToScreenPoint(RootCheck.Position);
                                     local PosSize = Vector3.new(Pos.X, 0, Pos.Z)
 
                                     Box.Size = Vector2.new(2704 / PosSize.Z, 5408 / PosSize.Z);
                                     Box.Position = Vector2.new(Pos.X - Box.Size.X / 2, Pos.Y + Inset.Y - Box.Size.Y / 2);
-                                    Box.Color = typeof(getgenv()[(decode_string_v1("bb74cb46ee920d8e01",1569478888))].SETTINGS.ESP_COLOR) == (decode_string_v1("6c4bd0201e43",963906711)) and getgenv()[(decode_string_v1("8a0b30a55643df5172",145371374))].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                                    Box.Color = typeof(getgenv()[(decode_string_v1("2e8582d030c89c121d",1818152663))].SETTINGS.ESP_COLOR) == (decode_string_v1("fcf388bb5836",210314553)) and getgenv()[(decode_string_v1("c5ae7638abcdb3f60b",1596407359))].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
                                 
-                                    if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()[(decode_string_v1("29926eb4125eb1efd6",1506921452))].SETTINGS.TEAM_CHECK then
+                                    if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()[(decode_string_v1("2682c967c3ae1bde63",1324574288))].SETTINGS.TEAM_CHECK then
                                         Box.Visible = false
                                     else
-                                        Box.Visible = getgenv()[(decode_string_v1("0674ecb1d1905be171",660818183))].SETTINGS.BOXES_ENABLED == true and Visible or false
+                                        Box.Visible = getgenv()[(decode_string_v1("d75ac710140abdc6ad",554993788))].SETTINGS.BOXES_ENABLED == true and Visible or false
                                     end
                                 end
                             end
                         else
-                            if getgenv()[(decode_string_v1("2d6e1844548d09b25f9fe76703d48823aa282ebff2c1bc",1554237563))][Plr.Name .. (decode_string_v1("76d44b7c7b20fc696d16",1761315772))] then
-                                getgenv()[(decode_string_v1("28411ec3028d2529e83ffa807333df5a19ae9f54ff3c33",714639126))][Plr.Name .. (decode_string_v1("00b390b3aa9db4c57d3e",631157645))].Visible = false
+                            if getgenv()[(decode_string_v1("a684c2490ad3301f20b5875fb65cf11fdc8e4eb7f9faef",2037588288))][Plr.Name .. (decode_string_v1("05ed99a61d8285118a22",550485922))] then
+                                getgenv()[(decode_string_v1("ae88dac09b3882a526c6118aaaa9c48bfcc46527620698",948795650))][Plr.Name .. (decode_string_v1("5eb1f1894552ec2cc20b",869352058))].Visible = false
                             end
                         end
                     else
-                        getgenv()[(decode_string_v1("9efe43f5b91b3ea6261e36",350252066))][Plr.Name .. (decode_string_v1("b919a723f2462d73c77e",1728821973))] = nil -- auto erase player from updation cache
+                        getgenv()[(decode_string_v1("f9d4f47002dfc978982df6",1536981535))][Plr.Name .. (decode_string_v1("9b3578b2c13cf8a6dcbc",510345505))] = nil -- auto erase player from updation cache
 
-                        if getgenv()[(decode_string_v1("7890c0d00be98fd34dc2d709b15aab9f5e0bab11bc8fc3",831837399))][Plr.Name .. (decode_string_v1("86ab0f9089860855210c",699454570))] then
-                            getgenv()[(decode_string_v1("b8811e3d5eef957b4f7d19e92df24906ccb0404b6e554e",1274641313))][Plr.Name .. (decode_string_v1("b98ff0ba927275769256",1708753981))]:Remove()
-                            getgenv()[(decode_string_v1("c844b4ece148043afcfcef8966fb8d1a0e6fd091cac191",310818378))][Plr.Name .. (decode_string_v1("8eb64ad386c6aee15daa",134332287))] = nil
+                        if getgenv()[(decode_string_v1("123f0a90d23877c1eb26d41560a038c196a264b40aac49",1202303115))][Plr.Name .. (decode_string_v1("206fbd317a805ef6c2ed",853029133))] then
+                            getgenv()[(decode_string_v1("d8711801264d4e720f3d7b9f42df91b81d5fbefdc8dfca",598872570))][Plr.Name .. (decode_string_v1("cc0ba67ace502578bf57",348844818))]:Remove()
+                            getgenv()[(decode_string_v1("5a3e89eee423aa2b3d4a87d564245da0dc7cfb1a561c15",1779877016))][Plr.Name .. (decode_string_v1("00db2150f60e6776fb40",634513397))] = nil
                         end
                     end
                 end
             end
         end
 
-        getgenv()[(decode_string_v1("32293623dd3e3ea341",794193672))].LoadFov = function()
+        getgenv()[(decode_string_v1("88f894eb4cfe7f94e4",731143321))].LoadFov = function()
         end
 
         if getgenv().ESP_TESTING == true then
             for _, Plr in ipairs(Players:GetPlayers()) do
                 if Plr ~= LPlayer then
-                    getgenv()[(decode_string_v1("f00d41c5011920fc86",1124263564))].LoadBox(Plr)
-                    getgenv()[(decode_string_v1("be0b0948f0bd7b3885",940396054))].LoadTracers(Plr)
+                    getgenv()[(decode_string_v1("2aabcdcb48599b541b",1072496060))].LoadBox(Plr)
+                    getgenv()[(decode_string_v1("82be31f1a17e398cb5",2050220320))].LoadTracers(Plr)
                 end
             end
         end
 
-        if getgenv()[(decode_string_v1("bb1a5a99d6ce95eb15",1541424683))].RemovedAndAdded == nil then
-            getgenv()[(decode_string_v1("c5193c4d33feb1cadc",1610143854))].RemovedAndAdded = true
+        if getgenv()[(decode_string_v1("c5f6db4d4df75d962e",1619479401))].RemovedAndAdded == nil then
+            getgenv()[(decode_string_v1("e2175fe3e427d43667",916685988))].RemovedAndAdded = true
 
             Players.PlayerAdded:Connect(function(Plr)
-                if getgenv()[(decode_string_v1("78ec2046ae8e12803d",1281997759))].SETTINGS.BOXES_ENABLED == true or getgenv().ESP_TESTING == true then
-                    getgenv()[(decode_string_v1("bb4f8ce31b60621ef0",174136627))].LoadBox(Plr)
+                if getgenv()[(decode_string_v1("c5ae6f1463a7bacce8",1616050446))].SETTINGS.BOXES_ENABLED == true or getgenv().ESP_TESTING == true then
+                    getgenv()[(decode_string_v1("ee97f26f7dd5f63bd3",350260900))].LoadBox(Plr)
                 end
 
-                if getgenv()[(decode_string_v1("cca2f70e6652273e2c",1147107102))].SETTINGS.TRACERS_ENABLED == true or getgenv().ESP_TESTING == true then
-                    getgenv()[(decode_string_v1("2965eff71cda303a96",1538991579))].LoadTracers(Plr)
+                if getgenv()[(decode_string_v1("01775b486fb5cfc0fa",558950950))].SETTINGS.TRACERS_ENABLED == true or getgenv().ESP_TESTING == true then
+                    getgenv()[(decode_string_v1("822a0e3b247e0c3b00",2044127114))].LoadTracers(Plr)
                 end
             end)
         end
     end
     
-    getgenv()[(decode_string_v1("ad7f7039f5706b461f",1435036752))].Connect()
+    getgenv()[(decode_string_v1("d336554715d5ef973e",1742598743))].Connect()
 
-    getgenv()[(decode_string_v1("be8468a3b7868aa88f",938420027))].Aimbot = function()
+    getgenv()[(decode_string_v1("82fa2a1d128c1a0ba8",231383781))].Aimbot = function()
         local Proxy = newproxy(true);
         local MetaTable = getmetatable(Proxy);
 
@@ -1405,23 +1352,23 @@ do
             mousemoverel(GOTO.X, GOTO.Y) -- Quick math for the aim function lmao
         end
 
-        getgenv()[(decode_string_v1("e0c7ba912e31b986f14d9e",891037697))].AimBot = nil
+        getgenv()[(decode_string_v1("042a5437aa93094469a0a2",1918117713))].AimBot = nil
 
         MetaTable.Start = function()
-            getgenv()[(decode_string_v1("af4e676de603089d36ec66",493452037))].AimBot = nil
-            if getgenv()[(decode_string_v1("de6c5071aaf71507325de6",1832178936))].AimBot == nil then
+            getgenv()[(decode_string_v1("c4ad066e3626eea48f8470",121563748))].AimBot = nil
+            if getgenv()[(decode_string_v1("960df7787125ce6da45447",876517318))].AimBot == nil then
 
-                getgenv()[(decode_string_v1("c3184e60de8cd626af41f6",1729268416))].AimBot = function()
+                getgenv()[(decode_string_v1("f9671a4f7131f68750d12c",18516386))].AimBot = function()
                     local LastDistance = 999999
                     for _, FPlayer in ipairs(Players:GetPlayers()) do
                         if FPlayer ~= LPlayer then
 
-                            local TeamCheck = tostring(GetPlrTeam(FPlayer)) == tostring(GetPlrTeam(LPlayer)) and getgenv()[(decode_string_v1("3666f15fb49b085733",776544985))].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED == true and true or false
+                            local TeamCheck = tostring(GetPlrTeam(FPlayer)) == tostring(GetPlrTeam(LPlayer)) and getgenv()[(decode_string_v1("5c44b253cba0c4882e",1751859095))].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED == true and true or false
                             if not TeamCheck then
                                 local FChar = GetChar_Ez(FPlayer)
 
                                 if FChar then
-                                    local HeadCheck = FChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("fb96eabe01",1835210885)) and PartNames[game.PlaceId].Head or (decode_string_v1("b0de44f2",1492290388)))
+                                    local HeadCheck = FChar:FindFirstChild(type(PartNames[game.PlaceId]) == (decode_string_v1("43326a0255",965009086)) and PartNames[game.PlaceId].Head or (decode_string_v1("8f0fd8a2",1304849406)))
 
                                     if HeadCheck then
                                         local HeadPos, HeadVisible = Camera:WorldToViewportPoint(HeadCheck.Position);
@@ -1448,29 +1395,29 @@ do
         end 
 
         MetaTable.End = function()
-            getgenv()[(decode_string_v1("3614ef7b3461ddf1141dd8",1965544374))].AimBot = nil
+            getgenv()[(decode_string_v1("6cdb8d1d3d862b9a505cbd",595493270))].AimBot = nil
         end
 
         MetaTable.TeamCheck = function(Bool)
-            getgenv()[(decode_string_v1("c518c6fe61a2585eaf",1603757413))].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED = Bool
+            getgenv()[(decode_string_v1("6a0e37e5fee2ca21ac",209626577))].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED = Bool
         end
 
         return MetaTable
     end
 
     if getgenv().ESP_TESTING == true then
-        getgenv()[(decode_string_v1("ff9bb27162063d3015",1482470955))].SetTracersVisibility(true)
-        getgenv()[(decode_string_v1("84a6d86dbc8b305893",977322915))].SetBoxVisibility(true)
-        getgenv()[(decode_string_v1("d3630decd2f01d0b7d",1732777114))].SetTeamCheck(false)
-        getgenv()[(decode_string_v1("297e26b7696e8fe1aa",1534619131))].UpdateColor(Color3.fromRGB(79, 22, 201))
+        getgenv()[(decode_string_v1("1edcfb926ede00ed62",43007313))].SetTracersVisibility(true)
+        getgenv()[(decode_string_v1("f670f4288d2c1f6d77",1222592046))].SetBoxVisibility(true)
+        getgenv()[(decode_string_v1("78a24b3126ee210ecf",1285758093))].SetTeamCheck(false)
+        getgenv()[(decode_string_v1("5ce5308306aba84537",194953290))].UpdateColor(Color3.fromRGB(79, 22, 201))
     end
 
-    if not getgenv()[(decode_string_v1("da85006305eb61a49a0a",1893733131))] then
-        getgenv()[(decode_string_v1("9ec9f660a0146c5518d3",38983447))] = true
-        local RunService = game[(decode_string_v1("752fe31b35c23941ca17",1495707926))](game, (decode_string_v1("5d78f9392e27e64d2380",350617139)))
+    if not getgenv()[(decode_string_v1("66a10c4a7d3270900454",776551641))] then
+        getgenv()[(decode_string_v1("c391a3b072f4fdffe6a9",192330876))] = true
+        local RunService = game[(decode_string_v1("0a51a53aa058313f3cac",1237470833))](game, (decode_string_v1("194909751a3214df0a73",872027904)))
         RunService.Heartbeat:Connect(function()
-            for _, Function in pairs(getgenv()[(decode_string_v1("c63525e2dba7fb89bd8911",331893061))]) do
-                if type(Function) == (decode_string_v1("95bb9a83d64089e0",2011432658)) then
+            for _, Function in pairs(getgenv()[(decode_string_v1("c344aa23c3306aba232278",1742538909))]) do
+                if type(Function) == (decode_string_v1("517102887454ef4c",2060475749)) then
                     xpcall(Function, ErrorHandlerTing)
                 end
             end
@@ -1480,29 +1427,29 @@ end
             --Timber. lua_compile_spot
             --PhantomForces. lua_compile_spot
             --BloxBurg. lua_compile_spot
-            local VRService = game:GetService((decode_string_v1("0d56ea19e8ba2b321c",2116519657)))
+            local VRService = game:GetService((decode_string_v1("f525f99ac0a7ce775c",1872343675)))
 
 do
     local function WorldZeroInit()
-        local MarketService = game:GetService((decode_string_v1("5232445186858007624607534aa88f706a54",739885187)))
-        local VRService = game:GetService((decode_string_v1("05179ce7578e48e1b0289a",1337656125)))
+        local MarketService = game:GetService((decode_string_v1("9431472352113360035cf29c8bdfbbfb5c4c",2112492128)))
+        local VRService = game:GetService((decode_string_v1("5d0da522ec5e384af7143d",1209787377)))
     
         local isSuccessful, info = pcall(MarketService.GetProductInfo, MarketService, game.PlaceId)
         if isSuccessful then
-            if info.Creator.Name == (decode_string_v1("bc7ca5fa2ecff628c9f7baade9",366930318)) then
+            if info.Creator.Name == (decode_string_v1("b9dc9a6bd956056abe43c15e00",171195474)) then
                 --
 
-                getgenv()[(decode_string_v1("e0c853ee66f2bc6880c719bbfe62f7c3e272aede59",896209185))] = false
+                getgenv()[(decode_string_v1("4abf7ae60435da25b3cab522a693c2420210bcd637",1186892933))] = false
             
                 --------------------------------------------------------------------------------------------
         
-                getgenv().UpdateLoop = type(getgenv().UpdateLoop) == (decode_string_v1("ae26d69e9e080f",1466187757)) and getgenv().UpdateLoop or false;
-                getgenv().UpdateCache = type(getgenv().UpdateCache) == (decode_string_v1("a4a79f9820",1744335547)) and getgenv().UpdateCache or {};
-                getgenv().MOB_ESP_OBJECTS = type(getgenv().MOB_ESP_OBJECTS) == (decode_string_v1("e4ec6790a6",1393300238)) and getgenv().MOB_ESP_OBJECTS or {};
-                getgenv().MOB_ESP_CONNECTIONS = type(getgenv().MOB_ESP_CONNECTIONS) == (decode_string_v1("341327ff44",551889040)) and getgenv().MOB_ESP_CONNECTIONS or {};
+                getgenv().UpdateLoop = type(getgenv().UpdateLoop) == (decode_string_v1("b27b72a9a62ea6",1502294949)) and getgenv().UpdateLoop or false;
+                getgenv().UpdateCache = type(getgenv().UpdateCache) == (decode_string_v1("44b6aaee81",513766590)) and getgenv().UpdateCache or {};
+                getgenv().MOB_ESP_OBJECTS = type(getgenv().MOB_ESP_OBJECTS) == (decode_string_v1("ebe8798af8",639939949)) and getgenv().MOB_ESP_OBJECTS or {};
+                getgenv().MOB_ESP_CONNECTIONS = type(getgenv().MOB_ESP_CONNECTIONS) == (decode_string_v1("6380e9c5d7",378385368)) and getgenv().MOB_ESP_CONNECTIONS or {};
         
-                local GameConfigFile = GetGameConfig(FixName(tostring(info.Creator.Name)) .. (decode_string_v1("d14068d64c",1803617688)))
-                Settings_Name = (decode_string_v1("0a28bcba9b167769f31e111935c5365b646a1b5314653ae6ac6366",2024468528))
+                local GameConfigFile = GetGameConfig(FixName(tostring(info.Creator.Name)) .. (decode_string_v1("d5931fffae",1090003506)))
+                Settings_Name = (decode_string_v1("908cd4edb55c1926395175980ef0d9454cb863770bd5a9266ebd74",1128104298))
 
                 getgenv()[Settings_Name] = {
                     AutoAttackMobs = GameConfigFile.AutoAttackMobs or false,
@@ -1512,9 +1459,9 @@ do
                     MobESPRenderDistance = GameConfigFile.MobESPRenderDistance or 250
                 }
                 
-                Window = UILibrary.new((decode_string_v1("465c6e9236076f1ebd1766be7182bb4918639e987fe440",1314744322)), 5013109572)
+                Window = UILibrary.new((decode_string_v1("322b7ee94983f0dbec3dc682bbff31e68115cd225f209d",1067164126)), 5013109572)
     
-                local TweenService = game:GetService((decode_string_v1("837abe1612f279fa738ba1d8",690637256)))
+                local TweenService = game:GetService((decode_string_v1("fcbac12b4f02b4c92fd3b918",1683125232)))
                 local Player = game.Players.LocalPlayer
                 local Character = nil
                 local PlayerPosition = nil
@@ -1526,16 +1473,16 @@ do
                 local CombatModule = require(game.ReplicatedStorage.Shared.Combat);
                 local AnimationModule = require(game.ReplicatedStorage.Client.Animations);
         
-                local MobsFolder = workspace:FindFirstChild((decode_string_v1("9bfb3b66",1392240110)))
+                local MobsFolder = workspace:FindFirstChild((decode_string_v1("11cb4517",509844842)))
                 --[===[local PlayerWindow = Window:addPage("Player", 5012544693)]===]
-                local AutoFarmWindow = Window:addPage((decode_string_v1("0b0d53318fadad51f8",1664562383)), 5012544693)
-                local VisualsWindow = Window:addPage((decode_string_v1("229bf1db31fadc",1404307625)), 5012544693)
-                local TeleportsWindow = Window:addPage((decode_string_v1("9c382b3e8bd2a995a8",1497916534)), 5012544693)
-                local AutoFarmSection = AutoFarmWindow:addSection((decode_string_v1("adea4b67f874cb58",1949721432)), 5012544693)
-                local VisualsSection = VisualsWindow:addSection((decode_string_v1("5d48fc33f484f03a",586645653)), 5012544693)
+                local AutoFarmWindow = Window:addPage((decode_string_v1("699d145d8d392ac40d",1425518915)), 5012544693)
+                local VisualsWindow = Window:addPage((decode_string_v1("85901ecf22ba7b",891314036)), 5012544693)
+                local TeleportsWindow = Window:addPage((decode_string_v1("b3fbf9c4121a52af7d",1278892563)), 5012544693)
+                local AutoFarmSection = AutoFarmWindow:addSection((decode_string_v1("b63e7a06c82148a3",1361548887)), 5012544693)
+                local VisualsSection = VisualsWindow:addSection((decode_string_v1("d24a7041bc0cbdad",1743162650)), 5012544693)
 
                 local Camera = workspace.Camera
-                local GUIService = game[(decode_string_v1("30d9891c4126e16c8466",1248084927))](game, (decode_string_v1("12cd4a54ee84f514c9ce",836871852)))
+                local GUIService = game[(decode_string_v1("d4120cb48d68fcc3ca50",1159677101))](game, (decode_string_v1("5727869d21ed6fb4edc9",528627692)))
                 
                 local function GetNearMobs()
 
@@ -1546,15 +1493,15 @@ do
 
                         local MobParams = OverlapParams.new()
                         MobParams.FilterDescendantsInstances = MobsFolder:GetChildren()
-                        MobParams.CollisionGroup = (decode_string_v1("ac62225e34a873",1704319434))
+                        MobParams.CollisionGroup = (decode_string_v1("bb81e736fbcd57",871592247))
                         MobParams.FilterType = Enum.RaycastFilterType.Whitelist
 
                         local FoundInBox = workspace:GetPartBoundsInBox(RootPart.CFrame, HitBoxSize, MobParams)
 
                         if FoundInBox ~= nil then
                             for _, Part in ipairs(FoundInBox) do
-                                if Part:IsA((decode_string_v1("b5ad48aeeb531c9a",2059906470))) then
-                                    if Part.Name == (decode_string_v1("28c355270ecd740f",2126625348)) then
+                                if Part:IsA((decode_string_v1("ea751cd3b6ab99df",1598689451))) then
+                                    if Part.Name == (decode_string_v1("b41a75131be979d0",1252529431)) then
                                         table.insert(Mobs, Part.Parent)
                                     end
                                 end
@@ -1593,14 +1540,14 @@ do
                             ESP_META.RemoveEsp(Mob)
     
                             getgenv().MOB_ESP_OBJECTS[Mob] = getgenv().MOB_ESP_OBJECTS[Mob] or {
-                                Box = Drawing.new((decode_string_v1("1e4ce62a04cc",1171617006))),
-                                ESPText = Drawing.new((decode_string_v1("2b605348",706783126)))
+                                Box = Drawing.new((decode_string_v1("3406b8cda7d6",303773995))),
+                                ESPText = Drawing.new((decode_string_v1("93cbb538",654318948)))
                             }
     
                             local Box =  getgenv().MOB_ESP_OBJECTS[Mob].Box
                             local ESPText =  getgenv().MOB_ESP_OBJECTS[Mob].ESPText
     
-                            ESPText.Text = (decode_string_v1("",1661869940))
+                            ESPText.Text = (decode_string_v1("",187518128))
                             ESPText.Color = Color3.fromRGB(255, 255, 255);
                             ESPText.Size = 20.0
                             ESPText.Visible = false
@@ -1612,7 +1559,7 @@ do
                             Box.Visible = false;
                             
                             getgenv().UpdateCache[Mob] = function()
-                                local Collider = Mob:FindFirstChild((decode_string_v1("05a73912d949680b",1380526310)))
+                                local Collider = Mob:FindFirstChild((decode_string_v1("0c1345e67abb3ae5",1186864012)))
 
                                 if Collider and PlayerPosition then
                                     local MobPos = Mob:GetPivot()
@@ -1630,7 +1577,7 @@ do
                                     Box.Position = Vector2.new(Pos.X - Box.Size.X / 2, (Pos.Y + Inset.Y - Box.Size.Y / 5));
                                     Box.Color = Color3.fromRGB(255, 255, 255)
     
-                                    ESPText.Text = string.format((decode_string_v1("8e8ba295b93726fd730fb63251ccccf6aff7a46e97df3028",1009710998)), Mob.Name, tostring( math.floor( (MobPos - PlayerPosition).Magnitude ) ) )
+                                    ESPText.Text = string.format((decode_string_v1("18befd1b47a90dc231ee40c496e04f2aa2c080b1fedf0215",135864635)), Mob.Name, tostring( math.floor( (MobPos - PlayerPosition).Magnitude ) ) )
     
                                     local TextSize = 0
     
@@ -1650,10 +1597,10 @@ do
                                     if PlayerPosition then
                                         if (Collider.Position - PlayerPosition).Magnitude <= getgenv()[Settings_Name].MobESPRenderDistance then
     
-                                            local CreatureHealthFolder = Mob:FindFirstChild((decode_string_v1("4021b1e59212701cf8ad71e9c320afbb",510331008)))
+                                            local CreatureHealthFolder = Mob:FindFirstChild((decode_string_v1("ff027dc601a2e86365b1ccd863e99ce6",1227510006)))
     
                                             if CreatureHealthFolder then
-                                                local CreatureHealth = CreatureHealthFolder:FindFirstChild((decode_string_v1("0042c6e91c8e",1692235110)))
+                                                local CreatureHealth = CreatureHealthFolder:FindFirstChild((decode_string_v1("7ff3b7b97d77",1337315936)))
                                                 if CreatureHealth then
                                                     if CreatureHealth.Value > 0 then
                                                         local ESPBool = getgenv()[Settings_Name].MobESP
@@ -1691,7 +1638,7 @@ do
 
                     ESP_META.EndConnections = function()
                         for I,V in pairs(getgenv().MOB_ESP_CONNECTIONS) do
-                            if typeof(V) == (decode_string_v1("194cfdce572616a547bc856b0343699294b5f8",96578798)) then
+                            if typeof(V) == (decode_string_v1("ed80ae2028425762762a974f67169af76a8913",999633184)) then
                                 V:Disconnect()
                                 getgenv().MOB_ESP_CONNECTIONS[I] = nil
                             end
@@ -1701,11 +1648,11 @@ do
                     ESP_META.StartConnections = function()
                         ESP_META.EndConnections()
 
-                        getgenv().MOB_ESP_CONNECTIONS[(decode_string_v1("2a06570e1c473993",88974701))] = MobsFolder.ChildAdded:Connect(function(Mob)
+                        getgenv().MOB_ESP_CONNECTIONS[(decode_string_v1("20b4153d4013e8ff",839155849))] = MobsFolder.ChildAdded:Connect(function(Mob)
                             ESP_META.AddEsp(Mob)
                         end)
         
-                        getgenv().MOB_ESP_CONNECTIONS[(decode_string_v1("c8dff855348a2c908adc",1234356657))] = MobsFolder.ChildRemoved:Connect(function(Mob)
+                        getgenv().MOB_ESP_CONNECTIONS[(decode_string_v1("9cd3c7c7908cd8671f61",865009508))] = MobsFolder.ChildRemoved:Connect(function(Mob)
                             ESP_META.RemoveEsp(Mob)
                         end)
                     end
@@ -1720,7 +1667,7 @@ do
                     MobESPMeta.RemoveEsp(Mob)
                 end
                 
-                getgenv()[(decode_string_v1("1099c4f85e9261b822c87d",112439171))][(decode_string_v1("b8ee57bf8385a265fd3db8a788a501c9",1269505006))] = function()
+                getgenv()[(decode_string_v1("13d91856d1807e703b6171",1377644117))][(decode_string_v1("d55622b5e4fe1371d507836e0c465f25",1727795841))] = function()
                     Character = Player.Character
         
                     if Character then
@@ -1736,7 +1683,7 @@ do
                 local CreatureIndex = 1
                 local UpdateTick = os.time()
 
-                getgenv().UpdateCache[(decode_string_v1("60a6ebd14339c0ec3123",261333993))] = function()
+                getgenv().UpdateCache[(decode_string_v1("c6041ab7e314f24e377d",1112911902))] = function()
                     if MobsFolder ~= nil then
                         if (UpdateTick - os.time()) >= 1 then
                             UpdateTick = os.time()
@@ -1760,7 +1707,7 @@ do
                     end
                 end
                 
-                VisualsSection:addSlider((decode_string_v1("1c1eae9dbff2ced4626747bdcc9a7d8eec7f8c",1041955168)), getgenv()[Settings_Name].MobESPRenderDistance, 250, 10000, function(NewValue)
+                VisualsSection:addSlider((decode_string_v1("d1ec3f24e8df0913794c83cfad3f63ac3323ef",152027554)), getgenv()[Settings_Name].MobESPRenderDistance, 250, 10000, function(NewValue)
                     NewValue = math.clamp(tonumber(NewValue) or 250, 250, 10000)
 
                     getgenv()[Settings_Name].MobESPRenderDistance = NewValue
@@ -1781,7 +1728,7 @@ do
                     end
                 end)
 
-                VisualsSection:addToggle((decode_string_v1("8af96f1069c68c",1023532810)), getgenv()[Settings_Name].MobESP, function(Bool)
+                VisualsSection:addToggle((decode_string_v1("e0c21bd7449146",1287909250)), getgenv()[Settings_Name].MobESP, function(Bool)
                     getgenv()[Settings_Name].MobESP = Bool
 
                     if Bool then
@@ -1799,7 +1746,7 @@ do
                     end
                 end)
 
-                AutoFarmSection:addToggle((decode_string_v1("22370076cdfcfd83c2d931a9a6db8da63588cadf43c2880e641404bf12b9b6698184d4",1271078247)), getgenv()[Settings_Name].AutoAttackMobs, function(Bool)
+                AutoFarmSection:addToggle((decode_string_v1("50091a4c510958d6a4882ee0a6477e62dddcdc2113a5cedd996b236246b5f2cebd7333",1094047391)), getgenv()[Settings_Name].AutoAttackMobs, function(Bool)
                     getgenv()[Settings_Name].AutoAttackMobs = Bool
         
                     if Bool then
@@ -1829,10 +1776,10 @@ do
                                             end
 
                                             local Creature = TotalInRegion[CreatureIndex]
-                                            local CreatureHealthFolder = Creature:FindFirstChild((decode_string_v1("6feb034e8cff61178fa69efcfde60e6d",85641146)))
+                                            local CreatureHealthFolder = Creature:FindFirstChild((decode_string_v1("dfe75d533f6b226444e392901345371c",2094222800)))
     
                                             if CreatureHealthFolder then
-                                                local CreatureHealth = CreatureHealthFolder:FindFirstChild((decode_string_v1("bf98b928b694",838520680)))
+                                                local CreatureHealth = CreatureHealthFolder:FindFirstChild((decode_string_v1("80a4014d88de",447611609)))
                                                 
                                                 if CreatureHealth then
                                                     
@@ -1845,7 +1792,7 @@ do
     
                                                             --ActionsModule:FireSkillUsedSignal("Primary");
                                                             --ActionsModule:FireCooldown("Primary");
-                                                            ActionsModule:SetBusy((decode_string_v1("2821b781c2",821099896)));
+                                                            ActionsModule:SetBusy((decode_string_v1("9db603a048",1569982811)));
                                                         
                                                             if Character then
                                                                 PlayerPosition = Character.PrimaryPart.Position
@@ -1856,7 +1803,7 @@ do
                                                             RootPart.CFrame = CFrame.new(RootPart.Position, Vector3.new(CreaturePos.X, CreaturePos.Y, CreaturePos.Z))
                                                             Camera.CFrame = CFrame.new(Camera.CFrame.p, Vector3.new(CreaturePos.X, CreaturePos.Y, CreaturePos.Z))
     
-                                                            CombatModule:AttackWithSkill((decode_string_v1("93aed9cad2d79b6f",684027211)) .. tostring(AttackIndex), PlayerPosition, CFrame.new(PlayerPosition, Vector3.new(CreaturePos.X, CreaturePos.Y, CreaturePos.Z)).LookVector * 1.1 );
+                                                            CombatModule:AttackWithSkill((decode_string_v1("933b5908a999ac17",2067952380)) .. tostring(AttackIndex), PlayerPosition, CFrame.new(PlayerPosition, Vector3.new(CreaturePos.X, CreaturePos.Y, CreaturePos.Z)).LookVector * 1.1 );
                                                             
                                                             AttackIndex = math.clamp(AttackIndex + 1, 1, 6)
     
@@ -1867,7 +1814,7 @@ do
                                                             CreatureIndex = CreatureIndex + 1
     
                                                             task.wait(0.01)
-                                                            ActionsModule:ReleaseBusy((decode_string_v1("6a68a62477",1776405541)));
+                                                            ActionsModule:ReleaseBusy((decode_string_v1("f54aa35cf0",154866008)));
                                                         end
     
                                                     end
@@ -1888,8 +1835,8 @@ do
                 local Coins = {}
         
                 workspace.Coins.ChildAdded:Connect(function(A)
-                    if A:IsA((decode_string_v1("3581476cd4",1416298155))) then
-                        if tostring(A) == (decode_string_v1("7ab3e98ef6",1437510969)) then
+                    if A:IsA((decode_string_v1("2c9b85fb7d",403475755))) then
+                        if tostring(A) == (decode_string_v1("66bb679a7d",521733061)) then
                             table.insert(Coins, A)
                         end
                     end
@@ -1909,11 +1856,11 @@ do
                     end)
                 end)
     
-                AutoFarmSection:addToggle((decode_string_v1("e7d9f75b7dc2882e",156494599)), getgenv()[Settings_Name].AntiIdle, function(Bool)
+                AutoFarmSection:addToggle((decode_string_v1("5e5782a982871ebf",967680079)), getgenv()[Settings_Name].AntiIdle, function(Bool)
                     getgenv()[Settings_Name].AntiIdle = Bool
                 end)
     
-                AutoFarmSection:addToggle((decode_string_v1("8ca4f7eea0da24ea81d0a967685cdbc4c27d6a1e5ecebe378500",791387414)), getgenv()[Settings_Name].AutoPickupCoins, function(Bool)
+                AutoFarmSection:addToggle((decode_string_v1("692d87a84ac0d11032abb4c26037255fa826863e1904ee2264b8",481539980)), getgenv()[Settings_Name].AutoPickupCoins, function(Bool)
                     getgenv()[Settings_Name].AutoPickupCoins = Bool
         
                     if Bool then
@@ -1941,18 +1888,18 @@ do
                     end
                 end)
         
-                if not getgenv()[(decode_string_v1("deecd6b822be148b1b91",22420343))] then
-                    getgenv()[(decode_string_v1("368c6ddadcf863d7187b",1959402019))] = true
+                if not getgenv()[(decode_string_v1("9633d1ce5e46f9addbff",884093615))] then
+                    getgenv()[(decode_string_v1("58222e4c2c50150b3d4d",242171460))] = true
                     RunService.Heartbeat:Connect(function()
-                        for _, Function in pairs(getgenv()[(decode_string_v1("136e7f1c381a29671b76d9",1388560601))]) do
-                            if type(Function) == (decode_string_v1("85a7525c34aad5d2",1285105204)) then
+                        for _, Function in pairs(getgenv()[(decode_string_v1("2b7b17e7ce45bf63b7d308",1569084865))]) do
+                            if type(Function) == (decode_string_v1("c1c6816b2ba11b78",1299887015)) then
                                 pcall(Function)
                             end
                         end
                     end)
                 end
         
-                print((decode_string_v1("4846084ad014c34791eddcef4fb26dce9b2ca0f201",1902588655)))
+                print((decode_string_v1("0043fb7cebd446114a81a5d19ae8e573ee5b5cf942",114150435)))
                 --
             end
         end    
@@ -1960,34 +1907,34 @@ do
     
     WorldZeroInit()
 
-    local _Players = game:GetService((decode_string_v1("e77d2fa85bf26c",1940681059)))
+    local _Players = game:GetService((decode_string_v1("c7744d0dc35940",1250837119)))
     local _Player = _Players.LocalPlayer
     
-    local queue_on_teleport = type(syn) == (decode_string_v1("8b3461e6ba",1752817764)) and syn.queue_on_teleport or queue_on_teleport
+    local queue_on_teleport = type(syn) == (decode_string_v1("f386517ac6",1961839194)) and syn.queue_on_teleport or queue_on_teleport
     
-    local RejoinCode = (decode_string_v1("38ad528769c44911d45dd7315840833b63853c75da5729df44f356780b826eacea909aa5786271dcc4e6a9bac047e8643bd2ae6caddd4523d90093f80b7f1b295912c6921c24388432e6b2d48171530ca5cca29a443bd5ca7900c360946bab94cc97f7449f5ea6a2fe13b312cd834da7d485baeb185aace30e0e6f2a12d18be2f9b24a4987273b96e75afd4a865ed0a15a37eb530d487dc9108b7966203569e952f69cca13ff3da88488a57a1b693d9935bca28fd4ff96824f17532f19dea5e27b883fdc4a789273972811ef7555debb4793196e29aac3d0747dee0badbd6370da632960def2c27e3d1f0b3c3308beee2fe72bea4748fc1f8682f12b01b3df1bff2cde348873ef7d4665afa0d0ff0dcc9f4f1326db033b333d2a5af6b70e2cdd8f930d7c1d97c12e052ab55be028eaf3ffe166ac0873d511dee61f85bfb2287a495c743cc992e49d75ccb4e94251520626e038170bb3e63bf38d79c5ad24083eb09006fca023fdbf6200cb0d7c33914d93dd995b8a2806779c7b21a33931dc970eece1d0323a17368242c95b7b76116ac0bef3ab9fe639fa6edd3cb86877d4da093506f3011b1a775ee09aae21046be80f3f89e48828b9e81e97ff8b7d67c897d375c238017fb704cf0207617cbc803feae7009886f81cf5f2ee6758ecc41854bc1e9cc3b89f3cc4f69b77e1a214fc5d405c7fe07dc5ba15ea6aa2e6234e9e5f1a654d4e2292abd4b81698a8b1c3eefe228797427b43c0caf1cf2e219e74fb7b7dd79007dcfa92cf43daf288d1394ec1d572ea07315496bf138df5ab255604967241120ce11bc8b9e44c690cc811e6c80020359bf4cfe8597128dbf98df0a26336ba6583c455c671cc76f142eaa02a7c512a76",1610491957))
+    local RejoinCode = (decode_string_v1("f7a126feef9c11d2ba3b944b22a52203f60565760c196f16cce5f64408bed80bfa5c6390e8919acb0137e0e5b1d522aa3a5ec81b46bd08a93637b19199b824f71b14610656d968c05f4eca56e558c58f162f6c7a61b3954ffc0922e78f1b1f39faea020906cdcf429fee5d614ac8d59c05fb2f44d01b7aede07433202d7bcdd8ceb9c5debb40073deb93940932c50a01f263db79227f8f9e5cc785f4107fe59ff8831251c89de3bba5eead4afdcb31d734afe4637c5f8a16ffc827e1da330aa674607a0a3fa8922431e412327a3565cacade1af82d352e06edecb81a1a909a6e8e57fa9bf9b8b590cae850021588ce7f5dcfc7a0204173d5d833ac411f466f6684593da90cd9408abf6817e8cdc9f612b6b5ee2807ddb079f90925972debf29884aade5d38d55bf3f1a820f3c9f5042c6204de0ec704dfe30ffbdf779b3c01e059bd4e66d258a7f3160fed36105dcc6242fc5b136225335948059b84ec676a79a626684758f8587c3d55f6c314d3ce890873003522062a3efbc5e0cbe1525778b3e427646bb72eeadf68e97d4f475d4c5d6a55d79bc8eed344c3bbf271ac303252f491be94925ff98ea4577ed6e13cc85a9004ac5458013797b8ddf4f8cb26e1cfe8b5db4597f83fc151f69efef481123661eb949eaedfefcfb8d52c387031239ac732857860920baa1a129c6a2c7d559a06c9eed449814c1e648ce610dc1d2378f545bbf52103cad1045ff5019e043d209d47fc4196387b968102391c12ac5557d643b0e04b9a31eddb88beb234fed17e05978371c6d9e49d5027a4dca2808bae7b918e343d976498453b057cb7966b0378d6cc8d393913a227726fd628c96fbb2ca808bc351e069b52fb301554bd069c5730",1906613864))
 
-    if not isfile((decode_string_v1("4b2a76ee1935fb5c34eff234f264d41e1ab7f7",565862832))) then
-        writefile((decode_string_v1("4ec1995ad7bc16f6e37309e71a3814dd5b408e",1149741004)), tostring(RejoinCode))
+    if not isfile((decode_string_v1("e4ee971324a8fe8ae6d563b180cab5f4d90e41",1818209688))) then
+        writefile((decode_string_v1("b83cd99795e97c6454e35551bc7356244b8637",636518128)), tostring(RejoinCode))
     end
     
-    queue_on_teleport((decode_string_v1("7782f0814ecd91599a0945e074e91b44f5a917067cb6bf6304767fbf5d8b293fbccaf39b28bd9c6b1e639cffae1094db251f35de523f981777ced858aa43421ece9e764a57e85223caad4f14aa72803755314b5a1c4c0526abc961677e197d046278177b27b5f4e5bcaba2e6",1814586540)))
+    queue_on_teleport((decode_string_v1("f7f36badbd621efb4cd7e71079111180f091ddd63c6caea3dcf65abca508d24220c39d94fe7aeee9d09afae0154b603bca5614465f970ed010bb4d4e959df16d6da2d492976a577b75bc49f2fbc972fb82c4fff71ce0f8aa4839d25ffc40a1793510061b7ce6cd547ebd4862",628712551)))
 end
             --DaHood. lua_compile_spot
 
-			if getgenv()[(decode_string_v1("514b8edd929d8607719989f35e39cc4abb605644f8",559242846))] == true then
+			if getgenv()[(decode_string_v1("c612a9a1ea617e3579b1e16a1322aa0744bc44cb01",110906210))] == true then
                 do
-    local Players = game[(decode_string_v1("da9fc469d0aba7f77056",898847540))](game, (decode_string_v1("675ce425ff5b9a",270173471)))
-    local Player = Players[(decode_string_v1("c3cf7862f1d5965108d5d0",986474266))]
-    local Format, Split, GSUB, gmatch, match = string[(decode_string_v1("edc84a78b121",1197724764))], string[(decode_string_v1("2e1c8e9d27",1861982654))], string[(decode_string_v1("dc9dacda",994048089))], string[(decode_string_v1("c2af8aaa7b59",955554383))], string[(decode_string_v1("e6ac127cad",1791785705))]
+    local Players = game[(decode_string_v1("c4398fe90258bdd82a1e",1055790400))](game, (decode_string_v1("87b560a6688f14",2133790410)))
+    local Player = Players[(decode_string_v1("db46305aa7db4ba5f70bfd",201814925))]
+    local Format, Split, GSUB, gmatch, match = string[(decode_string_v1("59580b32edd0",128517297))], string[(decode_string_v1("fab99e3afc",310282166))], string[(decode_string_v1("ac36a2a9",654081465))], string[(decode_string_v1("8366b4438841",507999682))], string[(decode_string_v1("5c152a65dc",1941416527))]
 
-    Window = UILibrary.new((decode_string_v1("ee1d8499d4c9b089aeec25901124b34df28addbccd8f",2104500771)), 5013109572)
+    Window = UILibrary.new((decode_string_v1("30c03e350c63d2280cb687af193e285680a30343a754",1249610534)), 5013109572)
 
-    local VisualsWindow = Window:addPage((decode_string_v1("9ee15efc8e0be2",1613595561)), 5012544693)
-    local VisualsSelection = VisualsWindow:addSection((decode_string_v1("c84e49b5",409385350)))
+    local VisualsWindow = Window:addPage((decode_string_v1("314a35139da107",744269824)), 5012544693)
+    local VisualsSelection = VisualsWindow:addSection((decode_string_v1("2283eb3b",626937987)))
 
-    local GameConfigFile = GetGameConfig(FixName(tostring((decode_string_v1("107d78ea35e70df165",334576690)))) .. (decode_string_v1("694bb12f60",1016163145)))
-    Settings_Name = (decode_string_v1("36696812f2a7cbbb294ad3cb8421161b8fc9d3c3ab6757b6bc05",1972990579))
+    local GameConfigFile = GetGameConfig(FixName(tostring((decode_string_v1("f6e9eca8a1a5f75d75",1100853482)))) .. (decode_string_v1("09bad2d65a",2083605738)))
+    Settings_Name = (decode_string_v1("589d22e40f37f69d6a99e3290180b5c8cb496754326b92b9969e",244844968))
 
     getgenv()[Settings_Name] = {
         Teamcheck = GameConfigFile.Teamcheck or false,
@@ -1996,78 +1943,78 @@ end
         Color = GameConfigFile.Color or {R = 255, G = 255, B = 255}
     }
 
-    VisualsSelection:addToggle((decode_string_v1("203d2092a0c33dcaca4da22ead",1229294329)), getgenv()[Settings_Name].Teamcheck, function(Bool)
+    VisualsSelection:addToggle((decode_string_v1("9229c983a7f04b282fea715b10",1025367727)), getgenv()[Settings_Name].Teamcheck, function(Bool)
         getgenv()[Settings_Name].Teamcheck = Bool
-        getgenv()[(decode_string_v1("f0d51c18b72f55cb94",1126113181))].SetTeamCheck(Bool)
+        getgenv()[(decode_string_v1("bb1e8e0f1cb7c7ca5f",19390493))].SetTeamCheck(Bool)
     end)
 
-    VisualsSelection:addToggle((decode_string_v1("da635595706b47d44c",1183668841)), getgenv()[Settings_Name].Boxes, function(Bool)
+    VisualsSelection:addToggle((decode_string_v1("82a3f90535e5ca7de3",2078161599)), getgenv()[Settings_Name].Boxes, function(Bool)
         getgenv()[Settings_Name].Boxes = Bool
         if Bool then
             for _, Plr in ipairs(Players:GetPlayers()) do
                 if Plr ~= Player then
-                    getgenv()[(decode_string_v1("421c23440837fcf199",1139709699))].LoadBox(Plr)
+                    getgenv()[(decode_string_v1("bba27640820e214413",1551493414))].LoadBox(Plr)
                 end
             end
-            getgenv()[(decode_string_v1("01e0e1b2900fe4b226",1677080416))].SetBoxVisibility(true)
+            getgenv()[(decode_string_v1("82d15ad27ee355f150",2053936124))].SetBoxVisibility(true)
         else
-            getgenv()[(decode_string_v1("92c84d4c0144ef2bdb",1027076280))].UnLoadType((decode_string_v1("100debe09bed50f2334b",738653654)))
-            getgenv()[(decode_string_v1("58acb22d58fc17a792",206465432))].SetBoxVisibility(false)
+            getgenv()[(decode_string_v1("308ff34ff9855d4345",2005968523))].UnLoadType((decode_string_v1("ac680a336bd48a0b26f4",821009709)))
+            getgenv()[(decode_string_v1("adbfa42c82e0a42d5f",1446237269))].SetBoxVisibility(false)
         end
     end)
 
-    VisualsSelection:addToggle((decode_string_v1("d7d57e8f077c13f954b370",542485589)), getgenv()[Settings_Name].Tracers, function(Bool)
+    VisualsSelection:addToggle((decode_string_v1("2ed03d0c6df8dc8f9155b7",609311938)), getgenv()[Settings_Name].Tracers, function(Bool)
         getgenv()[Settings_Name].Tracers = Bool
         if Bool then
             for _, Plr in ipairs(Players:GetPlayers()) do
                 if Plr ~= Player then
-                    getgenv()[(decode_string_v1("8af77e58521fcc17ce",1298075499))].LoadTracers(Plr)
+                    getgenv()[(decode_string_v1("be13bd7e0bd1ab4a78",940217800))].LoadTracers(Plr)
                 end
             end
-            getgenv()[(decode_string_v1("2e6719291688c0d374",1818660930))].SetTracersVisibility(true)
+            getgenv()[(decode_string_v1("012f0ec8c2b3a3df2e",1680417559))].SetTracersVisibility(true)
         else
-            getgenv()[(decode_string_v1("c5de39a4ba44b97d4d",1612462136))].UnLoadType((decode_string_v1("6706ac304870e25033b0c4b7",1441314647)))
-            getgenv()[(decode_string_v1("26e80c1a02c522d0ec",442102378))].SetTracersVisibility(false)
+            getgenv()[(decode_string_v1("3638ebfa688a63c144",28340022))].UnLoadType((decode_string_v1("1ce428a89f734e279be67e2b",2132951750)))
+            getgenv()[(decode_string_v1("ff718450ecc32aaabf",1496001626))].SetTracersVisibility(false)
         end
     end)
 
     local ESP_COLOR_LOCAL = getgenv()[Settings_Name].Color
 
-    getgenv()[(decode_string_v1("6a5092dcad928403f1",1889548768))].UpdateColor(Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B))
+    getgenv()[(decode_string_v1("92ff3571423990e38c",1017803413))].UpdateColor(Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B))
 
-    VisualsSelection:addColorPicker((decode_string_v1("36dcf4cd9198c64e6f",769992207)), Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B), function(newcolor)
+    VisualsSelection:addColorPicker((decode_string_v1("5cd02f7e908735f828",1762848076)), Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B), function(newcolor)
         local R, G, B = math.floor(newcolor.R * 255), math.floor(newcolor.G * 255), math.floor(newcolor.B * 255)
 
         getgenv()[Settings_Name].Color.R = R
         getgenv()[Settings_Name].Color.G = G
         getgenv()[Settings_Name].Color.B = B
 
-        getgenv()[(decode_string_v1("3244b50d5e394c095c",267767896))].UpdateColor(Color3.fromRGB(R, G, B))
+        getgenv()[(decode_string_v1("29671316864254947f",56772319))].UpdateColor(Color3.fromRGB(R, G, B))
     end)
 
-    VisualsSelection:addButton((decode_string_v1("af0e403a679d8d8173c5",1466945830)), function(Bool)
-        getgenv()[(decode_string_v1("ca06fb62e86676b031",859216761))].UnLoad()
+    VisualsSelection:addButton((decode_string_v1("de57203bace5df7b6f7b",1826002018)), function(Bool)
+        getgenv()[(decode_string_v1("30c549604d2ae6a6b1",2037723192))].UnLoad()
     end)
 end
 			end
 
 			if Window ~= nil and Settings_Name ~= nil then
-				local MarketService = game:GetService((decode_string_v1("11dc52a5149f9552292b01860287bcf85061",1538293347)))
-				SettingsPage = SettingsPage or Window:addPage((decode_string_v1("8e42eb80907e7df1",1832997427)), 5012544693)
-				SettingsSection = SettingsSection or SettingsPage:addSection((decode_string_v1("22fd565258",1126406456)), 5012544693)
-				SettingsSection:addButton((decode_string_v1("9bdce4cdd145aa83a85b67",1443247227)), function()
+				local MarketService = game:GetService((decode_string_v1("f38ae05c07a8e3f510c659dc5b5fcb6f5bd0",1539739310)))
+				SettingsPage = SettingsPage or Window:addPage((decode_string_v1("4a06b0c4ab9f2963",1261163446)), 5012544693)
+				SettingsSection = SettingsSection or SettingsPage:addSection((decode_string_v1("cb970399bd",167454697)), 5012544693)
+				SettingsSection:addButton((decode_string_v1("d2b64907c5f8aea9f41ac3",1089574201)), function()
 					local isSuccessful, info = pcall(MarketService.GetProductInfo, MarketService, game.PlaceId)
 					if isSuccessful then
-						if tostring(info.Creator.Name) == (decode_string_v1("b93b0e0e8c5f41675e8527dbef",521416038)) then
-							SaveGameConfig(FixName(tostring(info.Creator.Name)) .. (decode_string_v1("2101ca0faa",442996143)), getgenv()[Settings_Name])
-                        elseif getgenv()[(decode_string_v1("70c9287f22428e247c37749a8002fa4ccad5b17918",1233443812))] == true then
-							SaveGameConfig(FixName(tostring((decode_string_v1("408110c8f1d38d58f7",1120864241)))) .. (decode_string_v1("4205f97d3f",1645865812)), getgenv()[Settings_Name])
+						if tostring(info.Creator.Name) == (decode_string_v1("0ae10429d985b19706c6c1a357",671330197)) then
+							SaveGameConfig(FixName(tostring(info.Creator.Name)) .. (decode_string_v1("b2573c6a5e",487180158)), getgenv()[Settings_Name])
+                        elseif getgenv()[(decode_string_v1("2898e12191761e9965c7d48c149ffb1bc98630bffe",623596257))] == true then
+							SaveGameConfig(FixName(tostring((decode_string_v1("288e7dfff1df9fe683",1869208000)))) .. (decode_string_v1("556cb3431d",1948437887)), getgenv()[Settings_Name])
                         else
-							SaveGameConfig(FixName(tostring(info.Name)) .. (decode_string_v1("819d84e3fa",774745893)), getgenv()[Settings_Name])
+							SaveGameConfig(FixName(tostring(info.Name)) .. (decode_string_v1("055d2b180b",419032006)), getgenv()[Settings_Name])
 						end
 					end
 				end)
-				SettingsSection:addKeybind((decode_string_v1("04acd1ec83dba614d435e48f5d97",156906355)), Enum.KeyCode.Home, function()
+				SettingsSection:addKeybind((decode_string_v1("5ba89952f82fcf6f5795afc20357",1854335398)), Enum.KeyCode.Home, function()
 					Window:toggle()
 				end, function()
 				end)
@@ -2077,5 +2024,5 @@ end
 		end
 	end
 end, function(err)
-	return warn(err .. (decode_string_v1("6a",1683108585)) .. debug.traceback())
+	return warn(err .. (decode_string_v1("3d",212031685)) .. debug.traceback())
 end)
