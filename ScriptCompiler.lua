@@ -102,14 +102,18 @@ xpcall(function()
    
          if include_decoder then
             table.insert(text, [[
+                  local DecodeMT = getmetatable(newproxy(true))
+                  
                   local function decode_string_v1(str, seed)
+                     if DecodeMT[str] then return DecodeMT[str] end
+
                      repeat
                         seed = seed * 3
                      until seed > 2 ^ 43
                      
                      local K = 8186484168865098 + seed
 
-                     return (str:gsub('%x%x', function(c)
+                     local Decrypted = (str:gsub('%x%x', function(c)
                         local L = K % 274877906944
                         local H = (K - L) / 274877906944
                         local M = H % 128
@@ -118,6 +122,10 @@ xpcall(function()
                         K = L * 21271 + H + c + m
                         return string.char(m)
                      end))
+
+                     DecodeMT[str] = Decrypted
+
+                     return Decrypted
                   end
             ]])
          end
