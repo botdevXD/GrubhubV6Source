@@ -730,9 +730,9 @@ xpcall(function()
 
 		StringMT.char = StringTable.char
 
-		Backup = getgenv()["string,"] or StringMT
+		Backup = getgenv()["string_"] or StringMT
 		
-		getgenv()["string,"] = getgenv()["string,"] or StringMT
+		getgenv()["string_"] = getgenv()["string_"] or StringMT
 
 		local function Convert_v1(Offset, Text)
 			local Result = ""
