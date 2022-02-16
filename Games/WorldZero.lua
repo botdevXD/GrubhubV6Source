@@ -89,10 +89,10 @@ do
                 end
         
                 for _, V in pairs(TeleportModule:GetLocations()) do
-                    if V.Name:find("World") then
-                        if V.CanTeleport == true then
+                    if V.CanTeleport == true then
+                        if V.IsOtherWorld == true then
                             table.insert(WorldTeleports, V.Name)
-                            WorldIDs[V.Name] = V.WorldOrderID
+                            WorldIDs[V.Name] = V.ID
                         end
                     end
                 end
