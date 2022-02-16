@@ -1,6 +1,6 @@
 xpcall(function()
 	do
-		getgenv().Key = 'c6ZJsNnYck0aoLPJ49epCUbux';
+		getgenv().Key = 'iQ7H5G983natBojC';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
 		getgenv().GubVersion = '5.0';
@@ -793,14 +793,16 @@ xpcall(function()
 			until type(returnedData) == "string"
 		end
 
+		print(returnedData)
+
 		local ReturnedArgs = string.split(tostring(returnedData), "__SEP__TING__")
 		local CypherShit1 = UnConvert_v1(SERVER_DEOBF_OFFSET, tostring(ReturnedArgs[2]))
 		local CypherShit2 = UnConvert_v1(SERVER_DEOBF_OFFSET, tostring(ReturnedArgs[3]))
 		local serverData = tostring(ReturnedArgs[4])
 
 		if CypherShit1 == ShouldReturn1 then
-			print("Crash attempt 1 #1")
 		else
+		    print("Crash attempt 1 #1")
 			--while true do end
 		end
 
