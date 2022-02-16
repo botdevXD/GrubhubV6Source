@@ -789,11 +789,17 @@ xpcall(function()
 			repeat
 				returnedData = GetReturnedData()
 				returnedData = returnedData.Body
-				wait(0.0003)
+				task.wait(0.0003)
 			until type(returnedData) == "string"
 		end
 
-		print(returnedData)
+		local DecodedData = returnedData
+
+		for Index = 1, 10 do
+			DecodedData = base_decode(DecodedData)
+		end
+
+		returnedData = DecodedData
 
 		local ReturnedArgs = string.split(tostring(returnedData), "__SEP__TING__")
 		local CypherShit1 = UnConvert_v1(SERVER_DEOBF_OFFSET, tostring(ReturnedArgs[2]))
@@ -811,16 +817,25 @@ xpcall(function()
 		end
 
 		repeat
-			wait()
+			task.wait()
 		until serverData ~= nil
 
 		local currentTime = os.time()
 
-		wait(2.45)
+		task.wait(2.45)
 
 		if currentTime == os.time() then
-			game.Players.LocalPlayers:Kick("Attempted Crack Detected - If this is false, Please contact _Ben#6969")
+			return game.Players.LocalPlayer:Kick("Attempted Crack Detected - If this is false, Please contact _Ben#0420")
 		end
+
+		--[===[
+		local ActualScript = script
+		getfenv(0).print = function(...)
+			if script == ActualScript then
+				return getfenv(1).print(...)
+			end
+		end
+		]===]
 
 		local number = tostring(os.time())
 		local dynamic = number:split("")
