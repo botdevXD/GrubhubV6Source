@@ -734,6 +734,35 @@ xpcall(function()
 		
 		getgenv()["string_"] = getgenv()["string_"] or StringMT
 
+		local function Convert_v1_table(Offset, Text)
+			local Result = {}
+			local length = #Text
+
+			for Index = 1, length do
+				local char = Text["sub"](Text, Index, Index)
+				local Byte = char["byte"](char)
+				local MMath = (Byte + math.floor(Index / 100) + Offset + 3)
+				local letter = Backup["char"](MMath)
+				Result[Index] = letter
+			end
+
+			return Result
+		end
+
+		local function UnConvert_v1_table(Offset, Table)
+			local Result = ""
+
+			for Index, Letter in ipairs(Table) do
+				local char = Letter
+				local Byte = char["byte"](char)
+				local MMath = (Byte - math.floor(Index / 100) - Offset - 3)
+				local letter = Backup["char"](MMath)
+				Result = Result .. letter
+			end
+
+			return Result
+		end
+
 		local function Convert_v1(Offset, Text)
 			local Result = ""
 			local length = #Text
@@ -799,6 +828,8 @@ xpcall(function()
 			DecodedData = base_decode(DecodedData)
 		end
 
+		print(returnedData)
+
 		returnedData = DecodedData
 
 		local ReturnedArgs = string.split(tostring(returnedData), "__SEP__TING__")
@@ -808,12 +839,14 @@ xpcall(function()
 
 		if CypherShit1 == ShouldReturn1 then
 		else
-			while true do end
+			return print(returnedData)
+			--while true do end
 		end
 
 		if CypherShit2 == ShouldReturn2 then
 		else
-			while true do end
+			return print(returnedData)
+			--while true do end
 		end
 
 		repeat
@@ -827,15 +860,6 @@ xpcall(function()
 		if currentTime == os.time() then
 			return game.Players.LocalPlayer:Kick("Attempted Crack Detected - If this is false, Please contact _Ben#0420")
 		end
-
-		--[===[
-		local ActualScript = script
-		getfenv(0).print = function(...)
-			if script == ActualScript then
-				return getfenv(1).print(...)
-			end
-		end
-		]===]
 
 		local number = tostring(os.time())
 		local dynamic = number:split("")
@@ -854,12 +878,14 @@ xpcall(function()
 
 			if CypherShit1 == ShouldReturn1 then
 			else
-				while true do end
+				return print(returnedData)
+				--while true do end
 			end
 
 			if CypherShit2 == ShouldReturn2 then
 			else
-				while true do end
+				return print(returnedData)
+				--while true do end
 			end
 
 			local Settings_Name = nil
