@@ -39,8 +39,11 @@ do
                 local PlayerLookVector = nil
                 local RootPart = nil
                 local ItemTable = nil
-                
+                local WorldTeleports = {}
+                local WorldIDs = {}
+
                 local ActionsModule = require(game.ReplicatedStorage.Client.Actions);
+                local TeleportModule = require(game.ReplicatedStorage.Shared.Teleport);
                 local CombatModule = require(game.ReplicatedStorage.Shared.Combat);
                 local AnimationModule = require(game.ReplicatedStorage.Client.Animations);
         
@@ -49,6 +52,7 @@ do
                 local AutoFarmWindow = Window:addPage("Auto Farm", 5012544693)
                 local VisualsWindow = Window:addPage("Visuals", 5012544693)
                 local TeleportsWindow = Window:addPage("Teleports", 5012544693)
+                local Worlds_TP_Section = TeleportsWindow:addSection("Worlds", 5012544693)
                 local AutoFarmSection = AutoFarmWindow:addSection("Features", 5012544693)
                 local VisualsSection = VisualsWindow:addSection("Features", 5012544693)
 
@@ -84,6 +88,15 @@ do
                     return Mobs
                 end
         
+                for _, V in pairs(TeleportModule:GetLocations()) do
+                    if V.Name:find("World") then
+                        if V.CanTeleport == true then
+                            table.insert(WorldTeleports, V.Name)
+                            WorldIDs[V.Name] = V.WorldOrderID
+                        end
+                    end
+                end
+
                 local function MobESP()
                     local ESP_META = getmetatable(newproxy(true))
                     ESP_META.RemoveEsp = function(Mob)
@@ -427,6 +440,14 @@ do
                     end)
                 end)
     
+                for _, WorldName in ipairs(WorldTeleports) do
+                    if WorldIDs[WorldName] ~= nil then
+                        Worlds_TP_Section:addButton(WorldName, function()
+                            TeleportModule:TeleportToHub(Player, WorldIDs[WorldName])
+                        end)
+                    end
+                end
+
                 AutoFarmSection:addToggle("Anti Afk", getgenv()[Settings_Name].AntiIdle, function(Bool)
                     getgenv()[Settings_Name].AntiIdle = Bool
                 end)
