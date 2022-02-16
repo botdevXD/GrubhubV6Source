@@ -799,15 +799,15 @@ xpcall(function()
 		local serverData = tostring(ReturnedArgs[4])
 
 		if CypherShit1 == ShouldReturn1 then
+			print("Crash attempt 1 #1")
 		else
-			while true do
-			end
+			--while true do end
 		end
 
 		if CypherShit2 == ShouldReturn2 then
 		else
-			while true do
-			end
+			print("Crash attempt 2 #2")
+			--while true do end
 		end
 
 		repeat
@@ -839,14 +839,14 @@ xpcall(function()
 
 			if CypherShit1 == ShouldReturn1 then
 			else
-				while true do
-				end
+				print("Crash attempt 1 #3")
+				--while true do end
 			end
 
 			if CypherShit2 == ShouldReturn2 then
 			else
-				while true do
-				end
+				print("Crash attempt 2 #4")
+				--while true do end
 			end
 
 			local Settings_Name = nil
