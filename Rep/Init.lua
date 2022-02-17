@@ -766,7 +766,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'http://localhost:3000/api/mYq3t6w9',--'https://grubhubwhitelistfixedv6.herokuapp.com/api/mYq3t6w9',
+				Url = 'https://grubhubwhitelistfixedv6.herokuapp.com/api/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;
