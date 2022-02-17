@@ -2284,6 +2284,7 @@ do
                                             local Mag = math.floor((Vector2.new(HeadPos.X, HeadPos.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude)
 
                                             if Mag <= 100 and Mag <= LastDistance then
+                                                LastDistance = Mag
                                                 AimAtPlayer(Camera, Mouse, HeadCheck)
                                             end
                                         end
@@ -2293,11 +2294,6 @@ do
                         end
                     end
                 end
-
-                --[===[
-                    AIMBOT_ENABLED = false
-                    AIMBOT_TEAM_CHECK_ENABLED = false
-                ]===]
             end
         end 
 
@@ -2428,8 +2424,12 @@ do
                 local WorldTeleports = {}
                 local WorldIDs = {}
 
+                local DungeonTeleports = {}
+                local DungeonIDs = {}
+
                 local ActionsModule = require(game.ReplicatedStorage.Client.Actions);
                 local TeleportModule = require(game.ReplicatedStorage.Shared.Teleport);
+                local MissionsModule = require(game.ReplicatedStorage.Shared.Missions);
                 local CombatModule = require(game.ReplicatedStorage.Shared.Combat);
                 local AnimationModule = require(game.ReplicatedStorage.Client.Animations);
         
@@ -2448,6 +2448,9 @@ do
 ]]))), 5012544693)
                 local Worlds_TP_Section = TeleportsWindow:addSection((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["]", "u", "x", "r", "j", "y"]
+]]))), 5012544693)
+                local DungeonName_TP_Section = TeleportsWindow:addSection((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["J", "{", "t", "m", "k", "u", "t", "y"]
 ]]))), 5012544693)
                 local AutoFarmSection = AutoFarmWindow:addSection((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["L", "k", "g", "z", "{", "x", "k", "y"]
@@ -2500,10 +2503,19 @@ do
         
                 for _, V in pairs(TeleportModule:GetLocations()) do
                     if V.CanTeleport == true then
-                        if V.IsOtherWorld == true then
+                        if V.Name:find((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "u", "x", "r", "j"]
+]])))) then
                             table.insert(WorldTeleports, V.Name)
                             WorldIDs[V.Name] = V.ID
                         end
+                    end
+
+                    local MissionData = MissionsModule:GetMissionFromId(V.ID)
+
+                    if MissionData ~= nil then
+                        table.insert(DungeonTeleports, MissionData.NameTag)
+                        DungeonIDs[MissionData.NameTag] = MissionData.ID
                     end
                 end
 
@@ -2904,6 +2916,19 @@ do
                     end
                 end
 
+                for _, DungeonName in ipairs(DungeonTeleports) do
+                    if DungeonIDs[DungeonName] ~= nil then
+                        DungeonName_TP_Section:addButton(DungeonName, function()
+                            TeleportModule:TeleportToMission(Player, DungeonIDs[DungeonName], 1)
+                        end)
+                    end
+                end
+
+                --[[
+                        table.insert(DungeonTeleports, MissionData.Name)
+                        DungeonIDs[MissionData.Name] = MissionData.ID
+                ]]
+
                 AutoFarmSection:addToggle((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["G", "t", "z", "o", "&", "G", "l", "q"]
 ]]))), getgenv()[Settings_Name].AntiIdle, function(Bool)
@@ -2939,6 +2964,8 @@ do
                         end)
                     end
                 end)
+
+                Window:SelectPage(Window.pages[1], true)
         
                 if not getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["[", "v", "j", "g", "z", "k", "R", "u", "u", "v"]
@@ -2979,7 +3006,7 @@ do
 ]]))) and syn.queue_on_teleport or queue_on_teleport
     
     local RejoinCode = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
-["&", "&", "&", "&", "&", "&", "&", "&", "r", "u", "i", "g", "r", "&", "S", "g", "x", "q", "k", "z", "Y", "k", "x", "|", "o", "i", "k", "&", "C", "&", "m", "g", "s", "k", "@", "M", "k", "z", "Y", "k", "x", "|", "o", "i", "k", ".", "(", "S", "g", "x", "q", "k", "z", "v", "r", "g", "i", "k", "Y", "k", "x", "|", "o", "i", "k", "(", "\/", "", "&", "&", "&", "&", "&", "&", "&", "&", "r", "u", "i", "g", "r", "&", "\\", "X", "Y", "k", "x", "|", "o", "i", "k", "&", "C", "&", "m", "g", "s", "k", "@", "N", "l", "{", "Z", "l", "y", "}", "p", "j", "l", "\/", ")", "]", "p", "y", "{", "|", "h", "s", "\\", "z", "l", "y", ")", "0", "", "'", "'", "'", "'", "", "'", "'", "'", "'", "'", "'", "'", "'", "s", "v", "j", "h", "s", "'", "p", "z", "Z", "|", "j", "j", "l", "z", "z", "m", "|", "s", "3", "'", "p", "u", "m", "v", "'", "D", "'", "w", "j", "h", "s", "s", "\/", "T", "h", "y", "r", "l", "{", "Z", "l", "y", "}", "p", "j", "l", "5", "N", "l", "{", "W", "y", "v", "k", "|", "j", "{", "P", "u", "m", "v", "4", "(", "U", "i", "z", "s", "m", "|", "[", "m", "z", "~", "q", "k", "m", "4", "(", "o", "i", "u", "m", "6", "X", "t", "i", "k", "m", "Q", "l", "1", "", "(", "(", "(", "(", "(", "(", "(", "(", "q", "n", "(", "q", "{", "[", "}", "k", "k", "m", "{", "{", "n", "}", "t", "(", "|", "p", "m", "v", "", "(", "(", "(", "(", "(", "(", "(", "(", "(", "(", "(", "(", "q", "n", "(", "q", "v", "n", "w", "6", "K", "z", "m", "i", "|", "w", "z", "6", "V", "i", "u", "m", "(", "E", "E", "(", "*", "_", "w", "z", "u", "m", ")", "8", "8", ")", "c", "n", "{", "x", "+", ")", "}", "q", "n", "w", "", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", "{", "n", "y", "n", "j", "}", ")", "}", "j", "|", "t", "7", "€", "j", "r", "}", "1", "2", ")", "~", "w", "}", "r", "u", ")", "p", "j", "v", "n", "C", "R", "|", "U", "x", "j", "m", "n", "m", "1", "2", ")", "j", "w", "m", ")", "p", "j", "v", "n", "7", "Y", "u", "j", "‚", "n", "{", "|", "7", "U", "x", "l", "j", "u", "Y", "u", "j", "‚", "o", "|", "*", "ˆ", "G", "*", "x", "s", "v", "*", "k", "x", "n", "*", "q", "k", "w", "o", "8", "Z", "v", "k", "ƒ", "o", "|", "}", "8", "V", "y", "m", "k", "v", "Z", "v", "k", "ƒ", "o", "|", "8", "M", "r", "k", "|", "k", "m", "~", "o", "|", "*", "ˆ", "G", "*", "x", "s", "v", "", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "~", "k", "}", "u", "8", "n", "o", "v", "k", "ƒ", "2", ";", ":", "6", "*", "p", "", "x", "m", "~", "s", "y", "x", "2", "3", "", "*", "*", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "w", "z", "l", "o", "q", "t", "w", "p", "3", "-", "R", "}", "€", "m", "s", "€", "m", ":", "R", "}", "€", "m", "s", "€", "m", "a", "A", "^", "z", "€", "}", "n", "p", ":", "N", "z", "x", "{", "t", "w", "p", "o", "^", "n", "}", "t", "{", "", "9", "w", "€", "l", "-", "4", "3", "4", "", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "p", "y", "o", "4", "", "+", "+", "+", "+", ",", ",", ",", ",", ",", ",", ",", ",", "q", "z", "p", "", ",", ",", ",", ",", ",", ",", ",", ",", "q", "z", "p", "", ",", ",", ",", ","]
+["&", "&", "&", "&", "&", "&", "&", "&", "r", "u", "i", "g", "r", "&", "S", "g", "x", "q", "k", "z", "Y", "k", "x", "|", "o", "i", "k", "&", "C", "&", "m", "g", "s", "k", "@", "M", "k", "z", "Y", "k", "x", "|", "o", "i", "k", ".", "(", "S", "g", "x", "q", "k", "z", "v", "r", "g", "i", "k", "Y", "k", "x", "|", "o", "i", "k", "(", "\/", "", "&", "&", "&", "&", "&", "&", "&", "&", "r", "u", "i", "g", "r", "&", "\\", "X", "Y", "k", "x", "|", "o", "i", "k", "&", "C", "&", "m", "g", "s", "k", "@", "N", "l", "{", "Z", "l", "y", "}", "p", "j", "l", "\/", ")", "]", "p", "y", "{", "|", "h", "s", "\\", "z", "l", "y", ")", "0", "", "'", "'", "'", "'", "", "'", "'", "'", "'", "'", "'", "'", "'", "s", "v", "j", "h", "s", "'", "p", "z", "Z", "|", "j", "j", "l", "z", "z", "m", "|", "s", "3", "'", "p", "u", "m", "v", "'", "D", "'", "w", "j", "h", "s", "s", "\/", "T", "h", "y", "r", "l", "{", "Z", "l", "y", "}", "p", "j", "l", "5", "N", "l", "{", "W", "y", "v", "k", "|", "j", "{", "P", "u", "m", "v", "4", "(", "U", "i", "z", "s", "m", "|", "[", "m", "z", "~", "q", "k", "m", "4", "(", "o", "i", "u", "m", "6", "X", "t", "i", "k", "m", "Q", "l", "1", "", "(", "(", "(", "(", "(", "(", "(", "(", "q", "n", "(", "q", "{", "[", "}", "k", "k", "m", "{", "{", "n", "}", "t", "(", "|", "p", "m", "v", "", "(", "(", "(", "(", "(", "(", "(", "(", "(", "(", "(", "(", "q", "n", "(", "q", "v", "n", "w", "6", "K", "z", "m", "i", "|", "w", "z", "6", "V", "i", "u", "m", "(", "E", "E", "(", "*", "_", "w", "z", "u", "m", ")", "8", "8", ")", "c", "n", "{", "x", "+", ")", "}", "q", "n", "w", "", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", ")", "{", "n", "y", "n", "j", "}", ")", "}", "j", "|", "t", "7", "€", "j", "r", "}", "1", "2", ")", "~", "w", "}", "r", "u", ")", "p", "j", "v", "n", "C", "R", "|", "U", "x", "j", "m", "n", "m", "1", "2", ")", "j", "w", "m", ")", "p", "j", "v", "n", "7", "Y", "u", "j", "‚", "n", "{", "|", "7", "U", "x", "l", "j", "u", "Y", "u", "j", "‚", "o", "|", "*", "ˆ", "G", "*", "x", "s", "v", "*", "k", "x", "n", "*", "q", "k", "w", "o", "8", "Z", "v", "k", "ƒ", "o", "|", "}", "8", "V", "y", "m", "k", "v", "Z", "v", "k", "ƒ", "o", "|", "8", "M", "r", "k", "|", "k", "m", "~", "o", "|", "*", "ˆ", "G", "*", "x", "s", "v", "", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "~", "k", "}", "u", "8", "n", "o", "v", "k", "ƒ", "2", "?", "6", "*", "p", "", "x", "m", "~", "s", "y", "x", "2", "3", "", "*", "*", "*", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "w", "z", "l", "o", "q", "t", "w", "p", "3", "-", "R", "}", "€", "m", "s", "€", "m", ":", "R", "}", "€", "m", "s", "€", "m", "a", "A", "^", "z", "€", "}", "n", "p", ":", "N", "z", "x", "{", "t", "w", "p", "o", "^", "n", "}", "t", "{", "", "9", "w", "€", "l", "-", "4", "3", "4", "", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "p", "y", "o", "4", "", "+", "+", "+", "+", "+", ",", ",", ",", ",", ",", ",", ",", "q", "z", "p", "", ",", ",", ",", ",", ",", ",", ",", ",", "q", "z", "p", "", ",", ",", ",", ","]
 ]])))
 
     if not isfile((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[

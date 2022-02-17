@@ -320,6 +320,7 @@ do
                                             local Mag = math.floor((Vector2.new(HeadPos.X, HeadPos.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude)
 
                                             if Mag <= 100 and Mag <= LastDistance then
+                                                LastDistance = Mag
                                                 AimAtPlayer(Camera, Mouse, HeadCheck)
                                             end
                                         end
@@ -329,11 +330,6 @@ do
                         end
                     end
                 end
-
-                --[===[
-                    AIMBOT_ENABLED = false
-                    AIMBOT_TEAM_CHECK_ENABLED = false
-                ]===]
             end
         end 
 

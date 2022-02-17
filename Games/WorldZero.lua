@@ -42,8 +42,12 @@ do
                 local WorldTeleports = {}
                 local WorldIDs = {}
 
+                local DungeonTeleports = {}
+                local DungeonIDs = {}
+
                 local ActionsModule = require(game.ReplicatedStorage.Client.Actions);
                 local TeleportModule = require(game.ReplicatedStorage.Shared.Teleport);
+                local MissionsModule = require(game.ReplicatedStorage.Shared.Missions);
                 local CombatModule = require(game.ReplicatedStorage.Shared.Combat);
                 local AnimationModule = require(game.ReplicatedStorage.Client.Animations);
         
@@ -53,6 +57,7 @@ do
                 local VisualsWindow = Window:addPage("Visuals", 5012544693)
                 local TeleportsWindow = Window:addPage("Teleports", 5012544693)
                 local Worlds_TP_Section = TeleportsWindow:addSection("Worlds", 5012544693)
+                local DungeonName_TP_Section = TeleportsWindow:addSection("Dungeons", 5012544693)
                 local AutoFarmSection = AutoFarmWindow:addSection("Features", 5012544693)
                 local VisualsSection = VisualsWindow:addSection("Features", 5012544693)
 
@@ -90,10 +95,17 @@ do
         
                 for _, V in pairs(TeleportModule:GetLocations()) do
                     if V.CanTeleport == true then
-                        if V.IsOtherWorld == true then
+                        if V.Name:find("World") then
                             table.insert(WorldTeleports, V.Name)
                             WorldIDs[V.Name] = V.ID
                         end
+                    end
+
+                    local MissionData = MissionsModule:GetMissionFromId(V.ID)
+
+                    if MissionData ~= nil then
+                        table.insert(DungeonTeleports, MissionData.NameTag)
+                        DungeonIDs[MissionData.NameTag] = MissionData.ID
                     end
                 end
 
@@ -448,6 +460,19 @@ do
                     end
                 end
 
+                for _, DungeonName in ipairs(DungeonTeleports) do
+                    if DungeonIDs[DungeonName] ~= nil then
+                        DungeonName_TP_Section:addButton(DungeonName, function()
+                            TeleportModule:TeleportToMission(Player, DungeonIDs[DungeonName], 1)
+                        end)
+                    end
+                end
+
+                --[[
+                        table.insert(DungeonTeleports, MissionData.Name)
+                        DungeonIDs[MissionData.Name] = MissionData.ID
+                ]]
+
                 AutoFarmSection:addToggle("Anti Afk", getgenv()[Settings_Name].AntiIdle, function(Bool)
                     getgenv()[Settings_Name].AntiIdle = Bool
                 end)
@@ -479,6 +504,8 @@ do
                         end)
                     end
                 end)
+
+                Window:SelectPage(Window.pages[1], true)
         
                 if not getgenv()["UpdateLoop"] then
                     getgenv()["UpdateLoop"] = true
@@ -512,7 +539,7 @@ do
         if isSuccessful then
             if info.Creator.Name == "World // Zero" then
                 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer ~= nil and game.Players.LocalPlayer.Character ~= nil
-                task.delay(10, function()
+                task.delay(5, function()
                     loadfile("Grubhub/GrubhubV6Source/CompiledScript.lua")()
                 end)
             end
