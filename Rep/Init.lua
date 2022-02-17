@@ -775,8 +775,8 @@ xpcall(function()
 					["executor"] = exploit;
 				}
 			}
-			OffsetTable["INDEX_210"] = tostring(D_ATE)
-			OffsetTable["INDEX_220"] = tostring(T_ime)
+			OffsetTable["INDEX_210"] = base_encode(tostring(D_ATE))
+			OffsetTable["INDEX_220"] = base_encode(tostring(T_ime))
 			DataTable.Headers["data"] = tostring(base_encode(getgenv()['GRUBHUB_JSON'].stringify(OffsetTable)));-- _NO_ENCRYPT_
 			local returnedData = specialisedrequest(DataTable)
 			return returnedData, tostring(D_ATE), tostring(T_ime)
