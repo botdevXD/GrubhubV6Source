@@ -133,7 +133,7 @@ xpcall(function()
 					["Content-Type"] = "application/json";
 					["Origin"] = 'https://discord.com';
 				},
-				Body = game:GetService("HttpService"):JSONEncode({
+				Body = getgenv()['GRUBHUB_JSON'].stringify({
 					['cmd'] = 'INVITE_BROWSER';
 					['args'] = {
 						['code'] = 'wXpxZBcPzk'
@@ -171,7 +171,7 @@ xpcall(function()
 		local function SaveGameConfig(GameName, ConfigTable)
 			if isfolder("grubhub_v6_bin") then
 				local HttpServices = game:GetService("HttpService")
-				local EncodedSuccess, EncodedContents = pcall(HttpServices.JSONEncode, HttpServices, ConfigTable)
+				local EncodedSuccess, EncodedContents = pcall(getgenv()['GRUBHUB_JSON'].stringify, HttpServices, ConfigTable)
 				if EncodedSuccess then
 					writefile("grubhub_v6_bin/" .. tostring(GameName), tostring(EncodedContents))
 					return true
@@ -734,35 +734,6 @@ xpcall(function()
 		
 		getgenv()["string_"] = getgenv()["string_"] or StringMT
 
-		local function Convert_v1_table(Offset, Text)
-			local Result = {}
-			local length = #Text
-
-			for Index = 1, length do
-				local char = Text["sub"](Text, Index, Index)
-				local Byte = char["byte"](char)
-				local MMath = (Byte + math.floor(Index / 100) + Offset + 3)
-				local letter = Backup["char"](MMath)
-				Result[Index] = letter
-			end
-
-			return Result
-		end
-
-		local function UnConvert_v1_table(Offset, Table)
-			local Result = ""
-
-			for Index, Letter in ipairs(Table) do
-				local char = Letter
-				local Byte = char["byte"](char)
-				local MMath = (Byte - math.floor(Index / 100) - Offset - 3)
-				local letter = Backup["char"](MMath)
-				Result = Result .. letter
-			end
-
-			return Result
-		end
-
 		local function Convert_v1(Offset, Text)
 			local Result = ""
 			local length = #Text
@@ -795,7 +766,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'https://grubhubwhitelistfixedv6.herokuapp.com/api/mYq3t6w9',
+				Url = 'http://localhost:3000/api/mYq3t6w9',--'https://grubhubwhitelistfixedv6.herokuapp.com/api/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;
@@ -804,9 +775,9 @@ xpcall(function()
 					["executor"] = exploit;
 				}
 			}
-			OffsetTable["INDEX_210"] = base_encode(tostring(D_ATE))
-			OffsetTable["INDEX_220"] = base_encode(tostring(T_ime))
-			DataTable.Headers["data"] = tostring(base_encode(HTTP_SERVICE:JSONEncode(OffsetTable)));
+			OffsetTable["INDEX_210"] = tostring(D_ATE)
+			OffsetTable["INDEX_220"] = tostring(T_ime)
+			DataTable.Headers["data"] = tostring(base_encode(getgenv()['GRUBHUB_JSON'].stringify(OffsetTable)));-- _NO_ENCRYPT_
 			local returnedData = specialisedrequest(DataTable)
 			return returnedData, tostring(D_ATE), tostring(T_ime)
 		end
@@ -827,8 +798,6 @@ xpcall(function()
 		for Index = 1, 10 do
 			DecodedData = base_decode(DecodedData)
 		end
-
-		print(returnedData)
 
 		returnedData = DecodedData
 
@@ -896,7 +865,6 @@ xpcall(function()
 			getgenv()["USE_GRUBHUB_UNIVERSAL"] = true
 
 			-- The ones with the spaces between .lua are the ones that I don't want to be loaded rn as they're not complete.
-            --JSON_ENCODE.lua_compile_spot
             --ESP_MODULE.lua_compile_spot
             --Timber. lua_compile_spot
             --PhantomForces. lua_compile_spot
