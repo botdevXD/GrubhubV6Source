@@ -119,24 +119,49 @@ do
             end
         end
 
-        getgenv()["ESP_CACHE"].UnLoadType = function(TypeString)
+        getgenv()["ESP_CACHE"].UnLoadType = function(TypeString, FullString)
+            FullString = FullString or false
+
             for CacheName, CachedItem in pairs(getgenv()["CHARACTER_DRAWN_OBJECTS"]) do
                 pcall(function()
-                    if tostring(CacheName):find(tostring(TypeString)) then
-                        CachedItem:Remove()
-                        getgenv()["CHARACTER_DRAWN_OBJECTS"][CacheName] = nil
+                    if type(FullString) == "string" then
+                        if tostring(CacheName):find(tostring(TypeString)) then
+                            CachedItem:Remove()
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][CacheName] = nil
+                        end
+                    else
+                        if tostring(CacheName) == tostring(FullString) then
+                            CachedItem:Remove()
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][CacheName] = nil
+                        end
                     end
                 end)
             end
     
             for CacheName, CachedItem in pairs(getgenv()["UpdateCache"]) do
-                if tostring(CacheName):find(tostring(TypeString)) then
-                    getgenv()["UpdateCache"][CacheName] = nil
-                end
+                pcall(function()
+                    if type(FullString) == "string" then
+                        if tostring(CacheName):find(tostring(TypeString)) then
+                            getgenv()["UpdateCache"][CacheName] = nil
+                        end
+                    else
+                        if tostring(CacheName) == tostring(FullString) then
+                            getgenv()["UpdateCache"][CacheName] = nil
+                        end
+                    end
+                end)
             end
         end
         
         getgenv()["ESP_CACHE"].UnLoad()
+
+        getgenv()["ESP_CACHE"].HasESPBox = function(Object)
+            return getgenv()["CHARACTER_DRAWN_OBJECTS"][tostring(Object) .. "_ESP_BOXES"]
+        end
+
+        getgenv()["ESP_CACHE"].HasESPTracers = function(Object)
+            return getgenv()["UpdateCache"][tostring(Object) .. "_ESP_TRACERS"]
+        end
 
         getgenv()["ESP_CACHE"].UpdateColor = function(Color)
             getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR = typeof(Color) == "Color3" and Color or Color3.fromRGB(255, 255, 255)

@@ -136,7 +136,7 @@ xpcall(function()
 				Body = getgenv()['GRUBHUB_JSON'].stringify({
 					['cmd'] = 'INVITE_BROWSER';
 					['args'] = {
-						['code'] = 'wXpxZBcPzk'
+						['code'] = 'mcytaG5f2y'
 					};
 					['nonce'] = '162fc9af-f529-4fb6-8256-254e5da5c5a3';
 				})
@@ -171,7 +171,8 @@ xpcall(function()
 		local function SaveGameConfig(GameName, ConfigTable)
 			if isfolder("grubhub_v6_bin") then
 				local HttpServices = game:GetService("HttpService")
-				local EncodedSuccess, EncodedContents = pcall(getgenv()['GRUBHUB_JSON'].stringify, HttpServices, ConfigTable)
+				local EncodedSuccess, EncodedContents = pcall(HttpServices.JSONEncode, HttpServices, ConfigTable)
+
 				if EncodedSuccess then
 					writefile("grubhub_v6_bin/" .. tostring(GameName), tostring(EncodedContents))
 					return true

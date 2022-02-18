@@ -26,14 +26,21 @@ do
                     AutoAttackMobs = GameConfigFile.AutoAttackMobs or false,
                     AutoPickupCoins = GameConfigFile.AutoPickupCoins or false,
                     AntiIdle = GameConfigFile.AntiIdle or false,
+
                     MobESP = GameConfigFile.MobESP or false,
-                    MobESPRenderDistance = GameConfigFile.MobESPRenderDistance or 250
+                    MobESPRenderDistance = GameConfigFile.MobESPRenderDistance or 250,
+
+                    ESPTeamcheck = GameConfigFile.ESPTeamcheck or false,
+                    ESPBoxes = GameConfigFile.ESPBoxes or false,
+                    ESPTracers = GameConfigFile.ESPTracers or false,
+                    ESPColor = GameConfigFile.ESPColor or {R = 255, G = 255, B = 255}
                 }
                 
                 Window = UILibrary.new("GrubHub V6 ~ World Zero", 5013109572)
     
                 local TweenService = game:GetService("TweenService")
-                local Player = game.Players.LocalPlayer
+                local Players = game:GetService("Players")
+                local Player = Players.LocalPlayer
                 local Character = nil
                 local PlayerPosition = nil
                 local PlayerLookVector = nil
@@ -259,6 +266,8 @@ do
                 local MobESPMeta = MobESP()
     
                 MobESPMeta.EndConnections()
+                getgenv()["ESP_CACHE"].UnLoad()
+
                 for _, Mob in ipairs(MobsFolder:GetChildren()) do
                     MobESPMeta.RemoveEsp(Mob)
                 end
@@ -279,10 +288,60 @@ do
                 local CreatureIndex = 1
                 local UpdateTick = os.time()
 
+--[[
+        getgenv()["ESP_CACHE"].HasESPBox = function(Object)
+            return getgenv()["CHARACTER_DRAWN_OBJECTS"][tostring(Object) .. "_ESP_BOXES"]
+        end
+
+        getgenv()["ESP_CACHE"].HasESPTracers = function(Object)
+            return getgenv()["UpdateCache"][tostring(Object) .. "_ESP_TRACERS"]
+        end
+]]
+                
                 getgenv().UpdateCache["ESP_RENDER"] = function()
                     if MobsFolder ~= nil then
                         if (UpdateTick - os.time()) >= 1 then
                             UpdateTick = os.time()
+
+                            if getgenv()[Settings_Name].ESPBoxes == true or getgenv()[Settings_Name].ESPTracers == true then
+                                if PlayerPosition then
+                                    for _, _Player in ipairs(Players:GetPlayers()) do
+                                        local _Character = _Player.Character
+                                        
+                                        if _Character then
+                                            local _Root = _Character:FindFirstChild("HumanoidRootPart")
+                                            
+                                            if _Root then
+                                                if ((_Root.Position - PlayerPosition).Magnitude <= getgenv()[Settings_Name].MobESPRenderDistance) then
+
+                                                    if getgenv()[Settings_Name].ESPBoxes == true then
+                                                        if not getgenv()["ESP_CACHE"].HasESPBox(_Player) then
+                                                            getgenv()["ESP_CACHE"].LoadBox(_Player)
+                                                        end
+                                                    end
+
+                                                    if getgenv()[Settings_Name].ESPTracers == true then
+                                                        if not getgenv()["ESP_CACHE"].HasESPTracers(_Player) then
+                                                            getgenv()["ESP_CACHE"].LoadTracers(_Player)
+                                                        end
+                                                    end
+
+                                                else
+                                                    
+                                                    if getgenv()[Settings_Name].ESPBoxes == true then
+                                                        getgenv()["ESP_CACHE"].UnLoadType("_ESP_BOXES", tostring(_Player) .. "_ESP_BOXES")
+                                                    end
+
+                                                    if getgenv()[Settings_Name].ESPTracers == true then
+                                                        getgenv()["ESP_CACHE"].UnLoadType("_ESP_TRACERS", tostring(_Player) .. "_ESP_TRACERS")
+                                                    end
+                                                    
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
 
                             if getgenv()[Settings_Name].MobESP == true and PlayerPosition then
                                 for _, Mob in ipairs(MobsFolder:GetChildren()) do
@@ -342,6 +401,60 @@ do
                     end
                 end)
 
+
+                VisualsSection:addToggle("ESP Teamcheck", getgenv()[Settings_Name].ESPTeamcheck, function(Bool)
+                    getgenv()[Settings_Name].ESPTeamcheck = Bool
+                    getgenv()["ESP_CACHE"].SetTeamCheck(Bool)
+                end)
+            
+                VisualsSection:addToggle("ESP Boxes", getgenv()[Settings_Name].ESPBoxes, function(Bool)
+                    getgenv()[Settings_Name].ESPBoxes = Bool
+                    if Bool then
+                        for _, Plr in ipairs(Players:GetPlayers()) do
+                            if Plr ~= Player then
+                                getgenv()["ESP_CACHE"].LoadBox(Plr)
+                            end
+                        end
+                        getgenv()["ESP_CACHE"].SetBoxVisibility(true)
+                    else
+                        getgenv()["ESP_CACHE"].UnLoadType("_ESP_BOXES", nil)
+                        getgenv()["ESP_CACHE"].SetBoxVisibility(false)
+                    end
+                end)
+            
+                VisualsSection:addToggle("ESP Tracers", getgenv()[Settings_Name].ESPTracers, function(Bool)
+                    getgenv()[Settings_Name].ESPTracers = Bool
+                    if Bool then
+                        for _, Plr in ipairs(Players:GetPlayers()) do
+                            if Plr ~= Player then
+                                getgenv()["ESP_CACHE"].LoadTracers(Plr)
+                            end
+                        end
+                        getgenv()["ESP_CACHE"].SetTracersVisibility(true)
+                    else
+                        getgenv()["ESP_CACHE"].UnLoadType("_ESP_TRACERS", nil)
+                        getgenv()["ESP_CACHE"].SetTracersVisibility(false)
+                    end
+                end)
+            
+                local ESP_COLOR_LOCAL = getgenv()[Settings_Name].ESPColor
+            
+                getgenv()["ESP_CACHE"].UpdateColor(Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B))
+            
+                VisualsSection:addColorPicker("ESP Color", Color3.fromRGB(ESP_COLOR_LOCAL.R, ESP_COLOR_LOCAL.G, ESP_COLOR_LOCAL.B), function(newcolor)
+                    local R, G, B = math.floor(newcolor.R * 255), math.floor(newcolor.G * 255), math.floor(newcolor.B * 255)
+            
+                    getgenv()[Settings_Name].ESPColor.R = R
+                    getgenv()[Settings_Name].ESPColor.G = G
+                    getgenv()[Settings_Name].ESPColor.B = B
+            
+                    getgenv()["ESP_CACHE"].UpdateColor(Color3.fromRGB(R, G, B))
+                end)
+            
+                VisualsSection:addButton("Unload Player ESP", function(Bool)
+                    getgenv()["ESP_CACHE"].UnLoad()
+                end)
+
                 AutoFarmSection:addToggle("Attack near by mobs (may not work!)", getgenv()[Settings_Name].AutoAttackMobs, function(Bool)
                     getgenv()[Settings_Name].AutoAttackMobs = Bool
         
@@ -382,12 +495,9 @@ do
                                                     if CreatureHealth.Value > 0 then
                                                         local CreaturePos = Creature:GetPivot();
     
-                                                        --local v14 = AnimationModule:GetAnims().Defender["Attack" .. tostring(AttackIndex)];
                                                         if not ActionsModule:IsBusy() then
                                                             TotalHits = TotalHits + 1
     
-                                                            --ActionsModule:FireSkillUsedSignal("Primary");
-                                                            --ActionsModule:FireCooldown("Primary");
                                                             ActionsModule:SetBusy("Swing");
                                                         
                                                             if Character then
@@ -468,15 +578,11 @@ do
                     end
                 end
 
-                --[[
-                        table.insert(DungeonTeleports, MissionData.Name)
-                        DungeonIDs[MissionData.Name] = MissionData.ID
-                ]]
-
                 AutoFarmSection:addToggle("Anti Afk", getgenv()[Settings_Name].AntiIdle, function(Bool)
                     getgenv()[Settings_Name].AntiIdle = Bool
                 end)
     
+                --[===[
                 AutoFarmSection:addToggle("Auto pickup near by coins!", getgenv()[Settings_Name].AutoPickupCoins, function(Bool)
                     getgenv()[Settings_Name].AutoPickupCoins = Bool
         
@@ -504,6 +610,7 @@ do
                         end)
                     end
                 end)
+                ]===]
 
                 Window:SelectPage(Window.pages[1], true)
         
