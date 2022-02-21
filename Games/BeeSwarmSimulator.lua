@@ -19,7 +19,7 @@ do
             local playerHumRP = player.Character.HumanoidRootPart
 
             function tp(...)
-                local tic_k = tick();
+                local tic_k = os.time();
                 local params = {...};
                 local cframe = CFrame.new(params[1],params[2],params[3]);
                 local tween,err = pcall(function()
