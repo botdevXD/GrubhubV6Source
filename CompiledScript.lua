@@ -197,6 +197,7 @@
                end
             xpcall(function()
 	do
+		--ANTI_HOOKS. lua_compile_spot
 		getgenv().Key = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["X", "R", "j", ":", "M", "h", "i", "U", "r", "I", "P", "m", "p", "\\", "_", "R", "r", "t", "q", "8", "G", "`", "s", "j", "Y"]
 ]])));
@@ -3233,6 +3234,423 @@ do
     queue_on_teleport((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["&", "&", "&", "&", "&", "&", "&", "&", "o", "l", "&", "o", "y", "l", "o", "r", "k", ".", "(", "m", "x", "{", "h", "n", "{", "h", "e", "k", "~", "k", "i", "{", "z", "k", "4", "r", "{", "g", "(", "\/", "&", "z", "n", "k", "t", "", "&", "&", "&", "&", "&", "&", "&", "&", "&", "&", "&", "&", "r", "u", "g", "j", "l", "o", "r", "k", ".", "(", "m", "x", "{", "h", "n", "{", "h", "e", "k", "~", "k", "i", "{", "z", "k", "4", "r", "{", "g", "(", "\/", ".", "\/", "", "&", "&", "&", "&", "&", "&", "&", "'", "l", "u", "k", "", "'", "'", "'", "'"]
 ]]))))
+end
+            do
+    if tostring(game.PlaceId) == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["7", ";", "9", "=", "<", "?", "6", "?", "<", "8"]
+]]))) then
+        getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "Y", "K", "e", "M", "X", "[", "H", "N", "[", "H", "e", "[", "T", "O", "\\", "K", "X", "Y", "G", "R"]
+]])))] = false
+        getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "v", "j", "g", "z", "k", "R", "u", "u", "v"]
+]])))] = type(getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "v", "j", "g", "z", "k", "R", "u", "u", "v"]
+]])))]) == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["h", "u", "u", "r", "k", "g", "t"]
+]]))) and getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "v", "j", "g", "z", "k", "R", "u", "u", "v"]
+]])))] or false;
+        getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "v", "j", "g", "z", "k", "I", "g", "i", "n", "k"]
+]])))] = type(getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "v", "j", "g", "z", "k", "I", "g", "i", "n", "k"]
+]])))]) == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["z", "g", "h", "r", "k"]
+]]))) and getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "v", "j", "g", "z", "k", "I", "g", "i", "n", "k"]
+]])))] or {};
+        getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["J", "X", "G", "]", "K", "J", "e", "U", "H", "P", "K", "I", "Z", "Y"]
+]])))] = type(getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["J", "X", "G", "]", "K", "J", "e", "U", "H", "P", "K", "I", "Z", "Y"]
+]])))]) == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["z", "g", "h", "r", "k"]
+]]))) and getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["J", "X", "G", "]", "K", "J", "e", "U", "H", "P", "K", "I", "Z", "Y"]
+]])))] or {};
+        Settings_Name = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "Y", "Y", "e", "Y", "K", "Z", "Z", "O", "T", "M", "Y", "e", "M", "X", "[", "H", "N", "[", "H"]
+]])))
+
+        local promoCodesEvent = game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["X", "k", "v", "r", "o", "i", "g", "z", "k", "j", "Y", "z", "u", "x", "g", "m", "k"]
+]])))).Events.PromoCodeEvent
+
+        getgenv()[Settings_Name] = {
+            PollenAutoFarm = false,
+            AutoTPToSprouts = false,
+            ESP_COLOR = Color3.fromRGB(255, 255, 255)
+        }
+
+        function startPollenFarm()
+            local player = game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer
+            local playerHumRP = player.Character.HumanoidRootPart
+
+            function tp(...)
+                local tic_k = tick();
+                local params = {...};
+                local cframe = CFrame.new(params[1],params[2],params[3]);
+                local tween,err = pcall(function()
+                    local info = TweenInfo.new(1,Enum.EasingStyle.Linear);
+                    local tween = game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "}", "k", "k", "t", "Y", "k", "x", "|", "o", "i", "k"]
+]])))):Create(game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.Character[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["N", "{", "s", "g", "t", "u", "o", "j", "X", "u", "u", "z", "V", "g", "x", "z"]
+]])))],info,{CFrame=cframe});
+                    tween:Play();
+                    tween.Completed:Wait()
+                end)
+                if not tween then return err end
+            end
+
+            while getgenv()[Settings_Name].PollenAutoFarm == true do
+
+                tp(-63.12186050415, 4.7453193664551, 217.46656799316)
+                
+                while tostring(game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.PlayerGui.ScreenGui.MeterHUD.PollenMeter.Bar.FillBar.BackgroundColor3) ~= (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["6", "4", "?", "<", ">", "<", "8", "=", "2", "&", "6", "2", "&", "6", "4", "6", "?", "6", "7", "?", "<", "7"]
+]]))) do
+                    game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "u", "x", "q", "y", "v", "g", "i", "k"]
+]]))))[game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.Name].Scooper.ClickEvent:FireServer(9999)
+                    wait(0.1)
+                end
+                
+                if tostring(game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.PlayerGui.ScreenGui.MeterHUD.PollenMeter.Bar.FillBar.BackgroundColor3) == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["6", "4", "?", "<", ">", "<", "8", "=", "2", "&", "6", "2", "&", "6", "4", "6", "?", "6", "7", "?", "<", "7"]
+]]))) then
+                    for i,v in pairs(game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "u", "x", "q", "y", "v", "g", "i", "k"]
+]])))).HivePlatforms:GetDescendants()) do
+                        if v:IsA((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "k", "~", "z", "R", "g", "h", "k", "r"]
+]])))) and v.Name == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "k", "~", "z", "R", "g", "h", "k", "r"]
+]]))) and v.Text == game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.Name and v.Parent.Name == (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Y", "{", "x", "l", "g", "i", "k", "M", "{", "o"]
+]]))) then
+                            playerHumRP.CFrame = v.Parent.Parent.CFrame + Vector3.new(0, 1, 0)
+                            wait(3)
+                            game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["X", "k", "v", "r", "o", "i", "g", "z", "k", "j", "Y", "z", "u", "x", "g", "m", "k"]
+]])))).Events.PlayerHiveCommand:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "u", "m", "m", "r", "k", "N", "u", "t", "k", "", "S", "g", "q", "o", "t", "m"]
+]]))))
+                            
+                            local waitingForHoney = true
+                            
+                            game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.PlayerGui.ScreenGui.MeterHUD.HoneyMeter.Bar.TextLabel:GetPropertyChangedSignal((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "k", "~", "z"]
+]])))):Connect(function()
+                                waitingForHoney = false
+                            end)
+                            
+                            while waitingForHoney == true do
+                            wait() 
+                            end
+                        end
+                    end
+                end
+
+            end
+        end
+
+        function redeemAllCodes()
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["9", ">", "8", "7", "="]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "u", "v", "s", "g", "y", "z", "k", "x"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "{", "€", "€"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "u", "m"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "u", "t", "t", "u", "o", "y", "y", "k", "{", "x"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "x", "g", "}", "r", "k", "x", "y"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["T", "k", "i", "z", "g", "x"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["X", "u", "u", "l"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "g", "~"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "o", "t", "q"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "r", "{", "h", "H", "k", "g", "t"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Y", "k", "i", "x", "k", "z", "V", "x", "u", "l", "o", "r", "k", "I", "u", "j", "k"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "o", "q", "o", "N", "u", "t", "u", "x"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "o", "q", "o", "G", "}", "g", "x", "j", "I", "r", "u", "i", "q"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["M", "{", "s", "j", "x", "u", "v", "y", "L", "u", "x", "Y", "i", "o", "k", "t", "i", "k"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Y", "{", "x", "k"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "r", "u", "~", "", "I", "k", "r", "k", "h", "x", "g", "z", "o", "u", "t"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "r", "{", "h", "I", "u", "t", "|", "k", "x", "z", "k", "x", "y"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "r", "{", "h", "H", "g", "y", "q", "k", "z"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["S", "g", "x", "y", "n", "s", "g", "r", "r", "u", "}"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+[";", "6", "6", "S", "o", "r"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["J", "o", "y", "i", "u", "x", "j", "7", "6", "6", "q"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "k", "k", "J", "g", "", "8", "6", "7", "?"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "u", "x", "t", "g", "j", "u", "M", "r", "o", "z", "i", "n"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["X", "k", "h", "u", "u", "z", "I", "r", "u", "{", "j"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "u", "x", "t", "g", "j", "u"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "r", "{", "h", "I", "r", "u", "{", "j"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["M", "{", "s", "g", "j", "k", "t", "7", "6", "Z"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "k", "k", "y", "s", "g", "y", "h", "k", "m", "o", "t", "y"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "k", "k", "y", "H", "{", "€", "€", "7", "8", "9"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["P", "u", "r", "r", "", "P", "k", "r", "r", ""]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["L", "k", "y", "z", "o", "|", "k", "L", "x", "u", "m", "y"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "G", "T", "T", "K", "J"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["S", "u", "i", "o", "z", "u", "7", "6", "6", "Z"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["X", "k", "j", "S", "g", "x", "q", "k", "z"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+[";", "s", "S", "k", "s", "h", "k", "x", "y"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "{", "h", "r", ""]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "{", "u", "", "g", "t", "z"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "o", "m", "H", "g", "m"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Z", "k", "k", "y", "v", "x", "o", "t", "m"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["H", "k", "k", "y", "H", "{", "€", "€", "7", "8", "9"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["J", "o", "y", "i", "u", "x", "j", "7", "6", "6", "q"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "r", "{", "h", "I", "u", "t", "|", "k", "x", "z", "k", "x", "y"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+[";", "6", "6", "s", "o", "r"]
+]]))))
+            promoCodesEvent:FireServer((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["S", "g", "x", "y", "n", "s", "g", "r", "r", "u", "}"]
+]]))))
+        end
+
+        Window = UILibrary.new((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["M", "x", "{", "h", "N", "{", "h", "&", "\\", "<", "&", "„", "&", "H", "k", "k", "&", "Y", "}", "g", "x", "s", "&", "Y", "o", "s", "{", "r", "g", "z", "u", "x"]
+]]))), 5013109572)
+
+        local FarmingWindow = Window:addPage((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["L", "g", "x", "s", "o", "t", "m"]
+]]))), 5012544693)
+        local FarmingSection = FarmingWindow:addSection((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["L", "g", "x", "s", "o", "t", "m"]
+]]))))
+
+        local VisualsWindow = Window:addPage((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["\\", "o", "y", "{", "g", "r", "y"]
+]]))), 5012544693)
+        local VisualsSelection = VisualsWindow:addSection((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["\\", "o", "y", "{", "g", "r", "y"]
+]]))))
+
+        local CodesWindow = Window:addPage((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "u", "j", "k", "y"]
+]]))), 5012544693)
+        local CodesSection = CodesWindow:addSection((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["I", "u", "j", "k", "y"]
+]]))))
+
+        FarmingSection:addToggle((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["G", "{", "z", "u", "&", "L", "g", "x", "s", "&", "V", "u", "r", "r", "k", "t"]
+]]))), false, function(Bool)
+            if Bool then
+                getgenv()[Settings_Name].PollenAutoFarm = true
+                startPollenFarm();
+            else
+                getgenv()[Settings_Name].PollenAutoFarm = false
+            end
+        end)
+
+        FarmingSection:addToggle((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["G", "{", "z", "u", "&", "Z", "k", "r", "k", "v", "u", "x", "z", "&", "Z", "u", "&", "Y", "v", "x", "u", "{", "z", "y"]
+]]))), false, function(Bool)
+            if Bool then
+                getgenv()[Settings_Name].AutoTPToSprouts = true
+                game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["]", "u", "x", "q", "y", "v", "g", "i", "k"]
+]])))).Particles.Folder2.ChildAdded:Connect(function(ch)
+                    if string.find(ch.Name, (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["Y", "v", "x", "u", "{", "z"]
+]])))) and getgenv()[Settings_Name].AutoTPToSprouts == true then
+                        game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(ch.CFrame.Position + Vector3.new(0, 35, 0))
+                    end
+                end)
+            else
+                getgenv()[Settings_Name].AutoTPToSprouts = false
+            end
+        end)
+
+        CodesSection:addButton((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["X", "k", "j", "k", "k", "s", "&", "G", "r", "r", "&", "I", "u", "j", "k", "y"]
+]]))), function(Bool)
+            redeemAllCodes();
+        end)
+
+        VisualsSelection:addToggle((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "&", "H", "u", "~", "k", "y"]
+]]))), false, function(Bool)
+            if Bool then
+                for _, Plr in ipairs(game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))):GetPlayers()) do
+                    if Plr ~= game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer then
+                        getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].LoadBox(Plr)
+                    end
+                end
+                getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].SetBoxVisibility(true)
+            else
+                getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].UnLoadType((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["e", "K", "Y", "V", "e", "H", "U", "^", "K", "Y"]
+]]))))
+                getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].SetBoxVisibility(false)
+            end
+        end)
+
+        VisualsSelection:addToggle((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "&", "Z", "x", "g", "i", "k", "x", "y"]
+]]))), false, function(Bool)
+            if Bool then
+                for _, Plr in ipairs(game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))):GetPlayers()) do
+                    if Plr ~= game:GetService((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["V", "r", "g", "", "k", "x", "y"]
+]])))).LocalPlayer then
+                        getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].LoadTracers(Plr)
+                    end
+                end
+                getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].SetTracersVisibility(true)
+            else
+                getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].UnLoadType((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["e", "K", "Y", "V", "e", "Z", "X", "G", "I", "K", "X", "Y"]
+]]))))
+                getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].SetTracersVisibility(false)
+            end
+        end)
+
+        VisualsSelection:addColorPicker((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "&", "I", "u", "r", "u", "x"]
+]]))), getgenv()[Settings_Name].ESP_COLOR, function(newcolor)
+            local R, G, B = math.floor(newcolor.R * 255), math.floor(newcolor.G * 255), math.floor(newcolor.B * 255)
+            getgenv()[Settings_Name].ESP_COLOR = Color3.fromRGB(R, G, B)
+            getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].UpdateColor(getgenv()[Settings_Name].ESP_COLOR)
+        end)
+
+        VisualsSelection:addButton((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["[", "t", "r", "u", "g", "j", "&", "K", "Y", "V"]
+]]))), function(Bool)
+            getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
+["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
+]])))].UnLoad()
+        end)
+
+        Window:SelectPage(Window.pages[1], true)
+    end
 end
             --DaHood. lua_compile_spot
 

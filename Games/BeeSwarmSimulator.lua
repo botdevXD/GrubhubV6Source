@@ -6,7 +6,7 @@ do
         getgenv()["DRAWED_OBJECTS"] = type(getgenv()["DRAWED_OBJECTS"]) == "table" and getgenv()["DRAWED_OBJECTS"] or {};
         Settings_Name = "BSS_SETTINGS_GRUBHUB"
 
-        local promoCodesEvent = game:GetService("ReplicatedStorage").Events.promoCodesCodeEvent
+        local promoCodesEvent = game:GetService("ReplicatedStorage").Events.PromoCodeEvent
 
         getgenv()[Settings_Name] = {
             PollenAutoFarm = false,
