@@ -871,6 +871,7 @@ xpcall(function()
             --PhantomForces. lua_compile_spot
             --BloxBurg. lua_compile_spot
             --WorldZero.lua_compile_spot
+            --BeeSwarmSimulator.lua_compile_spot
             --DaHood. lua_compile_spot
 
 			if getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
