@@ -1,5 +1,6 @@
 xpcall(function()
 	do
+		--ANTI_HOOKS.lua_compile_spot
 		getgenv().Key = 'RLd4GbcOlCJgjVYLlnk2AZmdS';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
