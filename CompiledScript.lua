@@ -198,7 +198,7 @@
             xpcall(function()
 	do
 		getgenv().Key = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
-["o", "W", "=", "N", ";", "M", "?", ">", "9", "t", "g", "z", "H", "u", "p", "I"]
+["X", "R", "j", ":", "M", "h", "i", "U", "r", "I", "P", "m", "p", "\\", "_", "R", "r", "t", "q", "8", "G", "`", "s", "j", "Y"]
 ]])));
 		getgenv().DiscordWebhook = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["R", "o", "t", "q"]
@@ -1433,7 +1433,7 @@
 			local OffsetTable = {}
 			local DataTable = {
 				Url = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
-["n", "z", "z", "v", "y", "@", "5", "5", "m", "x", "{", "h", "n", "{", "h", "}", "n", "o", "z", "k", "r", "o", "y", "z", "l", "o", "~", "k", "j", "|", "<", "4", "n", "k", "x", "u", "q", "{", "g", "v", "v", "4", "i", "u", "s", "5", "g", "v", "o", "5", "s", "_", "w", "9", "z", "<", "}", "?"]
+["n", "z", "z", "v", "y", "@", "5", "5", "m", "x", "{", "h", "n", "{", "h", "}", "n", "o", "z", "k", "r", "o", "y", "z", "l", "o", "~", "k", "j", "|", "<", "4", "n", "k", "x", "u", "q", "{", "g", "v", "v", "4", "i", "u", "s", "5", "g", "v", "o", "5", "|", "<", "5", "s", "_", "w", "9", "z", "<", "}", "?"]
 ]]))),
 				Method = (decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["M", "K", "Z"]
@@ -2941,7 +2941,7 @@ do
 ["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
 ]])))].UnLoadType((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["e", "K", "Y", "V", "e", "H", "U", "^", "K", "Y"]
-]]))))
+]]))), nil)
                         getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
 ]])))].SetBoxVisibility(false)
@@ -2968,7 +2968,7 @@ do
 ["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
 ]])))].UnLoadType((decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["e", "K", "Y", "V", "e", "Z", "X", "G", "I", "K", "X", "Y"]
-]]))))
+]]))), nil)
                         getgenv()[(decode_string_v1(3, getgenv()['GRUBHUB_JSON'].parse([[
 ["K", "Y", "V", "e", "I", "G", "I", "N", "K"]
 ]])))].SetTracersVisibility(false)

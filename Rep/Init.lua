@@ -1,6 +1,6 @@
 xpcall(function()
 	do
-		getgenv().Key = 'iQ7H5G983natBojC';
+		getgenv().Key = 'RLd4GbcOlCJgjVYLlnk2AZmdS';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
 		getgenv().GubVersion = '5.0';
@@ -767,7 +767,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'https://grubhubwhitelistfixedv6.herokuapp.com/api/mYq3t6w9',
+				Url = 'https://grubhubwhitelistfixedv6.herokuapp.com/api/v6/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;

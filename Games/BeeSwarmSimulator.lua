@@ -148,10 +148,6 @@ do
             redeemAllCodes();
         end)
 
-        VisualsSelection:addToggle("ESP Teamcheck", false, function(Bool)
-            getgenv()["ESP_CACHE"].SetTeamCheck(Bool)
-        end)
-
         VisualsSelection:addToggle("ESP Boxes", false, function(Bool)
             if Bool then
                 for _, Plr in ipairs(game:GetService("Players"):GetPlayers()) do
