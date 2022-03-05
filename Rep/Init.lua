@@ -1,7 +1,7 @@
 xpcall(function()
 	do
 		--ANTI_HOOKS. lua_compile_spot
-		getgenv().Key = 'EXX8kCW8V9ngfPuRzxOa';
+		getgenv().Key = 'oe20TBAEWET5AJgqEkIYYX58u9crMJ';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
 		getgenv().GubVersion = '6.0';
@@ -28,6 +28,14 @@ xpcall(function()
 		local function identify()
 			local Executor = string.lower(identifyexecutor())
 			local ExecutorTable = nil
+
+			if string.find(Executor, "coco") then
+				ExecutorTable = {
+					"Coco Z",
+					request
+				}
+			end
+
 			if string.find(Executor, "synapse") then
 				ExecutorTable = {
 					"Synapse",
