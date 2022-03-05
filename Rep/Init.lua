@@ -1,10 +1,10 @@
 xpcall(function()
 	do
 		--ANTI_HOOKS. lua_compile_spot
-		getgenv().Key = 'RLd4GbcOlCJgjVYLlnk2AZmdS';
+		getgenv().Key = 'EXX8kCW8V9ngfPuRzxOa';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
-		getgenv().GubVersion = '5.0';
+		getgenv().GubVersion = '6.0';
 
 		local CLIENT_DEOBF_OFFSET = 3;
 		local SERVER_DEOBF_OFFSET = 1;
@@ -872,6 +872,7 @@ xpcall(function()
             --PhantomForces. lua_compile_spot
             --BloxBurg. lua_compile_spot
             --WorldZero.lua_compile_spot
+            --PetSimX.lua_compile_spot
             --BeeSwarmSimulator.lua_compile_spot
             --DaHood. lua_compile_spot
 
