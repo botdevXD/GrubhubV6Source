@@ -1489,7 +1489,9 @@ end
             IgnoreChests = GameConfigFile.IgnoreChests or false,
             IgnoreDiamonds = GameConfigFile.IgnoreDiamonds or false,
             CollectLootBags = GameConfigFile.CollectLootBags or false,
-            InstantCollect = GameConfigFile.InstantCollect or false
+            InstantCollect = GameConfigFile.InstantCollect or false,
+            AutoHatch = GameConfigFile.AutoHatch or false,
+            ChosenEgg = GameConfigFile.ChosenEgg or "Choose A Egg",
         }
 
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -1511,11 +1513,13 @@ end
 
         local AutoFarmWindow = Window:addPage("Auto Farm", 5012544693)
         local AutoFarmSection = AutoFarmWindow:addSection("Farming", 5012544693)
+        local AutoFarmHatchingSection = AutoFarmWindow:addSection("Hatching", 5012544693)
 
         local TeleportsWindow = Window:addPage("Teleports", 5012544693)
 
         local __VARIABLES = workspace:WaitForChild("__VARIABLES", 5)
         local __THINGS = workspace:WaitForChild("__THINGS", 5)
+        local __MAP = workspace:WaitForChild("__MAP", 5)
         local GameNetwork = nil
         local GameData = nil
         
@@ -1747,6 +1751,16 @@ end
                 end
             end
 
+            PetSimSDK.GetAllEggs = function()
+                local Data = {}
+                if GameLibarySuccess then
+                    for I, _ in pairs(GameLibaryContents.Directory.Eggs) do
+                        table.insert(Data, tostring(I))
+                    end
+                end
+                return Data
+            end
+
         end
 
         PlayerSection:addButton("Redeem free gifts", PetSimSDK.RedeemFreeGifts)
@@ -1881,6 +1895,31 @@ end
                 end
             end)
         end)
+
+
+        local AllEggs = PetSimSDK.GetAllEggs()
+
+        AutoFarmHatchingSection:addToggle("Auto Hatch", getgenv()[Settings_Name].AutoHatch, function(Bool)
+            getgenv()[Settings_Name].AutoHatch = Bool
+
+            task.spawn(function()
+                while getgenv()[Settings_Name].AutoHatch == true and GameNetwork ~= nil do
+
+                    if table.find(AllEggs, tostring(getgenv()[Settings_Name].ChosenEgg)) then
+                        GameNetwork.Invoke("Buy Egg", getgenv()[Settings_Name].ChosenEgg, false)
+                    end
+
+                    task.wait(1 / 10000)
+                end            
+            end)
+
+        end)
+        
+        AutoFarmHatchingSection:addDropdown(getgenv()[Settings_Name].ChosenEgg, AllEggs, function(Chosen)
+            if table.find(AllEggs, tostring(Chosen)) then
+                getgenv()[Settings_Name].ChosenEgg = tostring(Chosen)
+            end
+        end, true)
 
         print("Pet Simulator X loaded!")
     end
