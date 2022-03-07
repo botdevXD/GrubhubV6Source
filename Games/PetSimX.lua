@@ -21,6 +21,7 @@ do
             ChosenEgg = GameConfigFile.ChosenEgg or "Choose A Egg",
         }
 
+        local RunService = game:GetService("RunService")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
         local GameFramework = ReplicatedStorage:WaitForChild("Framework", 5)
         local GameLibary = GameFramework:WaitForChild("Library", 5)
@@ -43,10 +44,12 @@ do
         local AutoFarmHatchingSection = AutoFarmWindow:addSection("Hatching", 5012544693)
 
         local TeleportsWindow = Window:addPage("Teleports", 5012544693)
+        local WorldsTeleportSection = TeleportsWindow:addSection("Worlds", 5012544693)
+        local AreasTeleportSection = TeleportsWindow:addSection("Areas", 5012544693)
 
-        local __VARIABLES = workspace:WaitForChild("__VARIABLES", 5)
-        local __THINGS = workspace:WaitForChild("__THINGS", 5)
-        local __MAP = workspace:WaitForChild("__MAP", 5)
+        local __VARIABLES = workspace:FindFirstChild("__VARIABLES")
+        local __THINGS = workspace:FindFirstChild("__THINGS")
+        local __MAP = workspace:FindFirstChild("__MAP")
         local GameNetwork = nil
         local GameData = nil
         
@@ -70,9 +73,15 @@ do
         if GameNetwork == nil then return Player:Kick("Failed to get game network, contact a developer!") end
         if GameData == nil then return Player:Kick("Failed to get game data, contact a developer!") end
 
+        local PlrWalk = Player ~= nil and Player.Character ~= nil and Player.Character:FindFirstChild("Humanoid") and Player.Character.Humanoid.WalkSpeed or 0
+        local PlrJumpPower = Player ~= nil and Player.Character ~= nil and Player.Character:FindFirstChild("Humanoid") and Player.Character.Humanoid.JumpPower or 0
         local PetSimSDK = {}
 
         do
+            local TeleportsData = {
+                Worlds = {},
+                Areas = {}
+            }
             local OldOwnFunction = nil
             local OrbEnv = nil
             local ChestMeshIDs = (function()
@@ -90,6 +99,22 @@ do
                 end
 
                 return Data
+            end)()
+
+            local Teleports = (function()
+                for I, V in pairs(GameLibaryContents.Directory.Areas) do
+                    if V.world ~= nil and V.world ~= "" then
+                        if not TeleportsData.Worlds[tostring(V.world)] then
+                            TeleportsData.Worlds[tostring(V.world)] = tostring(V.world)
+                        end
+
+                        if not TeleportsData.Areas[tostring(I)] then
+                            TeleportsData.Areas[tostring(I)] = tostring(V.world)
+                        end
+                    end
+                end
+                
+                return TeleportsData
             end)()
 
             PetSimSDK.Blacklisted = {}
@@ -288,7 +313,69 @@ do
                 return Data
             end
 
+
+            PetSimSDK.GetTeleportsRaw = function()
+                return Teleports
+            end
+
+            PetSimSDK.GetMapTeleports = function()
+                return __MAP and __MAP:FindFirstChild("Teleports") and __MAP.Teleports or "NONE"
+            end
+
+            PetSimSDK.Teleport = function(Place, TeleportType)
+                if GameLibarySuccess then
+                    task.spawn(function()
+                        local RawData = PetSimSDK.GetTeleportsRaw()
+                        local TP_DATA = RawData.Worlds[tostring(Place)] or RawData.Areas[tostring(Place)]
+
+                        pcall(function()
+                            GameLibaryContents.WorldCmds.Load(TP_DATA);
+                        end)
+
+                        if TeleportType == "Area" then
+                            local TeleportsFolder = PetSimSDK.GetMapTeleports()
+                            local TeleportCheck = TeleportsFolder ~= "NONE" and typeof(TeleportsFolder) == "Instance" and TeleportsFolder:FindFirstChild(tostring(Place)) or nil
+
+                            repeat
+                                TeleportsFolder = PetSimSDK.GetMapTeleports()
+                                TeleportCheck = TeleportsFolder ~= "NONE" and typeof(TeleportsFolder) == "Instance" and TeleportsFolder:FindFirstChild(tostring(Place)) or nil
+                                task.wait(1 / 10000)
+                            until TeleportCheck ~= nil and TeleportCheck ~= "NONE"
+
+                            if TeleportCheck ~= nil then
+                                
+                            end
+                        end
+                    end)
+                end
+            end
+
         end
+        
+        getgenv()["UpdateCache"].PlayerController = function()
+            if Player then
+                if Player.Character then
+                    local Humanoid = Player.Character:FindFirstChild("Humanoid")
+
+                    if Humanoid then
+                        Humanoid.WalkSpeed = PlrWalk
+                        Humanoid.JumpPower = PlrJumpPower
+                    end
+                end
+            end
+
+            __VARIABLES = workspace:FindFirstChild("__VARIABLES")
+            __THINGS = workspace:FindFirstChild("__THINGS")
+            __MAP = workspace:FindFirstChild("__MAP")
+        end
+
+        PlayerSection:addSlider("Walkspeed", PlrWalk, 0, 100, function(NewValue)
+            PlrWalk = NewValue
+        end)
+
+        PlayerSection:addSlider("JumpPower", PlrJumpPower, 0, 100, function(NewValue)
+            PlrJumpPower = NewValue
+        end)
 
         PlayerSection:addButton("Redeem free gifts", PetSimSDK.RedeemFreeGifts)
         PlayerSection:addButton("Get all gamepasses", PetSimSDK.FreeGamepasses)
@@ -448,6 +535,32 @@ do
             end
         end, true)
 
+        local RawTeleportData = PetSimSDK.GetTeleportsRaw()
+
+        for WorldName, WorldPlace in pairs(RawTeleportData.Worlds) do
+            WorldsTeleportSection:addButton(tostring(WorldName), function()
+                PetSimSDK.Teleport(tostring(WorldName), "World")
+            end)
+        end
+
+        for AreaName, AreaWorld in pairs(RawTeleportData.Areas) do
+            AreasTeleportSection:addButton(tostring(AreaName), function()
+                PetSimSDK.Teleport(tostring(AreaName), "Area")
+            end)
+        end
+
+        if not getgenv()["UpdateLoop"] then
+            getgenv()["UpdateLoop"] = true
+            RunService.Heartbeat:Connect(function()
+                for _, Function in pairs(getgenv()["UpdateCache"]) do
+                    if type(Function) == "function" then
+                        pcall(Function)
+                    end
+                end
+            end)
+        end
+
+        Window:SelectPage(Window.pages[1], true)
         print("Pet Simulator X loaded!")
     end
 end

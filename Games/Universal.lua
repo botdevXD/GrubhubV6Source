@@ -70,4 +70,6 @@ do
     VisualsSelection:addButton("Unload ESP", function(Bool)
         getgenv()["ESP_CACHE"].UnLoad()
     end)
+
+    Window:SelectPage(Window.pages[1], true)
 end

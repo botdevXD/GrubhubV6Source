@@ -1,7 +1,7 @@
 xpcall(function()
 	do
 		--ANTI_HOOKS. lua_compile_spot
-		getgenv().Key = 'uVEkXQh3gEa07wyIrFHVYaw9EYZuYe';
+		getgenv().Key = 'Tc8v8Ujz4t9WgUUkwhT4jbqsgHykO0';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
 		getgenv().GubVersion = '6.0';
@@ -776,7 +776,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'https://grubhubscripts.com/api/v6/mYq3t6w9',
+				Url = 'http://localhost:3000/api/v6/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;
