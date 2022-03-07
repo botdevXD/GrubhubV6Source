@@ -343,7 +343,13 @@ do
                             until TeleportCheck ~= nil and TeleportCheck ~= "NONE"
 
                             if TeleportCheck ~= nil then
-                                
+                                if Player.Character then
+                                    local Humanoid = Player.Character:FindFirstChild("Humanoid")
+
+                                    if Humanoid then
+                                        Player.Character:SetPrimaryPartCFrame(TeleportCheck.CFrame + Vector3.new(0, Humanoid.HipHeight + 1, 0));
+                                    end
+                                end
                             end
                         end
                     end)
