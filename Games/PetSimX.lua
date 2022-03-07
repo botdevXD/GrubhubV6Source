@@ -39,6 +39,8 @@ do
         local AutoFarmWindow = Window:addPage("Auto Farm", 5012544693)
         local AutoFarmSection = AutoFarmWindow:addSection("Farming", 5012544693)
 
+        local TeleportsWindow = Window:addPage("Teleports", 5012544693)
+
         local __VARIABLES = workspace:WaitForChild("__VARIABLES", 5)
         local __THINGS = workspace:WaitForChild("__THINGS", 5)
         local GameNetwork = nil
@@ -67,6 +69,7 @@ do
         local PetSimSDK = {}
 
         do
+            local OldOwnFunction = nil
             local OrbEnv = nil
             local ChestMeshIDs = (function()
                 local Data = {}
@@ -93,6 +96,16 @@ do
                 Diamond = "Diamond",
                 Chest = "Chest"
             }
+
+            PetSimSDK.FreeGamepasses = function()
+                if GameLibarySuccess then
+                    if OldOwnFunction == nil then
+                        OldOwnFunction = hookfunction(GameLibaryContents.Gamepasses.Owns, function(...)
+                            return true
+                        end)
+                    end
+                end
+            end
 
             PetSimSDK.GetAllPets = function()
                 local Pets = {}
@@ -199,8 +212,10 @@ do
             PetSimSDK.IsLootBag = function(Object)
                 local Check1 = typeof(Object) == "Instance" and true or false
                 local Check2 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://7205419138" and true or false
-                local Check3 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://8159969008" and true or false
-                return Check2 or Check3
+                local Check3 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://8159964896" and true or false
+                local Check4 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://8159969008" and true or false
+
+                return Check2 or Check3 or Check4
             end
 
             PetSimSDK.CollectLootBag = function(LootBag)
@@ -262,6 +277,7 @@ do
         end
 
         PlayerSection:addButton("Redeem free gifts", PetSimSDK.RedeemFreeGifts)
+        PlayerSection:addButton("Get all gamepasses", PetSimSDK.FreeGamepasses)
 
         AutoFarmSection:addToggle("Auto Farm", getgenv()[Settings_Name].AutoFarm, function(Bool)
             getgenv()[Settings_Name].AutoFarm = Bool
@@ -358,7 +374,6 @@ do
 
                     if #Orbs > 0 then
                         for _, Orb in ipairs(Orbs) do
-                            print(PetSimSDK.GetType(Orb))
                             PetSimSDK.CollectOrb(Orb)
                         end
                     end
