@@ -1,7 +1,7 @@
 xpcall(function()
 	do
 		--ANTI_HOOKS. lua_compile_spot
-		getgenv().Key = 'oe20TBAEWET5AJgqEkIYYX58u9crMJ';
+		getgenv().Key = 'uVEkXQh3gEa07wyIrFHVYaw9EYZuYe';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
 		getgenv().GubVersion = '6.0';
@@ -776,7 +776,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'https://grubhubwhitelistfixedv6.herokuapp.com/api/v6/mYq3t6w9',
+				Url = 'https://grubhubscripts.com/api/v6/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;
@@ -876,13 +876,15 @@ xpcall(function()
 
 			-- The ones with the spaces between .lua are the ones that I don't want to be loaded rn as they're not complete.
             --ESP_MODULE.lua_compile_spot
-            --Timber. lua_compile_spot
-            --PhantomForces. lua_compile_spot
-            --BloxBurg. lua_compile_spot
-            --WorldZero.lua_compile_spot
-            --PetSimX.lua_compile_spot
-            --BeeSwarmSimulator.lua_compile_spot
-            --DaHood. lua_compile_spot
+            --Timber. lua_compile_spot -- need to complete
+            --PhantomForces. lua_compile_spot -- need to complete
+            --BloxBurg. lua_compile_spot -- need to complete
+            --WorldZero. lua_compile_spot -- need to complete
+            --BeeSwarmSimulator. lua_compile_spot -- need to complete
+            --DaHood. lua_compile_spot -- need to complete
+
+			-- Doing rn
+			--PetSimX.lua_compile_spot -- need to complete
 
 			if getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
                 --Universal.lua_compile_spot
@@ -900,7 +902,7 @@ xpcall(function()
                         elseif getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
 							SaveGameConfig(FixName(tostring("Universal")) .. ".json", getgenv()[Settings_Name])
                         else
-							SaveGameConfig(FixName(tostring(info.Name)) .. ".json", getgenv()[Settings_Name])
+							SaveGameConfig(tostring(game.PlaceId) .. ".json", getgenv()[Settings_Name])
 						end
 					end
 				end)
