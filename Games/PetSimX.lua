@@ -127,7 +127,7 @@ do
                 return TeleportsData
             end)()
 
-            PetSimSDK.CoinsCache = (function()
+            function GetCoinCache()
                 local CoinData = __THINGS and __THINGS:FindFirstChild("Coins") and __THINGS.Coins:GetChildren() or {}
 
                 for _, Object in ipairs(CoinData) do
@@ -135,8 +135,11 @@ do
                 end
 
                 return CoinData
-            end)
+            end
+
+            PetSimSDK.CoinsCache = {}
             
+            PetSimSDK.CoinCacheTime = 999999 -- will be reset to os.time once executed!
             PetSimSDK.EquippedPetsTime = 999999 -- will be reset to os.time once executed!
             PetSimSDK.ItemTypeCache = {}
             PetSimSDK.EquippedPets = {}
@@ -479,16 +482,7 @@ do
                     end)
                 end
             end
-
-            PetSimSDK.CoinsCache = PetSimSDK.CoinsCache()
             
-            if __THINGS then
-                if __THINGS:FindFirstChild("Coins") then
-                    getgenv().GameConnections["new_coin"] = __THINGS.Coins.ChildAdded:Connect(function(NewObject)
-                        PetSimSDK.GetType(NewObject)
-                    end)
-                end
-            end
         end
         
         getgenv()["UpdateCache"].PlayerController = function()
@@ -511,6 +505,13 @@ do
             __VARIABLES = workspace:FindFirstChild("__VARIABLES")
             __THINGS = workspace:FindFirstChild("__THINGS")
             __MAP = workspace:FindFirstChild("__MAP")
+
+            if PetSimSDK.CoinCacheTime == 999999 or (os.time() - PetSimSDK.CoinCacheTime) >= 2 then
+                PetSimSDK.CoinCacheTime = os.time()
+
+                table.clear(PetSimSDK.ItemTypeCache)
+                PetSimSDK.CoinsCache = GetCoinCache()
+            end
         end
 
         PlayerSection:addSlider("Walkspeed", PlrWalk, 0, 100, function(NewValue)

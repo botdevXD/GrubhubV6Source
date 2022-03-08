@@ -1600,7 +1600,7 @@ end
                 return TeleportsData
             end)()
 
-            PetSimSDK.CoinsCache = (function()
+            function GetCoinCache()
                 local CoinData = __THINGS and __THINGS:FindFirstChild("Coins") and __THINGS.Coins:GetChildren() or {}
 
                 for _, Object in ipairs(CoinData) do
@@ -1608,8 +1608,11 @@ end
                 end
 
                 return CoinData
-            end)
+            end
+
+            PetSimSDK.CoinsCache = {}
             
+            PetSimSDK.CoinCacheTime = 999999 -- will be reset to os.time once executed!
             PetSimSDK.EquippedPetsTime = 999999 -- will be reset to os.time once executed!
             PetSimSDK.ItemTypeCache = {}
             PetSimSDK.EquippedPets = {}
@@ -1952,13 +1955,14 @@ end
                     end)
                 end
             end
-
-            PetSimSDK.CoinsCache = PetSimSDK.CoinsCache()
             
             if __THINGS then
                 if __THINGS:FindFirstChild("Coins") then
                     getgenv().GameConnections["new_coin"] = __THINGS.Coins.ChildAdded:Connect(function(NewObject)
-                        PetSimSDK.GetType(NewObject)
+                        task.delay(1.5, function()
+                            print(NewObject)
+                            PetSimSDK.GetType(NewObject)
+                        end)
                     end)
                 end
             end
@@ -1984,6 +1988,13 @@ end
             __VARIABLES = workspace:FindFirstChild("__VARIABLES")
             __THINGS = workspace:FindFirstChild("__THINGS")
             __MAP = workspace:FindFirstChild("__MAP")
+
+            if PetSimSDK.CoinCacheTime == 999999 or (os.time() - PetSimSDK.CoinCacheTime) >= 2 then
+                PetSimSDK.CoinCacheTime = os.time()
+
+                table.clear(PetSimSDK.ItemTypeCache)
+                PetSimSDK.CoinsCache = GetCoinCache()
+            end
         end
 
         PlayerSection:addSlider("Walkspeed", PlrWalk, 0, 100, function(NewValue)
@@ -2029,11 +2040,7 @@ end
                                                     if PetSimSDK.IsBlacklisted(tostring(CoinType)) == false then
                                                         PetSimSDK.CollectCoin(Coin, true)
                                                         break
-                                                    else
-                                                        --print(CoinType)
                                                     end
-                                                else
-                                                    print("wtf")
                                                 end
                                             end
                                         end
