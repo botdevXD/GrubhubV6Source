@@ -6,6 +6,16 @@ do
 
         getgenv().UpdateLoop = type(getgenv().UpdateLoop) == "boolean" and getgenv().UpdateLoop or false;
         getgenv().UpdateCache = type(getgenv().UpdateCache) == "table" and getgenv().UpdateCache or {};
+        getgenv().GameConnections = type(getgenv().GameConnections) == "table" and getgenv().GameConnections or {};
+
+        if type(getgenv().GameConnections) == "table" then
+            for IndexName, Signal in pairs(getgenv().GameConnections) do
+                if typeof(Signal) == "RBXScriptConnection" then
+                    Signal:Disconnect()
+                end
+            end
+            table.clear(getgenv().GameConnections)
+        end
 
         local GameConfigFile = GetGameConfig(tostring(game.PlaceId) .. ".json")
         Settings_Name = "PET_SIM_X_SETTINGS_GRUBHUB"
@@ -117,6 +127,19 @@ do
                 return TeleportsData
             end)()
 
+            PetSimSDK.CoinsCache = (function()
+                local CoinData = __THINGS and __THINGS:FindFirstChild("Coins") and __THINGS.Coins:GetChildren() or {}
+
+                for _, Object in ipairs(CoinData) do
+                    PetSimSDK.GetType(Object)
+                end
+
+                return CoinData
+            end)
+            
+            PetSimSDK.EquippedPetsTime = 999999 -- will be reset to os.time once executed!
+            PetSimSDK.ItemTypeCache = {}
+            PetSimSDK.EquippedPets = {}
             PetSimSDK.Blacklisted = {}
             PetSimSDK.Types = {
                 Coin = "Coin",
@@ -174,13 +197,13 @@ do
             end
 
             PetSimSDK.GetCoins = function()
-                return __THINGS and __THINGS:FindFirstChild("Coins") and __THINGS.Coins:GetChildren() or {}
+                return type(PetSimSDK.CoinsCache) == "table" and PetSimSDK.CoinsCache or {}
             end
 
             PetSimSDK.CollectCoin = function(Coin, UseAllPets)
+                local EquippedPets = PetSimSDK.EquippedPets
+
                 if GameNetwork ~= nil then
-                    local EquippedPets = PetSimSDK.GetEquippedPets()
-                    
                     if #EquippedPets > 0 then
                         local Pets = UseAllPets == true and (function()
                             local PetIDs = {}
@@ -210,8 +233,17 @@ do
             end
 
             PetSimSDK.IsOrb = function(Object)
+                if PetSimSDK.ItemTypeCache[Object] then
+                    return PetSimSDK.ItemTypeCache[Object] == PetSimSDK.Types.Orb and true or false
+                end
+
                 local Check1 = typeof(Object) == "Instance" and true or false
                 local Check2 = Check1 == true and Object:FindFirstChild("Orb") and true or false
+
+                if Check2 == true then
+                    PetSimSDK.ItemTypeCache[Object] = PetSimSDK.Types.Orb
+                end
+
                 return Check2
             end
 
@@ -239,10 +271,18 @@ do
             end
 
             PetSimSDK.IsLootBag = function(Object)
+                if PetSimSDK.ItemTypeCache[Object] then
+                    return PetSimSDK.ItemTypeCache[Object] == PetSimSDK.Types.Lootbag and true or false
+                end
+
                 local Check1 = typeof(Object) == "Instance" and true or false
                 local Check2 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://7205419138" and true or false
                 local Check3 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://8159964896" and true or false
                 local Check4 = Check1 == true and Object:IsA("MeshPart") and tostring(Object.MeshId) == "rbxassetid://8159969008" and true or false
+
+                if Check2 or Check3 or Check4 then
+                    PetSimSDK.ItemTypeCache[Object] = PetSimSDK.Types.Lootbag
+                end
 
                 return Check2 or Check3 or Check4
             end
@@ -255,10 +295,18 @@ do
             end
 
             PetSimSDK.IsDiamond = function(Object)
+                if PetSimSDK.ItemTypeCache[Object] then
+                    return PetSimSDK.ItemTypeCache[Object] == PetSimSDK.Types.Diamond and true or false
+                end
+
                 local Check1 = typeof(Object) == "Instance" and true or false
                 local Check2 = Check1 == true and Object:FindFirstChild("Coin") and true or false
                 local Check3 = Check2 == true and Object.Coin:IsA("MeshPart") and tostring(Object.Coin.MeshId) == "rbxassetid://7041620873" and true or false
                 local Check4 = Check2 == true and Object.Coin:IsA("MeshPart") and tostring(Object.Coin.MeshId) == "rbxassetid://7041621431" and true or false
+
+                if Check3 or Check4 then
+                    PetSimSDK.ItemTypeCache[Object] = PetSimSDK.Types.Diamond
+                end
 
                 if Check3 == true then return true end
                 if Check4 == true then return true end
@@ -267,30 +315,47 @@ do
             end
 
             PetSimSDK.IsChest = function(Object)
+                if PetSimSDK.ItemTypeCache[Object] then
+                    return PetSimSDK.ItemTypeCache[Object] == PetSimSDK.Types.Chest and true or false
+                end
+                
                 local Check1 = typeof(Object) == "Instance" and true or false
                 local Check2 = Check1 == true and Object:FindFirstChild("Coin") and true or false
                 local Check3 = Check2 == true and Object.Coin:IsA("MeshPart") and table.find(ChestMeshIDs, tostring(Object.Coin.MeshId)) ~= nil and true or false
+                  
+                if Check3 then
+                    PetSimSDK.ItemTypeCache[Object] = PetSimSDK.Types.Chest
+                end
+
                 return Check3
             end
 
             PetSimSDK.IsCoin = function(Object)
+                if PetSimSDK.ItemTypeCache[Object] then
+                    return PetSimSDK.ItemTypeCache[Object] == PetSimSDK.Types.Coin and true or false
+                end
+
                 local Check1 = typeof(Object) == "Instance" and true or false
                 local Check2 = Check1 == true and Object:FindFirstChild("Coin") and true or false
                 
+                if Check2 == true and PetSimSDK.IsChest(Object) == false and PetSimSDK.IsDiamond(Object) == false then
+                    PetSimSDK.ItemTypeCache[Object] = PetSimSDK.Types.Coin
+                end
+
                 return Check2 == true and PetSimSDK.IsChest(Object) == false and PetSimSDK.IsDiamond(Object) == false and true or false
             end
 
             PetSimSDK.GetType = function(Object)
-                local Type1 = PetSimSDK.IsCoin(Object) == true and PetSimSDK.Types.Coin or "NONE"
-                local Type2 = PetSimSDK.IsOrb(Object) == true and PetSimSDK.Types.Orb or Type1
-                local Type3 = PetSimSDK.IsLootBag(Object) == true and PetSimSDK.Types.Lootbag or Type2
-                local Type4 = PetSimSDK.IsDiamond(Object) == true and PetSimSDK.Types.Diamond or Type3
-                local Type5 = PetSimSDK.IsChest(Object) == true and PetSimSDK.Types.Chest or Type4
-                return Type5
+                if PetSimSDK.IsCoin(Object) == true then return PetSimSDK.Types.Coin end
+                if PetSimSDK.IsOrb(Object) == true then return PetSimSDK.Types.Orb end
+                if PetSimSDK.IsLootBag(Object) == true then return PetSimSDK.Types.Lootbag end
+                if PetSimSDK.IsDiamond(Object) == true then return PetSimSDK.Types.Diamond end
+                if PetSimSDK.IsChest(Object) == true then return PetSimSDK.Types.Chest end
+                return nil
             end
 
             PetSimSDK.IsBlacklisted = function(Type)
-                return table.find(PetSimSDK.Blacklisted, Type) ~= nil and true or false
+                return PetSimSDK.Blacklisted[Type] ~= nil and true or false
             end
 
             PetSimSDK.RedeemFreeGifts = function()
@@ -313,7 +378,6 @@ do
                 return Data
             end
 
-
             PetSimSDK.GetTeleportsRaw = function()
                 return Teleports
             end
@@ -322,13 +386,73 @@ do
                 return __MAP and __MAP:FindFirstChild("Teleports") and __MAP.Teleports or "NONE"
             end
 
+            PetSimSDK.GetCoinsFolder = function()
+                return __THINGS and __THINGS:FindFirstChild("Coins") and __THINGS.Coins
+            end
+
+            PetSimSDK.GetOrbsFolder = function()
+                return __THINGS and __THINGS:FindFirstChild("Orbs") and __THINGS.Orbs
+            end
+
+            PetSimSDK.GetLootbagsFolder = function()
+                return __THINGS and __THINGS:FindFirstChild("Lootbags") and __THINGS.Lootbags
+            end
+
+            PetSimSDK.MapLoader = function(AreaName) -- Map Loader hook
+                if AreaName == "Trading Plaza" then
+                    AreaName = "Spawn"
+                end
+                
+                GameNetwork.Fire("Request World", AreaName)
+
+                while not Player.PlayerGui:FindFirstChild("__MAP") do
+                    GameLibaryContents.RenderStepped();
+                end
+
+                Player.Character.HumanoidRootPart.Anchored = true
+
+                if __MAP then
+                    __MAP:Destroy();
+                end
+
+                PetSimSDK.GetCoinsFolder():ClearAllChildren()
+                PetSimSDK.GetOrbsFolder():ClearAllChildren()
+                PetSimSDK.GetLootbagsFolder():ClearAllChildren()
+
+                local NewMapFolder = Player.PlayerGui:WaitForChild("__MAP", 5)
+                local NewMap = NewMapFolder:WaitForChild("MAP", 5)
+
+                if NewMap then
+                    local WorldData = GameLibaryContents.Directory.Worlds[AreaName];
+
+                    if not WorldData then return warn("World data not found!") end
+                    
+                    if NewMap:FindFirstChild("Spawns") then
+                        NewMap.Spawns:Destroy()
+                    end
+
+                    local MapDebris = GameLibaryContents.Debris:FindFirstChild("__MAPDEBRIS");
+                    if not MapDebris then
+                        MapDebris = Instance.new("Folder")
+                        MapDebris.Name = "__MAPDEBRIS"
+                        MapDebris.Parent = u1.Debris
+                    else
+                        MapDebris:ClearAllChildren();
+                    end
+
+                    NewMap.Name = "__MAP"
+                    NewMap.Parent = workspace
+                end
+            end
+
             PetSimSDK.Teleport = function(Place, TeleportType)
-                if GameLibarySuccess then
+                if GameLibarySuccess and Player.Character then
                     task.spawn(function()
                         local RawData = PetSimSDK.GetTeleportsRaw()
                         local TP_DATA = RawData.Worlds[tostring(Place)] or RawData.Areas[tostring(Place)]
 
-                        pcall(function()
+                       pcall(function()
+                            --PetSimSDK.MapLoader(TP_DATA)
                             GameLibaryContents.WorldCmds.Load(TP_DATA);
                         end)
 
@@ -356,6 +480,15 @@ do
                 end
             end
 
+            PetSimSDK.CoinsCache = PetSimSDK.CoinsCache()
+            
+            if __THINGS then
+                if __THINGS:FindFirstChild("Coins") then
+                    getgenv().GameConnections["new_coin"] = __THINGS.Coins.ChildAdded:Connect(function(NewObject)
+                        PetSimSDK.GetType(NewObject)
+                    end)
+                end
+            end
         end
         
         getgenv()["UpdateCache"].PlayerController = function()
@@ -366,6 +499,11 @@ do
                     if Humanoid then
                         Humanoid.WalkSpeed = PlrWalk
                         Humanoid.JumpPower = PlrJumpPower
+                    end
+
+                    if PetSimSDK.EquippedPetsTime == 999999 or (os.time() - PetSimSDK.EquippedPetsTime) >= 1 then
+                        PetSimSDK.EquippedPetsTime = os.time()
+                        PetSimSDK.EquippedPets = PetSimSDK.GetEquippedPets()
                     end
                 end
             end
@@ -394,30 +532,33 @@ do
             task.spawn(function()
                 while getgenv()[Settings_Name].AutoFarm == true do
                     if Player.Character == nil then
-                        task.wait(1 / 10000)
+                        task.wait(1 / 50)
                         continue
                     end
 
                     local Root = Player.Character:FindFirstChild("HumanoidRootPart")
-                    local Equipped = PetSimSDK.GetEquippedPets()
 
-                    if #Equipped > 0 then
-                        local CanProceed = OldFarmObject == nil and true or false
-                        CanProceed = OldFarmObject ~= nil and OldFarmObject.Parent == nil and true or CanProceed
+                    if #PetSimSDK.EquippedPets > 0 then
+                        local CanProceed = true--OldFarmObject == nil and true or false
+                        --CanProceed = OldFarmObject ~= nil and OldFarmObject.Parent == nil and true or CanProceed
 
                         if CanProceed then
                             local Coins = PetSimSDK.GetCoins()
-                            
+
                             if #Coins > 0 then
                                 for _, Coin in ipairs(Coins) do
-                                    if PetSimSDK.IsCoin(Coin) or PetSimSDK.IsChest(Coin) or PetSimSDK.IsDiamond(Coin) then
-                                        if (Coin.Coin.Position - (Root ~= nil and Root.Position or Camera.CFrame.p)).Magnitude <= 150 then
-                                            
-                                            if not PetSimSDK.IsBlacklisted(PetSimSDK.GetType(Coin)) then
-                                                PetSimSDK.CollectCoin(Coin, true)
-                                                break
-                                            end
+                                    if Coin ~= nil then
+                                        if Coin:FindFirstChild("Coin") then
+                                            if (Coin.Coin.Position - (Root ~= nil and Root.Position or Camera.CFrame.p)).Magnitude <= 150 then
+                                                local CoinType = PetSimSDK.GetType(Coin)
 
+                                                if CoinType ~= nil then
+                                                    if PetSimSDK.IsBlacklisted(tostring(CoinType)) == false then
+                                                        PetSimSDK.CollectCoin(Coin, true)
+                                                        break
+                                                    end
+                                                end
+                                            end
                                         end
                                     end
                                 end
@@ -425,7 +566,7 @@ do
                         end
                     end
 
-                    task.wait(1 / 10000)
+                    task.wait(1 / 50)
                 end
             end)
         end)
@@ -433,36 +574,31 @@ do
         AutoFarmSection:addToggle("Ignore Coins", getgenv()[Settings_Name].IgnoreCoins, function(Bool)
             getgenv()[Settings_Name].IgnoreCoins = Bool
 
-            local BlacklistIndex = table.find(PetSimSDK.Blacklisted, PetSimSDK.Types.Coin)
-
             if Bool then
-                table.insert(PetSimSDK.Blacklisted, PetSimSDK.Types.Coin)
+                PetSimSDK.Blacklisted[PetSimSDK.Types.Coin] = true
             else
-                table.remove(PetSimSDK.Blacklisted, BlacklistIndex)
+                PetSimSDK.Blacklisted[PetSimSDK.Types.Coin] = nil
             end
         end)
 
         AutoFarmSection:addToggle("Ignore Chests", getgenv()[Settings_Name].IgnoreChests, function(Bool)
             getgenv()[Settings_Name].IgnoreChests = Bool
 
-            local BlacklistIndex = table.find(PetSimSDK.Blacklisted, PetSimSDK.Types.Chest)
-
             if Bool then
-                table.insert(PetSimSDK.Blacklisted, PetSimSDK.Types.Chest)
+                PetSimSDK.Blacklisted[PetSimSDK.Types.Chest] = true
             else
-                table.remove(PetSimSDK.Blacklisted, BlacklistIndex)
+                PetSimSDK.Blacklisted[PetSimSDK.Types.Chest] = nil
             end
+
         end)
 
         AutoFarmSection:addToggle("Ignore Diamonds", getgenv()[Settings_Name].IgnoreDiamonds, function(Bool)
             getgenv()[Settings_Name].IgnoreDiamonds = Bool
-
-            local BlacklistIndex = table.find(PetSimSDK.Blacklisted, PetSimSDK.Types.Diamond)
-
+            
             if Bool then
-                table.insert(PetSimSDK.Blacklisted, PetSimSDK.Types.Diamond)
+                PetSimSDK.Blacklisted[PetSimSDK.Types.Diamond] = true
             else
-                table.remove(PetSimSDK.Blacklisted, BlacklistIndex)
+                PetSimSDK.Blacklisted[PetSimSDK.Types.Diamond] = nil
             end
         end)
 
@@ -473,7 +609,7 @@ do
                 while getgenv()[Settings_Name].InstantCollect == true do
 
                     if Player.Character == nil then
-                        task.wait(1 / 10000)
+                        task.wait(1 / 250)
                         continue
                     end
 
@@ -485,7 +621,7 @@ do
                         end
                     end
                     
-                    task.wait(1 / 10000)
+                    task.wait(1 / 250)
                 end
             end)
         end)
@@ -497,7 +633,7 @@ do
                 while getgenv()[Settings_Name].CollectLootBags == true do
 
                     if Player.Character == nil then
-                        task.wait(1 / 10000)
+                        task.wait(1 / 250)
                         continue
                     end
 
@@ -511,7 +647,7 @@ do
                         end
                     end
                     
-                    task.wait(1 / 10000)
+                    task.wait(1 / 250)
                 end
             end)
         end)
@@ -529,8 +665,8 @@ do
                         GameNetwork.Invoke("Buy Egg", getgenv()[Settings_Name].ChosenEgg, false)
                     end
 
-                    task.wait(1 / 10000)
-                end            
+                    task.wait(1 / 100)
+                end
             end)
 
         end)
