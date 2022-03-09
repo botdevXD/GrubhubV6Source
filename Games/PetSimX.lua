@@ -219,10 +219,9 @@ do
                         end)() or {[1] = EquippedPets[1].PetID}
         
                         if #Pets > 0 then
-                            
-                            for PetIndex, PetId in ipairs(Pets) do
-                                local JoinCallResult = GameNetwork.Invoke("Join Coin", Coin.Name, {PetId});
+                            local JoinCallResult = GameNetwork.Invoke("Join Coin", Coin.Name, Pets);
 
+                            for PetIndex, PetId in ipairs(Pets) do
                                 GameNetwork.Fire("Change Pet Target", PetId, "Coin", Coin:GetAttribute("ID"));
                                 GameNetwork.Fire("Farm Coin", Coin.Name, PetId);
                             end
@@ -482,7 +481,7 @@ do
                     end)
                 end
             end
-            
+
         end
         
         getgenv()["UpdateCache"].PlayerController = function()
@@ -509,8 +508,17 @@ do
             if PetSimSDK.CoinCacheTime == 999999 or (os.time() - PetSimSDK.CoinCacheTime) >= 2 then
                 PetSimSDK.CoinCacheTime = os.time()
 
-                table.clear(PetSimSDK.ItemTypeCache)
                 PetSimSDK.CoinsCache = GetCoinCache()
+
+                for Index, Value in pairs(PetSimSDK.ItemTypeCache) do
+                    if typeof(Index) == "Instance" then
+                        if Index.Parent == nil then
+                            PetSimSDK.ItemTypeCache[Index] = nil
+                        end
+                    else
+                        PetSimSDK.ItemTypeCache[Index] = nil
+                    end
+                end
             end
         end
 
@@ -555,6 +563,7 @@ do
 
                                                 if CoinType ~= nil then
                                                     if PetSimSDK.IsBlacklisted(tostring(CoinType)) == false then
+
                                                         PetSimSDK.CollectCoin(Coin, true)
                                                         break
                                                     end
