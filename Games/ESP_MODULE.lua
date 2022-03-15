@@ -22,9 +22,13 @@ do
 
     local PartNames = {
         [292439477] = {Root = "Torso", Head = "Head"},
-        [3233893879] = {Root = "Chest", Head = "Head"}
+        [3233893879] = {Root = "Chest", Head = "Head"},
+        [3837841034] = {Root = "torso", Head = "head"}
     }
     
+    local CustomCharacterCache = {}
+    local CustomTeamCache = {}
+
     if PartNames[game.PlaceId] ~= nil then
         getgenv()["CUSTOM_FUNCTIONS_GC"] = type(getgenv()["CUSTOM_FUNCTIONS_GC"]) == "table" and getgenv()["CUSTOM_FUNCTIONS_GC"] or {}
 
@@ -50,11 +54,24 @@ do
     local function GetPlrTeam(Plr)
         if typeof(Plr) == "Instance" then
             if game.PlaceId == 3233893879 then
+                -- Phantom forces
                 if getgenv()["CUSTOM_FUNCTIONS_GC"]["GetPlayerTeam"] ~= nil then
                     return getgenv()["CUSTOM_FUNCTIONS_GC"]["GetPlayerTeam"]:GetPlayerTeam(Plr)
                 else
                     return Plr.Team
                 end
+            elseif game.PlaceId == 3837841034 then
+                -- Deadline
+                if CustomTeamCache ~= nil then
+                    if type(CustomTeamCache) == "table" then
+                        if CustomTeamCache[Plr.Name] ~= nil then
+                            if type(CustomTeamCache[Plr.Name]) == "table" then
+                                return CustomTeamCache[Plr.Name].team
+                            end
+                        end
+                    end
+                end
+                return nil
             else
                 return Plr.Team
             end
@@ -62,6 +79,10 @@ do
     end
 
     local function GetChar_Ez(Plr)
+        if CustomCharacterCache[Plr] ~= nil then
+            return CustomCharacterCache[Plr].Char
+        end
+
         if typeof(Plr) == "Instance" then
             if not PartNames[game.PlaceId] then
                 if Plr:IsA("Model") then
@@ -78,6 +99,9 @@ do
                         return PlrParts.Body
                     end
                 end
+            elseif game.PlaceId == 3837841034 then
+                -- Deadline moment
+                return nil
             elseif game.PlaceId == 292439477 then
                 -- Phantom Forces moment
 
@@ -105,6 +129,7 @@ do
 
     getgenv()["ESP_CACHE"].Connect = function()
         getgenv()["ESP_CACHE"].UnLoad = function()
+            table.clear(CustomCharacterCache)
             for CacheName, CachedItem in pairs(getgenv()["CHARACTER_DRAWN_OBJECTS"]) do
                 pcall(function()
                     CachedItem:Remove()
@@ -117,6 +142,14 @@ do
                     getgenv()["UpdateCache"][CacheName] = nil
                 end
             end
+        end
+
+        getgenv()["ESP_CACHE"].UpdateTeamData = function(Data)
+            CustomTeamCache = Data
+        end
+
+        getgenv()["ESP_CACHE"].AddCharacter = function(Player, Data)
+            CustomCharacterCache[Player] = Data
         end
 
         getgenv()["ESP_CACHE"].UnLoadType = function(TypeString, FullString)
@@ -192,6 +225,12 @@ do
                     if Players:FindFirstChild(tostring(Plr)) ~= nil then
                         local PlrChar = GetChar_Ez(Plr)
 
+                        if PlrChar ~= nil then
+                            if PlrChar.Parent == nil then
+                                PlrChar = nil
+                            end
+                        end
+
                         if PlrChar and getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] ~= nil then
                             local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Root or "HumanoidRootPart")
                             local Plrhead = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Head or "Head")
@@ -242,6 +281,12 @@ do
                 getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] = function()
                     if Players:FindFirstChild(tostring(Plr)) ~= nil then
                         local PlrChar = GetChar_Ez(Plr)
+
+                        if PlrChar ~= nil then
+                            if PlrChar.Parent == nil then
+                                PlrChar = nil
+                            end
+                        end
 
                         if PlrChar and getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] ~= nil then
                             local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Root or "HumanoidRootPart")

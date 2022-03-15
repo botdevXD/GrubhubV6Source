@@ -882,9 +882,11 @@ xpcall(function()
             --WorldZero. lua_compile_spot -- need to complete
             --BeeSwarmSimulator. lua_compile_spot -- need to complete
             --DaHood. lua_compile_spot -- need to complete
+			--BadBusiness. lua_compile_spot -- need to complete
 
 			-- Doing rn
 			--PetSimX.lua_compile_spot -- need to complete
+			--Deadline.lua_compile_spot -- need to complete
 
 			if getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
                 --Universal.lua_compile_spot
