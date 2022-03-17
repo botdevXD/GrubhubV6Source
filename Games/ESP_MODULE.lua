@@ -2,6 +2,30 @@
 -- Made by 0x74_Dev / _Ben#6969 / Mr.Grubhub --
 -----------------------------------------------
 
+--[===[
+    local Plr = game.Players.LocalPlayer
+getgenv()["CHARACTER_DRAWN_OBJECTS"] = getgenv()["CHARACTER_DRAWN_OBJECTS"] or {}
+if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] == nil then
+	local Camera = workspace.Camera
+	getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = Drawing.new("Line")
+	getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Visible = false
+	getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Thickness = 2;
+
+
+	game:GetService("RunService").RenderStepped:Connect(function()
+		local LinePos, LineVisible = Camera:WorldToScreenPoint(workspace.fff.Position);
+		local BarrelPos, BarrelVisible = Camera:WorldToScreenPoint(game.Players.LocalPlayer.Character["M4-(30)"].barrelpos1.Position)
+	
+		
+		local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]
+		Line.To = Vector2.new(BarrelPos.X, BarrelPos.Y + 35)
+		Line.From = Vector2.new(LinePos.X, LinePos.Y + 35);
+		Line.Visible = true
+	end)
+end
+]===]
+
+
 local ErrorHandlerTing = function(err)
     return warn(err)
 end
@@ -214,12 +238,23 @@ do
 
         getgenv()["ESP_CACHE"].LoadTracers = function(Plr)
             if getgenv()["UpdateCache"][Plr.Name .. "_ESP_TRACERS"] == nil then
-                if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] == nil then
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = Drawing.new("Line")
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Visible = false
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Thickness = 2;
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
+                local function Create()
+                    if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] == nil then
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = Drawing.new("Line")
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Visible = false
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Thickness = 2;
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
+                    end
                 end
+
+                local function Remove()
+                    if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] then
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]:Remove()
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = nil
+                    end
+                end
+
+                Create()
 
                 getgenv()["UpdateCache"][Plr.Name .. "_ESP_TRACERS"] = function()
                     if Players:FindFirstChild(tostring(Plr)) ~= nil then
@@ -231,39 +266,47 @@ do
                             end
                         end
 
-                        if PlrChar and getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] ~= nil then
+                        if PlrChar then
                             local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Root or "HumanoidRootPart")
                             local Plrhead = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Head or "Head")
                             
                             if RootCheck and Plrhead then
-                                if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] then
-                                    local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]
-                                    local Pos, Visible = Camera:WorldToScreenPoint(RootCheck.Position);
-                                    local PosSize = Vector3.new(Pos.X, 0, Pos.Z)
-                                    local LinePos, LineVisible = Camera:WorldToViewportPoint(Plrhead.Position);
-                                    Line.To = Vector2.new(LinePos.X, LinePos.Y)
-                                    Line.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
-                                    Line.Color = typeof(getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR) == "Color3" and getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+
+                                local Pos, Visible = Camera:WorldToScreenPoint(RootCheck.Position);
+                                local PosSize = Vector3.new(Pos.X, 0, Pos.Z)
+                                local LinePos, LineVisible = Camera:WorldToViewportPoint(Plrhead.Position);
                                 
-                                    if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()["ESP_CACHE"].SETTINGS.TEAM_CHECK then
-                                        Line.Visible = false
+                                if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()["ESP_CACHE"].SETTINGS.TEAM_CHECK then
+                                    Remove()
+                                else
+                                    if Visible then
+                                        if getgenv()["ESP_CACHE"].SETTINGS.TRACERS_ENABLED == true then
+                                            Create()
+
+                                            local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]
+                                            Line.To = Vector2.new(LinePos.X, LinePos.Y)
+                                            Line.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y);
+                                            Line.Color = typeof(getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR) == "Color3" and getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                                        
+                                            Line.Visible = true
+                                        else
+                                            getgenv()["UpdateCache"][Plr.Name .. "_ESP_TRACERS"] = nil -- auto erase player from updation cache
+                                            
+                                            Remove()
+                                        end
                                     else
-                                        Line.Visible = getgenv()["ESP_CACHE"].SETTINGS.TRACERS_ENABLED == true and Visible or false
+                                        Remove()
                                     end
                                 end
+
                             end
                         else
-                            if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] then
-                                getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Visible = false
-                            end
+                            Remove()
                         end
                     else
                         getgenv()["UpdateCache"][Plr.Name .. "_ESP_TRACERS"] = nil -- auto erase player from updation cache
 
-                        if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] then
-                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]:Remove()
-                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = nil
-                        end
+                        Remove()
                     end
                 end
             end
@@ -271,12 +314,24 @@ do
 --GetPlayerTeam
         getgenv()["ESP_CACHE"].LoadBox = function(Plr)
             if getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] == nil then
-                if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] == nil then
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] = Drawing.new("Square");
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Thickness = 2;
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Filled = false;
-                    getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Visible = false;
+
+                local function Create()
+                    if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] == nil then
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] = Drawing.new("Square");
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Thickness = 2;
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Filled = false;
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Visible = false;
+                    end
                 end
+
+                local function Remove()
+                    if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] then
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"]:Remove()
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] = nil
+                    end
+                end
+
+                Create()
 
                 getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] = function()
                     if Players:FindFirstChild(tostring(Plr)) ~= nil then
@@ -288,39 +343,46 @@ do
                             end
                         end
 
-                        if PlrChar and getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] ~= nil then
+                        if PlrChar then
                             local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Root or "HumanoidRootPart")
                             
                             if RootCheck then
-                                if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] then
-                                    local Inset = GUIService:GetGuiInset();
-                                    local Box = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"]
-                                    local Pos, Visible = Camera:WorldToScreenPoint(RootCheck.Position);
-                                    local PosSize = Vector3.new(Pos.X, 0, Pos.Z)
-
-                                    Box.Size = Vector2.new(2704 / PosSize.Z, 5408 / PosSize.Z);
-                                    Box.Position = Vector2.new(Pos.X - Box.Size.X / 2, Pos.Y + Inset.Y - Box.Size.Y / 2);
-                                    Box.Color = typeof(getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR) == "Color3" and getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                                local Inset = GUIService:GetGuiInset();
                                 
-                                    if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()["ESP_CACHE"].SETTINGS.TEAM_CHECK then
-                                        Box.Visible = false
+                                local Pos, Visible = Camera:WorldToScreenPoint(RootCheck.Position);
+                                local PosSize = Vector3.new(Pos.X, 0, Pos.Z)
+
+                                if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()["ESP_CACHE"].SETTINGS.TEAM_CHECK then
+                                    Remove()
+                                else
+                                    if Visible then
+                                        if getgenv()["ESP_CACHE"].SETTINGS.BOXES_ENABLED == true then
+                                            Create()
+
+                                            local Box = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"]
+                                            Box.Size = Vector2.new(2704 / PosSize.Z, 5408 / PosSize.Z);
+                                            Box.Position = Vector2.new(Pos.X - Box.Size.X / 2, Pos.Y + Inset.Y - Box.Size.Y / 2);
+                                            Box.Color = typeof(getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR) == "Color3" and getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                                        
+                                            Box.Visible = true
+                                        else
+                                            getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] = nil -- auto erase player from updation cache
+
+                                            Remove()
+                                        end
                                     else
-                                        Box.Visible = getgenv()["ESP_CACHE"].SETTINGS.BOXES_ENABLED == true and Visible or false
+                                        Remove()
                                     end
                                 end
+
                             end
                         else
-                            if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] then
-                                getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Visible = false
-                            end
+                            Remove()
                         end
                     else
                         getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] = nil -- auto erase player from updation cache
 
-                        if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] then
-                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"]:Remove()
-                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] = nil
-                        end
+                        Remove()
                     end
                 end
             end

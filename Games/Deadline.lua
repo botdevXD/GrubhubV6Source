@@ -114,6 +114,7 @@ xpcall(function()
                 end
             end
 
+            --[===[
             function SetWeaponValue(Data, NewValue)
                 function RecursiveUpdate(Table)
                     if type(Table) == "table" then
@@ -133,6 +134,7 @@ xpcall(function()
                     RecursiveUpdate(Key)
                 end
             end
+            ]===]
 
             local OldFootPrint = nil
 
