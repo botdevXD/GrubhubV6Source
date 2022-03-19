@@ -25,6 +25,8 @@ xpcall(function()
                 AntiRecoil = GameConfigFile.AntiRecoil or false,
                 Teamcheck = GameConfigFile.Teamcheck or false,
                 Boxes = GameConfigFile.Boxes or false,
+                NoGunBob = GameConfigFile.NoGunBob or false,
+                NoCamBob = GameConfigFile.NoCamBob or false,
                 Tracers = GameConfigFile.Tracers or false,
                 Color = GameConfigFile.Color or {R = 255, G = 255, B = 255}
             }
@@ -77,6 +79,24 @@ xpcall(function()
 
                 if type(GC_OBJECT) == "table" then
                     local MarkerAdd = rawget(GC_OBJECT, "character")
+                    local GunBob = rawget(GC_OBJECT, "get_cycle_bobbing")
+                    local CameraBob = rawget(GC_OBJECT, "get_bob")
+
+                    if GunBob then
+                        local OldGunBobHook = GC_OBJECT.get_cycle_bobbing
+
+                        rawset(GC_OBJECT, "get_cycle_bobbing", function(...)
+                            return getgenv()[Settings_Name].NoGunBob == true and 0 or OldGunBobHook(...)
+                        end)
+                    end
+
+                    if CameraBob then
+                        local OldCameraBobHook = GC_OBJECT.get_bob
+
+                        rawset(GC_OBJECT, "get_bob", function(...)
+                            return getgenv()[Settings_Name].NoCamBob == true and 0 or OldCameraBobHook(...)
+                        end)
+                    end
 
                     if MarkerAdd then
                         if type(GC_OBJECT) == "table" then
@@ -136,6 +156,27 @@ xpcall(function()
             end
             ]===]
 
+            local MiscModule = require(game.ReplicatedStorage.framework.component.misc_util);
+
+            local OldAppendHook = MiscModule.append
+            MiscModule.append = function(DataTable)
+                local AppendedData = OldAppendHook(DataTable)
+
+                if type(DataTable) == "table" then
+                    local OldCycleBob = DataTable.get_cycle_bobbing
+                    DataTable.get_cycle_bobbing = function(...)
+                        return getgenv()[Settings_Name].NoGunBob == true and 0 or OldCycleBob(...)
+                    end
+
+                    local OldGetBob = DataTable.get_bob
+                    DataTable.get_bob = function(...)
+                        return getgenv()[Settings_Name].NoCamBob == true and 0 or OldGetBob(...)
+                    end
+                end
+                
+                return AppendedData
+            end
+
             local OldFootPrint = nil
 
             OldFootPrint = hookfunction(require(game.ReplicatedStorage.framework.core.Footplant).Footplant.new, function(Character, PlayerTable)
@@ -174,6 +215,14 @@ xpcall(function()
                     end
                 end
             end
+
+            PlayerSection:addToggle("No gun bob", getgenv()[Settings_Name].NoGunBob, function(Bool)
+                getgenv()[Settings_Name].NoGunBob = Bool
+            end)
+
+            PlayerSection:addToggle("No camera bob", getgenv()[Settings_Name].NoCamBob, function(Bool)
+                getgenv()[Settings_Name].NoCamBob = Bool
+            end)
 
             VisualsSelection:addToggle("ESP Teamcheck", getgenv()[Settings_Name].Teamcheck, function(Bool)
                 getgenv()[Settings_Name].Teamcheck = Bool

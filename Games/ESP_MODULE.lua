@@ -212,6 +212,9 @@ do
         
         getgenv()["ESP_CACHE"].UnLoad()
 
+        getgenv()["ESP_CACHE"].DrawLine = function()
+        end
+        
         getgenv()["ESP_CACHE"].HasESPBox = function(Object)
             return getgenv()["CHARACTER_DRAWN_OBJECTS"][tostring(Object) .. "_ESP_BOXES"]
         end

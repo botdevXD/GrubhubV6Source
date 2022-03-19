@@ -1077,6 +1077,30 @@
 -- Made by 0x74_Dev / _Ben#6969 / Mr.Grubhub --
 -----------------------------------------------
 
+--[===[
+    local Plr = game.Players.LocalPlayer
+getgenv()["CHARACTER_DRAWN_OBJECTS"] = getgenv()["CHARACTER_DRAWN_OBJECTS"] or {}
+if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] == nil then
+	local Camera = workspace.Camera
+	getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = Drawing.new("Line")
+	getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Visible = false
+	getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Thickness = 2;
+
+
+	game:GetService("RunService").RenderStepped:Connect(function()
+		local LinePos, LineVisible = Camera:WorldToScreenPoint(workspace.fff.Position);
+		local BarrelPos, BarrelVisible = Camera:WorldToScreenPoint(game.Players.LocalPlayer.Character["M4-(30)"].barrelpos1.Position)
+	
+		
+		local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]
+		Line.To = Vector2.new(BarrelPos.X, BarrelPos.Y + 35)
+		Line.From = Vector2.new(LinePos.X, LinePos.Y + 35);
+		Line.Visible = true
+	end)
+end
+]===]
+
+
 local ErrorHandlerTing = function(err)
     return warn(err)
 end
@@ -1263,6 +1287,9 @@ do
         
         getgenv()["ESP_CACHE"].UnLoad()
 
+        getgenv()["ESP_CACHE"].DrawLine = function()
+        end
+        
         getgenv()["ESP_CACHE"].HasESPBox = function(Object)
             return getgenv()["CHARACTER_DRAWN_OBJECTS"][tostring(Object) .. "_ESP_BOXES"]
         end
@@ -2300,6 +2327,8 @@ end -- need to complete
                 AntiRecoil = GameConfigFile.AntiRecoil or false,
                 Teamcheck = GameConfigFile.Teamcheck or false,
                 Boxes = GameConfigFile.Boxes or false,
+                NoGunBob = GameConfigFile.NoGunBob or false,
+                NoCamBob = GameConfigFile.NoCamBob or false,
                 Tracers = GameConfigFile.Tracers or false,
                 Color = GameConfigFile.Color or {R = 255, G = 255, B = 255}
             }
@@ -2352,6 +2381,26 @@ end -- need to complete
 
                 if type(GC_OBJECT) == "table" then
                     local MarkerAdd = rawget(GC_OBJECT, "character")
+                    local GunBob = rawget(GC_OBJECT, "get_cycle_bobbing")
+                    local CameraBob = rawget(GC_OBJECT, "get_bob")
+
+                    if GunBob then
+                        local OldGunBobHook = GC_OBJECT.get_cycle_bobbing
+
+                        rawset(GC_OBJECT, "get_cycle_bobbing", function(...)
+                            print("Set that bitch number 1")
+                            return getgenv()[Settings_Name].NoGunBob == true and 0 or OldGunBobHook(...)
+                        end)
+                    end
+
+                    if CameraBob then
+                        local OldCameraBobHook = GC_OBJECT.get_bob
+
+                        rawset(GC_OBJECT, "get_bob", function(...)
+                            print("Set that bitch number 2")
+                            return getgenv()[Settings_Name].NoCamBob == true and 0 or OldCameraBobHook(...)
+                        end)
+                    end
 
                     if MarkerAdd then
                         if type(GC_OBJECT) == "table" then
@@ -2411,6 +2460,28 @@ end -- need to complete
             end
             ]===]
 
+            local MiscModule = require(game.ReplicatedStorage.framework.component.misc_util);
+
+            local OldAppendHook = MiscModule.append
+            MiscModule.append = function(DataTable)
+                local AppendedData = OldAppendHook(DataTable)
+                print("Starting append!")
+
+                if type(DataTable) == "table" then
+                    local OldCycleBob = DataTable.get_cycle_bobbing
+                    DataTable.get_cycle_bobbing = function(...)
+                        return getgenv()[Settings_Name].NoGunBob == true and 0 or OldCycleBob(...)
+                    end
+
+                    local OldGetBob = DataTable.get_bob
+                    DataTable.get_bob = function(...)
+                        return getgenv()[Settings_Name].NoCamBob == true and 0 or OldGetBob(...)
+                    end
+                end
+                
+                return AppendedData
+            end
+
             local OldFootPrint = nil
 
             OldFootPrint = hookfunction(require(game.ReplicatedStorage.framework.core.Footplant).Footplant.new, function(Character, PlayerTable)
@@ -2449,6 +2520,14 @@ end -- need to complete
                     end
                 end
             end
+
+            PlayerSection:addToggle("No gun bob", getgenv()[Settings_Name].NoGunBob, function(Bool)
+                getgenv()[Settings_Name].NoGunBob = Bool
+            end)
+
+            PlayerSection:addToggle("No camera bob", getgenv()[Settings_Name].NoCamBob, function(Bool)
+                getgenv()[Settings_Name].NoCamBob = Bool
+            end)
 
             VisualsSelection:addToggle("ESP Teamcheck", getgenv()[Settings_Name].Teamcheck, function(Bool)
                 getgenv()[Settings_Name].Teamcheck = Bool
