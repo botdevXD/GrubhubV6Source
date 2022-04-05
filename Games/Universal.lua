@@ -1,4 +1,5 @@
 do
+    getgenv()["grubhub_loaded"] = true
     local Players = game["GetService"](game, "Players")
     local Player = Players["LocalPlayer"]
     local Format, Split, GSUB, gmatch, match = string["format"], string["split"], string["gsub"], string["gmatch"], string["match"]

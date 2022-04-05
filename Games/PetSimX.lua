@@ -1,6 +1,7 @@
 do
     if tostring(game.PlaceId) == "6284583030" then
         getgenv()["USE_GRUBHUB_UNIVERSAL"] = false
+        getgenv()["grubhub_loaded"] = true
         
         --------------------------------------------------------------------------------------------
 
@@ -703,10 +704,11 @@ do
 
         if not getgenv()["UpdateLoop"] then
             getgenv()["UpdateLoop"] = true
-            RunService.Heartbeat:Connect(function()
+            
+            RunService.RenderStepped:Connect(function(_Delta)
                 for _, Function in pairs(getgenv()["UpdateCache"]) do
                     if type(Function) == "function" then
-                        pcall(Function)
+                        pcall(Function, _Delta)
                     end
                 end
             end)

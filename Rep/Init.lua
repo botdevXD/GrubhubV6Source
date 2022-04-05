@@ -1,5 +1,9 @@
 xpcall(function()
 	do
+		if getgenv()["grubhub_loaded"] == true then
+			local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/mooncores/lib/d74663634965be19c972f137bcf683194362be28/notif.lua"))()
+			return library:Notification("GrubHub", "\nGrubhub is already loaded!\n", 10, Color3.fromRGB(255, 255, 255))
+		end
 		--ANTI_HOOKS. lua_compile_spot
 		getgenv().Key = 'Tc8v8Ujz4t9WgUUkwhT4jbqsgHykO0';
 		getgenv().DiscordWebhook = 'Link';
@@ -776,7 +780,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'https://grubhubscripts.com/api/v6/mYq3t6w9',
+				Url = 'http://localhost:8000/api/v6/mYq3t6w9',--'https://grubhubscripts.com/api/v6/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;

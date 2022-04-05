@@ -15,7 +15,6 @@ if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] == nil then
 	game:GetService("RunService").RenderStepped:Connect(function()
 		local LinePos, LineVisible = Camera:WorldToScreenPoint(workspace.fff.Position);
 		local BarrelPos, BarrelVisible = Camera:WorldToScreenPoint(game.Players.LocalPlayer.Character["M4-(30)"].barrelpos1.Position)
-	
 		
 		local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]
 		Line.To = Vector2.new(BarrelPos.X, BarrelPos.Y + 35)
@@ -176,6 +175,10 @@ do
             CustomCharacterCache[Player] = Data
         end
 
+        getgenv()["ESP_CACHE"].GetCharacter = function(Player) return GetChar_Ez(Player) end
+        getgenv()["ESP_CACHE"].GetTeam = function(Player) return GetPlrTeam(Player) end
+        getgenv()["ESP_CACHE"].GetCustomCharacterPartNames = function() return PartNames[game.PlaceId] end
+        
         getgenv()["ESP_CACHE"].UnLoadType = function(TypeString, FullString)
             FullString = FullString or false
 
@@ -489,12 +492,14 @@ do
     if not getgenv()["UpdateLoop"] then
         getgenv()["UpdateLoop"] = true
         local RunService = game["GetService"](game, "RunService")
-        RunService.Heartbeat:Connect(function()
+
+        RunService.RenderStepped:Connect(function(_Delta)
             for _, Function in pairs(getgenv()["UpdateCache"]) do
                 if type(Function) == "function" then
-                    xpcall(Function, ErrorHandlerTing)
+                    xpcall(Function, ErrorHandlerTing, _Delta)
                 end
             end
         end)
+
     end
 end
