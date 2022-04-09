@@ -5,7 +5,7 @@ xpcall(function()
 			return library:Notification("GrubHub", "\nGrubhub is already loaded!\n", 10, Color3.fromRGB(255, 255, 255))
 		end
 		--ANTI_HOOKS. lua_compile_spot
-		getgenv().Key = 'Tc8v8Ujz4t9WgUUkwhT4jbqsgHykO0';
+		getgenv().Key = '6RVLRAjvysQIgN6DMmBjbd8t5tMRfa';
 		getgenv().DiscordWebhook = 'Link';
 		getgenv().WebhookEnabled = false;
 		getgenv().GubVersion = '6.0';
@@ -878,19 +878,22 @@ xpcall(function()
 
 			getgenv()["USE_GRUBHUB_UNIVERSAL"] = true
 
-			-- The ones with the spaces between .lua are the ones that I don't want to be loaded rn as they're not complete.
             --ESP_MODULE.lua_compile_spot
+
+			-- The ones with the spaces between .lua are the ones that I don't want to be loaded rn as they're not complete.
+			-- Not finished!
+
             --Timber. lua_compile_spot -- need to complete
             --PhantomForces. lua_compile_spot -- need to complete
             --BloxBurg. lua_compile_spot -- need to complete
-            --WorldZero. lua_compile_spot -- need to complete
             --BeeSwarmSimulator. lua_compile_spot -- need to complete
             --DaHood. lua_compile_spot -- need to complete
 			--BadBusiness. lua_compile_spot -- need to complete
 
-			-- Doing rn
-			--PetSimX.lua_compile_spot -- need to complete
-			--Deadline.lua_compile_spot -- need to complete
+			-- Finished
+			--WorldZero.lua_compile_spot -- near done
+			--PetSimX.lua_compile_spot -- completed
+			--Deadline.lua_compile_spot -- completed
 
 			if getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
                 --Universal.lua_compile_spot

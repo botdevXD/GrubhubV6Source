@@ -3,7 +3,7 @@ xpcall(function()
         if tostring(game.PlaceId) == "3837841034" then
             getgenv()["grubhub_loaded"] = false
 
-            local DebugMode = false
+            local DebugMode = true
             local rconsolename = rconsolename or rconsolesettitle
             local rconsolecreate = rconsolecreate or rconsolename
             local consoleclear = consoleclear or rconsoleclear
@@ -33,6 +33,7 @@ xpcall(function()
             getgenv().UpdateCache = type(getgenv().UpdateCache) == "table" and getgenv().UpdateCache or {};
             getgenv().GameConnections = type(getgenv().GameConnections) == "table" and getgenv().GameConnections or {};
             getgenv().OLD_GAME_FUNCTIONS = type(getgenv().OLD_GAME_FUNCTIONS) == "table" and getgenv().OLD_GAME_FUNCTIONS or {};
+            getgenv().GAME_GARBAGE_COLLECTED = type(getgenv().GAME_GARBAGE_COLLECTED) == "boolean" and getgenv().GAME_GARBAGE_COLLECTED or false;
     
             if type(getgenv().GameConnections) == "table" then
                 for IndexName, Signal in pairs(getgenv().GameConnections) do
@@ -61,9 +62,13 @@ xpcall(function()
                 NoAimSound = GameConfigFile.NoAimSound or false, -- New
                 NoGunFireSound = GameConfigFile.NoGunFireSound or false, -- New
                 SilentAim = GameConfigFile.SilentAim or false, -- New
+                AimBot = GameConfigFile.AimBot or false, -- New
+                BodyPartTarget = GameConfigFile.BodyPartTarget or "Head", -- New
                 BarrelTracers = GameConfigFile.BarrelTracers or false, -- New
-                SilentAimDistance = GameConfigFile.SilentAimDistance or 250, -- New
-
+                SilentAimAndAimbotDistance = GameConfigFile.SilentAimAndAimbotDistance or 250, -- New
+                AimBotSmoothness = GameConfigFile.AimBotSmoothness or 10, -- New
+                
+                ESP_NAMETAGS = GameConfigFile.ESP_NAMETAGS or false,
                 Tracers = GameConfigFile.Tracers or false,
                 FPS_COUNTER = GameConfigFile.FPS_COUNTER or false,
                 CameraFOV = GameConfigFile.CameraFOV or 78,
@@ -76,7 +81,7 @@ xpcall(function()
             getgenv().DeadlineGunFireData = getgenv().DeadlineGunFireData or {}
             getgenv().DeadlineCharacters = getgenv().DeadlineCharacters or {}
             getgenv().DeadlineMatchData = getgenv().DeadlineMatchData or {}
-
+            
             local SoundData = {
                 ["ads"] = {type = "aim"},
                 ["ads_out"] = {type = "aim"},
@@ -84,6 +89,7 @@ xpcall(function()
                 ["semi"] = {type = "shoot"},
                 ["tail"] = {type = "shoot"}
             }
+
             local RunService = game:GetService("RunService")
             local ReplicatedStorage = game:GetService("ReplicatedStorage")
     
@@ -96,6 +102,7 @@ xpcall(function()
 
             local Players = game:GetService("Players")
             local Player = Players.LocalPlayer
+            local Mouse = Player:GetMouse()
 
             Window = UILibrary.new("GrubHub V6 ~ Deadline", 5013109572)
     
@@ -110,6 +117,7 @@ xpcall(function()
             local VisualsSelection = VisualsWindow:addSection("Options", 5012544693)
             
             local function Custom_play_sound(GunPlaySound, ...)
+                consoleprint("Weapon sound playing!\n")
                 local SoundType = unpack({...})
                 local _SoundData = type(SoundData[tostring(SoundType)]) == "table" and SoundData[tostring(SoundType)].type or nil
 
@@ -122,6 +130,7 @@ xpcall(function()
             end
 
             local function CustomReloadFunction(OldReloadFunction, ...)
+                consoleprint("Weapon reloading!\n")
 
                 local Args = {...}
                 local WeaponStats = Args[1]
@@ -166,7 +175,7 @@ xpcall(function()
                 return OldReloadFunction(unpack(Args))
             end
 
-            local function GetNearPlayer()
+            local function GetNearPlayer(TargetPart)
                 local OldDistance = math.huge
                 local Target = nil
                 local Attacker = nil
@@ -180,13 +189,13 @@ xpcall(function()
                         local LocalTeam = getgenv()["ESP_CACHE"].GetTeam(Player)
 
                         if GameCharacter and LocalCharacter and tostring(GameTeam) ~= tostring(LocalTeam) then
-                            local GameRoot = GameCharacter:FindFirstChild(type(PartNames) == "table" and PartNames.Root or "HumanoidRootPart")
-                            local LocalRoot = LocalCharacter:FindFirstChild(type(PartNames) == "table" and PartNames.Root or "HumanoidRootPart")
+                            local GameRoot = GameCharacter:FindFirstChild(type(PartNames) == "table" and PartNames[TargetPart or "Root"] or tostring(TargetPart or "HumanoidRootPart"))
+                            local LocalRoot = LocalCharacter:FindFirstChild(type(PartNames) == "table" and PartNames[TargetPart or "Root"] or tostring(TargetPart or "HumanoidRootPart"))
 
                             if GameRoot and LocalRoot then
                                 local Distance = math.abs((LocalRoot.Position - GameRoot.Position).Magnitude)
                                 
-                                if (Distance <= getgenv()[Settings_Name].SilentAimDistance) and (Distance < OldDistance) then
+                                if (Distance <= getgenv()[Settings_Name].SilentAimAndAimbotDistance) and (Distance < OldDistance) then
                                     OldDistance = Distance
                                     Target = GameRoot
                                     Attacker = LocalRoot
@@ -204,95 +213,99 @@ xpcall(function()
                 getgenv()["CHARACTER_DRAWN_OBJECTS"]["_ESP_BARREL_TRACERS"] = nil
             end
 
-            for _, GC_OBJECT in pairs(getgc(true)) do
+            if getgenv().GAME_GARBAGE_COLLECTED == false then
+                getgenv().GAME_GARBAGE_COLLECTED = false
+                
+                for _, GC_OBJECT in pairs(getgc(true)) do
 
-                if type(GC_OBJECT) == "table" then
-                    local RenderFunction = rawget(GC_OBJECT, "render")
-                    local MarkerAdd = rawget(GC_OBJECT, "character")
-                    local GunBob = rawget(GC_OBJECT, "get_cycle_bobbing")
-                    local CameraBob = rawget(GC_OBJECT, "get_bob")
-                    local CharacterFootStep = rawget(GC_OBJECT, "footstep")
-                    local GunPlaySound = rawget(GC_OBJECT, "play_sound")
+                    if type(GC_OBJECT) == "table" then
+                        local RenderFunction = rawget(GC_OBJECT, "render")
+                        local MarkerAdd = rawget(GC_OBJECT, "character")
+                        local GunBob = rawget(GC_OBJECT, "get_cycle_bobbing")
+                        local CameraBob = rawget(GC_OBJECT, "get_bob")
+                        local CharacterFootStep = rawget(GC_OBJECT, "footstep")
+                        local GunPlaySound = rawget(GC_OBJECT, "play_sound")
 
-                    if type(RenderFunction) == "function" and getgenv().OLD_GAME_FUNCTIONS["leaderboard_hook"] == nil then
-                        if tostring(debug.getinfo(RenderFunction).source):lower():find("leaderboard") and islclosure(RenderFunction) then
-                            local OldLeaderboardHook = RenderFunction
-                            getgenv().OLD_GAME_FUNCTIONS["leaderboard_hook"] = OldLeaderboardHook
-                            rawset(GC_OBJECT, "render", function(...)
-                                local RenderData = unpack({...})
-                                getgenv().DeadlineMatchData = type(RenderData) == "table" and type(RenderData.state) == "table" and type(RenderData.state.match_data) == "table" and RenderData.state.match_data or getgenv().DeadlineMatchData
+                        if type(RenderFunction) == "function" and getgenv().OLD_GAME_FUNCTIONS["leaderboard_hook"] == nil then
+                            if tostring(debug.getinfo(RenderFunction).source):lower():find("leaderboard") and islclosure(RenderFunction) then
+                                local OldLeaderboardHook = RenderFunction
+                                getgenv().OLD_GAME_FUNCTIONS["leaderboard_hook"] = OldLeaderboardHook
+                                rawset(GC_OBJECT, "render", function(...)
+                                    local RenderData = unpack({...})
+                                    getgenv().DeadlineMatchData = type(RenderData) == "table" and type(RenderData.state) == "table" and type(RenderData.state.match_data) == "table" and RenderData.state.match_data or getgenv().DeadlineMatchData
 
-                                consoleprint("Updating match data\n")
+                                    consoleprint("Updating match data\n")
 
-                                getgenv()["ESP_CACHE"].UpdateTeamData(getgenv().DeadlineMatchData)
+                                    getgenv()["ESP_CACHE"].UpdateTeamData(getgenv().DeadlineMatchData)
 
-                                return OldLeaderboardHook(...)
-                            end)
-                        end
-                    end
-
-                    if type(GunPlaySound) == "function" then
-                        if tostring(debug.getinfo(GunPlaySound).source):lower():find("misc_util") and islclosure(GunPlaySound) then
-                            getgenv().OLD_GAME_FUNCTIONS["play_sound_hook_gc"] = getgenv().OLD_GAME_FUNCTIONS["play_sound_hook_gc"] or GunPlaySound
-                            
-                            rawset(GC_OBJECT, "play_sound", function(...)
-                                return Custom_play_sound(getgenv().OLD_GAME_FUNCTIONS["play_sound_hook_gc"], ...)
-                            end)
-                        end
-                    end
-
-                    if type(CharacterFootStep) == "function" then
-                        local OldCharacterFootstep = GC_OBJECT.footstep
-                        getgenv().OLD_GAME_FUNCTIONS["character_footstep_gc"] = getgenv().OLD_GAME_FUNCTIONS["character_footstep_gc"] or OldCharacterFootstep
-
-                        rawset(GC_OBJECT, "footstep", function(...)
-                            if getgenv()[Settings_Name].SlientFootSteps == true then
-                                return nil
-                            end
-                            return getgenv().OLD_GAME_FUNCTIONS["character_footstep_gc"](...)
-                        end)
-                    end
-
-                    if GunBob then
-                        local OldGunBobHook = GC_OBJECT.get_cycle_bobbing
-                        getgenv().OLD_GAME_FUNCTIONS["get_cycle_bobbing_gc"] = getgenv().OLD_GAME_FUNCTIONS["get_cycle_bobbing_gc"] or OldGunBobHook
-
-                        rawset(GC_OBJECT, "get_cycle_bobbing", function(...)
-                            return getgenv()[Settings_Name].NoGunBob == true and 0 or getgenv().OLD_GAME_FUNCTIONS["get_cycle_bobbing_gc"](...)
-                        end)
-                    end
-
-                    if CameraBob then
-                        local OldCameraBobHook = GC_OBJECT.get_bob
-                        getgenv().OLD_GAME_FUNCTIONS["get_bob_gc"] = getgenv().OLD_GAME_FUNCTIONS["get_bob_gc"] or OldCameraBobHook
-
-                        rawset(GC_OBJECT, "get_bob", function(...)
-                            return getgenv()[Settings_Name].NoCamBob == true and 0 or getgenv().OLD_GAME_FUNCTIONS["get_bob_gc"](...)
-                        end)
-                    end
-
-                    if MarkerAdd then
-                        if type(GC_OBJECT) == "table" then
-                            if GC_OBJECT.player ~= nil then
-
-                                pcall(function()
-                                    getgenv().DeadlineCharacters[GC_OBJECT.player] = {
-                                        Char = GC_OBJECT.character
-                                    }
-
-                                    if getgenv().DeadlineCharacters[GC_OBJECT.player] ~= nil then
-
-                                        consoleprint("Adding character to ESP List, Player: " .. tostring(GC_OBJECT.player) .. "\n")
-
-                                        getgenv()["ESP_CACHE"].AddCharacter(GC_OBJECT.player, getgenv().DeadlineCharacters[GC_OBJECT.player])
-                                    end
+                                    return OldLeaderboardHook(...)
                                 end)
+                            end
+                        end
 
+                        if type(GunPlaySound) == "function" then
+                            if tostring(debug.getinfo(GunPlaySound).source):lower():find("misc_util") and islclosure(GunPlaySound) then
+                                getgenv().OLD_GAME_FUNCTIONS["play_sound_hook_gc"] = getgenv().OLD_GAME_FUNCTIONS["play_sound_hook_gc"] or GunPlaySound
+                                
+                                rawset(GC_OBJECT, "play_sound", function(...)
+                                    return Custom_play_sound(getgenv().OLD_GAME_FUNCTIONS["play_sound_hook_gc"], ...)
+                                end)
+                            end
+                        end
+
+                        if type(CharacterFootStep) == "function" then
+                            local OldCharacterFootstep = getgenv().OLD_GAME_FUNCTIONS["character_footstep_gc"] or GC_OBJECT.footstep
+                            getgenv().OLD_GAME_FUNCTIONS["character_footstep_gc"] = getgenv().OLD_GAME_FUNCTIONS["character_footstep_gc"] or OldCharacterFootstep
+
+                            rawset(GC_OBJECT, "footstep", function(...)
+                                if getgenv()[Settings_Name].SlientFootSteps == true then
+                                    return nil
+                                end
+                                return OldCharacterFootstep(...)
+                            end)
+                        end
+
+                        if GunBob then
+                            local OldGunBobHook = getgenv().OLD_GAME_FUNCTIONS["get_cycle_bobbing_gc"] or GC_OBJECT.get_cycle_bobbing
+                            getgenv().OLD_GAME_FUNCTIONS["get_cycle_bobbing_gc"] = getgenv().OLD_GAME_FUNCTIONS["get_cycle_bobbing_gc"] or OldGunBobHook
+
+                            rawset(GC_OBJECT, "get_cycle_bobbing", function(...)
+                                return getgenv()[Settings_Name].NoGunBob == true and 0 or OldGunBobHook(...)
+                            end)
+                        end
+
+                        if CameraBob then
+                            local OldCameraBobHook = getgenv().OLD_GAME_FUNCTIONS["get_bob_gc"] or GC_OBJECT.get_bob
+                            getgenv().OLD_GAME_FUNCTIONS["get_bob_gc"] = getgenv().OLD_GAME_FUNCTIONS["get_bob_gc"] or OldCameraBobHook
+
+                            rawset(GC_OBJECT, "get_bob", function(...)
+                                return getgenv()[Settings_Name].NoCamBob == true and 0 or OldCameraBobHook(...)
+                            end)
+                        end
+
+                        if MarkerAdd then
+                            if type(GC_OBJECT) == "table" then
+                                if GC_OBJECT.player ~= nil then
+
+                                    pcall(function()
+                                        getgenv().DeadlineCharacters[GC_OBJECT.player] = {
+                                            Char = GC_OBJECT.character
+                                        }
+
+                                        if getgenv().DeadlineCharacters[GC_OBJECT.player] ~= nil then
+
+                                            consoleprint("Adding character to ESP List, Player: " .. tostring(GC_OBJECT.player) .. "\n")
+
+                                            getgenv()["ESP_CACHE"].AddCharacter(GC_OBJECT.player, getgenv().DeadlineCharacters[GC_OBJECT.player])
+                                        end
+                                    end)
+
+                                end
                             end
                         end
                     end
-                end
 
+                end
             end
             
             for _, Object in ipairs(ItemsFolder:GetDescendants()) do
@@ -315,7 +328,7 @@ xpcall(function()
 
             local CastModule = require(ReplicatedStorage:WaitForChild("module", 5):WaitForChild("caster", 5));
 
-            local OldCastFire = CastModule.fire
+            local OldCastFire = getgenv().OLD_GAME_FUNCTIONS["cast_fire_module"] or CastModule.fire
             getgenv().OLD_GAME_FUNCTIONS["cast_fire_module"] = getgenv().OLD_GAME_FUNCTIONS["cast_fire_module"] or OldCastFire
 
             rawset(CastModule, "fire", function(...)
@@ -324,8 +337,7 @@ xpcall(function()
                     if getgenv()[Settings_Name].SilentAim == true then
                         consoleprint("Silent aim function started!\n")
                         
-                        local Target, Attacker = GetNearPlayer()
-                        
+                        local Target, Attacker = GetNearPlayer(getgenv()[Settings_Name].BodyPartTarget)
                         
                         if Target ~= nil and Attacker ~= nil then
                             consoleprint("Silent aim target found!\n")
@@ -336,16 +348,16 @@ xpcall(function()
                         consoleprint("Silent aim function ended!\n")
                     end
                 end
-                return getgenv().OLD_GAME_FUNCTIONS["cast_fire_module"](unpack(Args))
+                return OldCastFire(unpack(Args))
             end)
 
             local MiscModule = require(FrameworkFolder:WaitForChild("component", 5):WaitForChild("misc_util", 5));
 
-            local OldAppendHook = MiscModule.append
+            local OldAppendHook = getgenv().OLD_GAME_FUNCTIONS["misc_append_module"] or MiscModule.append
             getgenv().OLD_GAME_FUNCTIONS["misc_append_module"] = getgenv().OLD_GAME_FUNCTIONS["misc_append_module"] or OldAppendHook
 
             rawset(MiscModule, "append", function(DataTable)
-                local AppendedData = getgenv().OLD_GAME_FUNCTIONS["misc_append_module"](DataTable)
+                local AppendedData = OldAppendHook(DataTable)
 
                 if type(DataTable) == "table" then
                     local OldCycleBob = DataTable.get_cycle_bobbing
@@ -379,7 +391,7 @@ xpcall(function()
 
             -- Fix below
             local FootPlantModule = require(game.ReplicatedStorage.framework.core.Footplant)
-            local OldFootPrint = FootPlantModule.Footplant.new
+            local OldFootPrint = getgenv().OLD_GAME_FUNCTIONS["footplant_new_module"] or FootPlantModule.Footplant.new
             getgenv().OLD_GAME_FUNCTIONS["footplant_new_module"] = getgenv().OLD_GAME_FUNCTIONS["footplant_new_module"] or OldFootPrint
 
             FootPlantModule.Footplant.new = function(...)
@@ -405,49 +417,116 @@ xpcall(function()
                     end
                 end
 
-                return getgenv().OLD_GAME_FUNCTIONS["footplant_new_module"](...)
+                return OldFootPrint(...)
             end
+
+            local hurt_player_old = nil
+            local update_health_old = nil
 
             if MainControllerModule_Success then
                 if type(MainControllerModule) == "table" then
-                    local FrameworkRender = rawget(MainControllerModule.MainController, "render_stepped")
+                    local FrameworkRender = getgenv().OLD_GAME_FUNCTIONS["framework_render"] or rawget(MainControllerModule.MainController, "render_stepped")
 
                     getgenv().OLD_GAME_FUNCTIONS["framework_render"] = getgenv().OLD_GAME_FUNCTIONS["framework_render"] or FrameworkRender
 
                     rawset(MainControllerModule.MainController, "render_stepped", function(...)
                         local Args = {...}
-                        
-                        if getgenv()[Settings_Name].BarrelTracers == true then
-                            local PlayerData = Args[1]
+                        local PlayerData = Args[1]
+                        local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"]["_ESP_BARREL_TRACERS"]
+                        local Target, Attacker = nil, nil
 
-                            if type(PlayerData) == "table" then
-                                if type(PlayerData.equipped_data) == "table" then
-                                    if PlayerData.receiver ~= nil then
-                                        if PlayerData.receiver.barrel ~= nil then
+                        if getgenv()[Settings_Name].BarrelTracers == true or getgenv()[Settings_Name].AimBot == true then
+                            Target, Attacker = GetNearPlayer(getgenv()[Settings_Name].BodyPartTarget)
+                        end
 
-                                            if getgenv()["CHARACTER_DRAWN_OBJECTS"]["_ESP_BARREL_TRACERS"] ~= nil then
-                                                local Line = getgenv()["CHARACTER_DRAWN_OBJECTS"]["_ESP_BARREL_TRACERS"]
-                                                local Target, Attacker = GetNearPlayer()
-                                
+                        if type(PlayerData) == "table" then
+                            
+                            if type(PlayerData.update_health) == "function" then
+                                if update_health_old == nil then
+                                    getgenv().OLD_GAME_FUNCTIONS["update_health_old"] = getgenv().OLD_GAME_FUNCTIONS["update_health_old"] or PlayerData.update_health
+
+                                    update_health_old = update_health_old or getgenv().OLD_GAME_FUNCTIONS["update_health_old"]
+                                    
+                                    -- Continue off the no fall damage here by hooking update health!
+
+                                    rawset(PlayerData, "update_health", function(...)
+                                        consoleprint("Update player health called!\n")
+                                        if tostring(getfenv(2).script):lower():find("maincontroller") then
+                                            -- No fall damage hook here
+                                            consoleprint("Update player health called from main controller!\n")
+                                        end
+                                        return update_health_old(...)
+                                    end)
+                                end
+                            end
+
+                            if type(PlayerData.network_events) == "table" then
+                                if type(PlayerData.network_events.hurt_player) == "function" then
+                                    if hurt_player_old == nil then
+                                        getgenv().OLD_GAME_FUNCTIONS["hurt_player_old"] = getgenv().OLD_GAME_FUNCTIONS["hurt_player_old"] or PlayerData.network_events.hurt_player
+                                    end
+
+                                    hurt_player_old = hurt_player_old or getgenv().OLD_GAME_FUNCTIONS["hurt_player_old"]
+
+                                    rawset(PlayerData.network_events, "hurt_player", function(...)
+                                        consoleprint("Fall damage function called!\n")
+                                        return hurt_player_old(...)
+                                    end)
+                                end
+                            end
+
+                            if type(PlayerData.equipped_data) == "table" then
+
+                                if Line ~= nil then
+                                    if PlayerData.health ~= nil then
+                                        if PlayerData.health <= 0 then
+                                            Line.Visible = false
+                                            return FrameworkRender(unpack(Args))
+                                        end
+                                    end
+                                end
+
+                                if typeof(PlayerData.receiver) == "Instance" then
+                                    if PlayerData.receiver:FindFirstChild("barrel") then
+
+                                        if getgenv()[Settings_Name].AimBot == true then
+                                            if Target ~= nil and Attacker ~= nil then
+                                                if PlayerData.equipped_data.aiming ~= nil then
+                                                    if PlayerData.equipped_data.aiming == true then
+                                                        local TARGETPOS, TARGET_VISIBLE = Camera:WorldToScreenPoint(Target.Position)
+
+                                                        if TARGET_VISIBLE then
+                                                            local Smoothness = getgenv()[Settings_Name].AimBotSmoothness
+                                                            TARGETPOS -= Camera:WorldToScreenPoint(Mouse.Hit.p)
+
+                                                            mousemoverel(TARGETPOS.X / Smoothness, TARGETPOS.Y / Smoothness)
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+
+                                        if getgenv()[Settings_Name].BarrelTracers == true then
+                                            if Line ~= nil then
                                                 if Target ~= nil and Attacker ~= nil then
-                                                    local LinePos, LineVisible = Camera:WorldToScreenPoint(Target.Position);
-                                                    local BarrelPos, BarrelVisible = Camera:WorldToScreenPoint(PlayerData.receiver.barrel.WorldPosition)
+                                                    local LinePos, LineVisible = Camera:WorldToViewportPoint(Target.Position);
+                                                    local BarrelPos, BarrelVisible = Camera:WorldToViewportPoint(PlayerData.receiver.barrel.WorldPosition)
                                                     
-                                                    Line.To = Vector2.new(BarrelPos.X, BarrelPos.Y + 35)
-                                                    Line.From = Vector2.new(LinePos.X, LinePos.Y + 35);
+                                                    Line.To = Vector2.new(LinePos.X, LinePos.Y);
+                                                    Line.From = Vector2.new(BarrelPos.X, BarrelPos.Y);
                                                     Line.Visible = LineVisible
+                                                    Line.Color = typeof(getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR) == "Color3" and getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
                                                 else
                                                     Line.Visible = false
                                                 end
                                             end
-
                                         end
                                     end
                                 end
                             end
                         end
 
-                        return getgenv().OLD_GAME_FUNCTIONS["framework_render"](unpack(Args))
+                        return FrameworkRender(unpack(Args))
                     end)
                 end
             end
@@ -455,31 +534,33 @@ xpcall(function()
             if FrameworkWeaponModule_Success then
                 if type(FrameworkWeaponModule) == "table" then
                     if type(FrameworkWeaponModule.getRecoil) == "function" then
-                        local OldReloadWeapon = rawget(FrameworkWeaponModule, "reload")
-                        local OldFireWeapon = rawget(FrameworkWeaponModule, "fire")
-                        local RecoilFunctionHook = rawget(FrameworkWeaponModule, "getRecoil")
+                        local OldReloadWeapon = getgenv().OLD_GAME_FUNCTIONS["weapon_reload"] or rawget(FrameworkWeaponModule, "reload")
+                        local OldFireWeapon = getgenv().OLD_GAME_FUNCTIONS["weapon_fire"] or rawget(FrameworkWeaponModule, "fire")
+                        local RecoilFunctionHook = getgenv().OLD_GAME_FUNCTIONS["weapon_getrecoil"] or rawget(FrameworkWeaponModule, "getRecoil")
 
                         getgenv().OLD_GAME_FUNCTIONS["weapon_reload"] = getgenv().OLD_GAME_FUNCTIONS["weapon_reload"] or OldReloadWeapon
                         getgenv().OLD_GAME_FUNCTIONS["weapon_fire"] = getgenv().OLD_GAME_FUNCTIONS["weapon_fire"] or OldFireWeapon
                         getgenv().OLD_GAME_FUNCTIONS["weapon_getrecoil"] = getgenv().OLD_GAME_FUNCTIONS["weapon_getrecoil"] or RecoilFunctionHook
 
                         rawset(FrameworkWeaponModule, "getRecoil", function(...)
+                            consoleprint("Weapon Recoil Handler!\n")
 
                             if getgenv()[Settings_Name].AntiRecoil == true then
                                 return Vector3.new(0, 0, 0)
                             end
 
-                            return getgenv().OLD_GAME_FUNCTIONS["weapon_getrecoil"](...)
+                            return RecoilFunctionHook(...)
                         end)
                         
                         rawset(FrameworkWeaponModule, "reload", function(...)
                             consoleprint("Weapon reloading\n")
 
-                            return CustomReloadFunction(getgenv().OLD_GAME_FUNCTIONS["weapon_reload"], ...)
+                            return CustomReloadFunction(OldReloadWeapon, ...)
                         end)
                         
                         rawset(FrameworkWeaponModule, "fire", function(...)
                             consoleprint("Weapon fired\n")
+
                             local Args = {...}
                             local WeaponStats = Args[1]
 
@@ -499,9 +580,9 @@ xpcall(function()
                                                                 local Args = {...}
                                                                 
                                                                 if getgenv()[Settings_Name].SilentAim == true then
-                                                                    local Target, Attacker = GetNearPlayer()
+                                                                    local Target, Attacker = GetNearPlayer(getgenv()[Settings_Name].BodyPartTarget)
                             
-                                                                    if Target ~= nil and Attacker ~= nil then                                                                    
+                                                                    if Target ~= nil and Attacker ~= nil then
                                                                         Args[2] = CFrame.new(Attacker.Position, Target.Position).LookVector
                                                                     end
                                                                 end
@@ -543,19 +624,33 @@ xpcall(function()
                                 end
                             end
 
-                            return getgenv().OLD_GAME_FUNCTIONS["weapon_fire"](unpack(Args))
+                            return OldFireWeapon(unpack(Args))
                         end)
+
+                        GunModsFeatures:addDropdown(getgenv()[Settings_Name].BodyPartTarget, {"Head", "Torso"}, function(Chosen)
+                            if tostring(Chosen) == "Torso" or tostring(Chosen) == "Head" then
+                                getgenv()[Settings_Name].BodyPartTarget = tostring(Chosen)
+                            end
+                        end, false)
 
                         GunModsFeatures:addToggle("Fast reload", getgenv()[Settings_Name].FastGunReload, function(Bool)
                             getgenv()[Settings_Name].FastGunReload = Bool
+                        end)
+
+                        GunModsFeatures:addToggle("AimBot (Aims at near by enemys)", getgenv()[Settings_Name].AimBot, function(Bool)
+                            getgenv()[Settings_Name].AimBot = Bool
+                        end)
+
+                        GunModsFeatures:addSlider("Aimbot smoothness", getgenv()[Settings_Name].AimBotSmoothness, 1, 10, function(NewValue)
+                            getgenv()[Settings_Name].AimBotSmoothness = NewValue
                         end)
 
                         GunModsFeatures:addToggle("Silent Aim (shoots near by enemys)", getgenv()[Settings_Name].SilentAim, function(Bool)
                             getgenv()[Settings_Name].SilentAim = Bool
                         end)
 
-                        GunModsFeatures:addSlider("Silent Aim Distance", getgenv()[Settings_Name].SilentAimDistance, 0, 10000, function(NewValue)
-                            getgenv()[Settings_Name].SilentAimDistance = NewValue
+                        GunModsFeatures:addSlider("Silent Aim and Aimbot Distance", getgenv()[Settings_Name].SilentAimAndAimbotDistance, 0, 10000, function(NewValue)
+                            getgenv()[Settings_Name].SilentAimAndAimbotDistance = NewValue
                         end)
 
                         GunModsFeatures:addToggle("No Recoil", getgenv()[Settings_Name].AntiRecoil, function(Bool)
@@ -669,7 +764,23 @@ xpcall(function()
                 getgenv()[Settings_Name].Teamcheck = Bool
                 getgenv()["ESP_CACHE"].SetTeamCheck(Bool)
             end)
-        
+
+            VisualsSelection:addToggle("ESP NameTags", getgenv()[Settings_Name].ESP_NAMETAGS, function(Bool)
+                getgenv()[Settings_Name].ESP_NAMETAGS = Bool
+
+                if Bool then
+                    for _, Plr in ipairs(Players:GetPlayers()) do
+                        if Plr ~= Player then
+                            getgenv()["ESP_CACHE"].LoadNameTag(Plr)
+                        end
+                    end
+                    getgenv()["ESP_CACHE"].SetNameTag(true)
+                else
+                    getgenv()["ESP_CACHE"].UnLoadType("_ESP_NAME_TAG")
+                    getgenv()["ESP_CACHE"].SetNameTag(false)
+                end
+            end)
+
             VisualsSelection:addToggle("ESP Boxes", getgenv()[Settings_Name].Boxes, function(Bool)
                 getgenv()[Settings_Name].Boxes = Bool
                 if Bool then

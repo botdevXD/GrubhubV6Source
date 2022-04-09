@@ -44,9 +44,9 @@ do
     getgenv()["CHARACTER_DRAWN_OBJECTS"] = type(getgenv()["CHARACTER_DRAWN_OBJECTS"]) == "table" and getgenv()["CHARACTER_DRAWN_OBJECTS"] or {};
 
     local PartNames = {
-        [292439477] = {Root = "Torso", Head = "Head"},
-        [3233893879] = {Root = "Chest", Head = "Head"},
-        [3837841034] = {Root = "torso", Head = "head"}
+        [292439477] = {Root = "Torso", Torso = "Torso", Head = "Head"},
+        [3233893879] = {Root = "Chest", Torso = "Chest", Head = "Head"},
+        [3837841034] = {Root = "torso", Torso = "torso", Head = "head"}
     }
     
     local CustomCharacterCache = {}
@@ -146,6 +146,7 @@ do
         TRACERS_ENABLED = false,
         TEAM_CHECK = false,
         AIMBOT_ENABLED = false,
+        NAME_TAG = false,
         AIMBOT_TEAM_CHECK_ENABLED = false,
         ESP_COLOR = Color3.fromRGB(255, 255, 255)
     }
@@ -230,6 +231,10 @@ do
             getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR = typeof(Color) == "Color3" and Color or Color3.fromRGB(255, 255, 255)
         end
 
+        getgenv()["ESP_CACHE"].SetNameTag = function(Bool)
+            getgenv()["ESP_CACHE"].SETTINGS.NAME_TAG = type(Bool) == "boolean" and Bool or false
+        end
+
         getgenv()["ESP_CACHE"].SetTeamCheck = function(Bool)
             getgenv()["ESP_CACHE"].SETTINGS.TEAM_CHECK = type(Bool) == "boolean" and Bool or false
         end
@@ -253,10 +258,14 @@ do
                     end
                 end
 
-                local function Remove()
+                local function Remove(bool)
                     if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] then
-                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]:Remove()
-                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = nil
+                        if bool == true then
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"]:Remove()
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"] = nil
+                            return nil
+                        end
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_TRACERS"].Visible = false
                     end
                 end
 
@@ -312,12 +321,12 @@ do
                     else
                         getgenv()["UpdateCache"][Plr.Name .. "_ESP_TRACERS"] = nil -- auto erase player from updation cache
 
-                        Remove()
+                        Remove(true)
                     end
                 end
             end
         end
---GetPlayerTeam
+
         getgenv()["ESP_CACHE"].LoadBox = function(Plr)
             if getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] == nil then
 
@@ -330,10 +339,14 @@ do
                     end
                 end
 
-                local function Remove()
+                local function Remove(bool)
                     if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] then
-                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"]:Remove()
-                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] = nil
+                        if bool == true then
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"]:Remove()
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"] = nil
+                            return nil
+                        end
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_BOXES"].Visible = false;
                     end
                 end
 
@@ -388,7 +401,86 @@ do
                     else
                         getgenv()["UpdateCache"][Plr.Name .. "_ESP_BOXES"] = nil -- auto erase player from updation cache
 
-                        Remove()
+                        Remove(true)
+                    end
+                end
+            end
+        end
+
+        getgenv()["ESP_CACHE"].LoadNameTag = function(Plr)
+            if getgenv()["UpdateCache"][Plr.Name .. "_ESP_NAME_TAG"] == nil then
+
+                local function Create()
+                    if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"] == nil then
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"] = Drawing.new("Text");
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"].Size = 16;
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"].Text = tostring(Plr);
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"].Center = true;
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"].Outline = false;
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"].Visible = false;
+                    end
+                end
+
+                local function Remove(bool)
+                    if getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"] then
+                        if bool == true then
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"]:Remove()
+                            getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"] = nil
+                            return nil
+                        end
+                        getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"].Visible = false;
+                    end
+                end
+
+                Create()
+
+                getgenv()["UpdateCache"][Plr.Name .. "_ESP_NAME_TAG"] = function()
+                    if Players:FindFirstChild(tostring(Plr)) ~= nil then
+                        local PlrChar = GetChar_Ez(Plr)
+
+                        if PlrChar ~= nil then
+                            if PlrChar.Parent == nil then
+                                PlrChar = nil
+                            end
+                        end
+
+                        if PlrChar then
+                            local RootCheck = PlrChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Root or "HumanoidRootPart")
+                            
+                            if RootCheck then
+                                local Pos, Visible = Camera:WorldToViewportPoint(RootCheck.Position)
+                                local Pos_screen, Visible_ = Camera:WorldToScreenPoint(RootCheck.Position)
+
+                                if tostring(GetPlrTeam(Plr)) == tostring(GetPlrTeam(LPlayer)) and getgenv()["ESP_CACHE"].SETTINGS.TEAM_CHECK then
+                                    Remove()
+                                else
+                                    if Visible then
+                                        if getgenv()["ESP_CACHE"].SETTINGS.NAME_TAG == true then
+                                            Create()
+
+                                            local _NameTag = getgenv()["CHARACTER_DRAWN_OBJECTS"][Plr.Name .. "_ESP_NAME_TAG"]
+                                            _NameTag.Position = Vector2.new(Pos.X, (Pos.Y + (5408 / Pos_screen.Y) / 2) - 25);
+                                            _NameTag.Color = typeof(getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR) == "Color3" and getgenv()["ESP_CACHE"].SETTINGS.ESP_COLOR or Color3.fromRGB(255, 255, 255)
+                                            
+                                            _NameTag.Visible = true
+                                        else
+                                            getgenv()["UpdateCache"][Plr.Name .. "_ESP_NAME_TAG"] = nil -- auto erase player from updation cache
+
+                                            Remove()
+                                        end
+                                    else
+                                        Remove()
+                                    end
+                                end
+
+                            end
+                        else
+                            Remove()
+                        end
+                    else
+                        getgenv()["UpdateCache"][Plr.Name .. "_ESP_NAME_TAG"] = nil -- auto erase player from updation cache
+
+                        Remove(true)
                     end
                 end
             end
