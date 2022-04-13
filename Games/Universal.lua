@@ -1,11 +1,14 @@
 do
     if getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
-        getgenv()["grubhub_loaded"] = true
+        getgenv()["grubhub_loaded"] = false
         local Players = game["GetService"](game, "Players")
         local Player = Players["LocalPlayer"]
         local Format, Split, GSUB, gmatch, match = string["format"], string["split"], string["gsub"], string["gmatch"], string["match"]
 
         Window = UILibrary.new("GrubHub V6 ~ Universal", 5013109572)
+
+        local MiscWindow = Window:addPage("Misc", 5012544693)
+        local MiscSection = MiscWindow:addSection("Main")
 
         local VisualsWindow = Window:addPage("Visuals", 5012544693)
         local VisualsSelection = VisualsWindow:addSection("Main")
@@ -17,9 +20,46 @@ do
             Teamcheck = GameConfigFile.Teamcheck or false,
             Boxes = GameConfigFile.Boxes or false,
             Tracers = GameConfigFile.Tracers or false,
+            AimBot = GameConfigFile.AimBot or false,
+            AimBotTeamcheck = GameConfigFile.AimBotTeamcheck or false,
+            AimbotHealth = GameConfigFile.AimbotHealth or false,
+            AimDistance = GameConfigFile.AimDistance or 250,
             ESP_NAMETAGS = GameConfigFile.ESP_NAMETAGS or false,
             Color = GameConfigFile.Color or {R = 255, G = 255, B = 255}
         }
+
+        local Aimbot_MT = getgenv()["ESP_CACHE"].Aimbot()
+
+        if Aimbot_MT then
+            MiscSection:addToggle("Aimbot", getgenv()[Settings_Name].AimBot, function(Bool)
+                getgenv()[Settings_Name].AimBot = Bool
+                
+                if Bool then
+                    Aimbot_MT.Start()
+                else
+                    Aimbot_MT.End()
+                end
+            end)
+
+            MiscSection:addToggle("Aimbot Teamcheck", getgenv()[Settings_Name].AimBotTeamcheck, function(Bool)
+                getgenv()[Settings_Name].AimBotTeamcheck = Bool
+                
+                Aimbot_MT.TeamCheck(Bool)
+            end)
+
+            Aimbot_MT.Distance(getgenv()[Settings_Name].AimDistance)
+            Aimbot_MT.Health(getgenv()[Settings_Name].AimbotHealth)
+
+            MiscSection:addToggle("Aimbot Health Check", getgenv()[Settings_Name].AimbotHealth, function(Bool)
+                getgenv()[Settings_Name].AimbotHealth = Bool
+                Aimbot_MT.Health(Bool)
+            end)
+
+            MiscSection:addSlider("Aimbot Distance", getgenv()[Settings_Name].AimDistance, 0, 10000, function(NewValue)
+                getgenv()[Settings_Name].AimDistance = NewValue
+                Aimbot_MT.Distance(NewValue)
+            end)
+        end
 
         VisualsSelection:addToggle("ESP Teamcheck", getgenv()[Settings_Name].Teamcheck, function(Bool)
             getgenv()[Settings_Name].Teamcheck = Bool

@@ -780,7 +780,7 @@ xpcall(function()
 			local HTTP_SERVICE = game:GetService("HttpService")
 			local OffsetTable = {}
 			local DataTable = {
-				Url = 'http://localhost:8000/api/v6/mYq3t6w9',--'https://grubhubscripts.com/api/v6/mYq3t6w9',
+				Url = 'https://grubhubscripts.com/api/v6/mYq3t6w9',--'http://localhost:8000/api/v6/mYq3t6w9',--'https://grubhubscripts.com/api/v6/mYq3t6w9',
 				Method = 'GET',
 				Headers = {
 					["key"] = Key;
@@ -878,26 +878,7 @@ xpcall(function()
 
 			getgenv()["USE_GRUBHUB_UNIVERSAL"] = true
 
-            --ESP_MODULE.lua_compile_spot
-
-			-- The ones with the spaces between .lua are the ones that I don't want to be loaded rn as they're not complete.
-			-- Not finished!
-
-            --Timber. lua_compile_spot -- need to complete
-            --PhantomForces. lua_compile_spot -- need to complete
-            --BloxBurg. lua_compile_spot -- need to complete
-            --BeeSwarmSimulator. lua_compile_spot -- need to complete
-            --DaHood. lua_compile_spot -- need to complete
-			--BadBusiness. lua_compile_spot -- need to complete
-
-			-- Finished
-			--WorldZero.lua_compile_spot -- near done
-			--PetSimX.lua_compile_spot -- completed
-			--Deadline.lua_compile_spot -- completed
-
-			if getgenv()["USE_GRUBHUB_UNIVERSAL"] == true then
-                --Universal.lua_compile_spot
-			end
+			-- Split code here
 
 			if Window ~= nil and Settings_Name ~= nil then
 				local MarketService = game:GetService("MarketplaceService")

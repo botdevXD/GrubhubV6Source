@@ -147,7 +147,9 @@ do
         TEAM_CHECK = false,
         AIMBOT_ENABLED = false,
         NAME_TAG = false,
+        HealthCheck = false,
         AIMBOT_TEAM_CHECK_ENABLED = false,
+        AimDistance = 150,
         ESP_COLOR = Color3.fromRGB(255, 255, 255)
     }
 
@@ -509,6 +511,10 @@ do
                 if getgenv()["ESP_CACHE"].SETTINGS.TRACERS_ENABLED == true or getgenv().ESP_TESTING == true then
                     getgenv()["ESP_CACHE"].LoadTracers(Plr)
                 end
+
+                if getgenv()["ESP_CACHE"].SETTINGS.NAME_TAG == true or getgenv().ESP_TESTING == true then
+                    getgenv()["ESP_CACHE"].LoadNameTag(Plr)
+                end
             end)
         end
     end
@@ -519,10 +525,48 @@ do
         local Proxy = newproxy(true);
         local MetaTable = getmetatable(Proxy);
 
-        local function AimAtPlayer(Camera, Mouse, target)
-            local TARGETPOS = Camera:WorldToScreenPoint(target.Position)
-            local GOTO = Vector2.new((TARGETPOS.X - Mouse.X) * .15, (TARGETPOS.Y - Mouse.Y) * .15)
-            mousemoverel(GOTO.X, GOTO.Y) -- Quick math for the aim function lmao
+        local function GetNearPlayer(TargetPart)
+            local OldDistance = math.huge
+            local Target = nil
+            local Attacker = nil
+            local PartNames = getgenv()["ESP_CACHE"].GetCustomCharacterPartNames()
+
+            for _, GamePlayer in ipairs(Players:GetPlayers()) do
+                if GamePlayer ~= LPlayer then
+                    local GameCharacter = getgenv()["ESP_CACHE"].GetCharacter(GamePlayer)
+                    local LocalCharacter = getgenv()["ESP_CACHE"].GetCharacter(LPlayer)
+                    local GameTeam = getgenv()["ESP_CACHE"].GetTeam(GamePlayer)
+                    local LocalTeam = getgenv()["ESP_CACHE"].GetTeam(LPlayer)
+                    local TeamCheck = tostring(GameTeam) == tostring(LocalTeam) and getgenv()["ESP_CACHE"].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED == true and true or false
+                    local HealthCheck = false
+
+                    if GameCharacter and LocalCharacter and not TeamCheck then
+                        local GameRoot = GameCharacter:FindFirstChild(type(PartNames) == "table" and PartNames[TargetPart or "Root"] or tostring(TargetPart or "HumanoidRootPart"))
+                        local LocalRoot = LocalCharacter:FindFirstChild(type(PartNames) == "table" and PartNames[TargetPart or "Root"] or tostring(TargetPart or "HumanoidRootPart"))
+                        local GameHumanoid = GameCharacter:FindFirstChild("Humanoid")
+
+                        if GameHumanoid then
+                            if getgenv()["ESP_CACHE"].SETTINGS.HealthCheck == true then
+                                if GameHumanoid.Health <= 0 then
+                                    HealthCheck = true
+                                end
+                            end
+                        end
+
+                        if GameRoot and LocalRoot and not HealthCheck then
+                            local Distance = math.abs((LocalRoot.Position - GameRoot.Position).Magnitude)
+                            
+                            if (Distance <= getgenv()["ESP_CACHE"].SETTINGS.AimDistance) and (Distance < OldDistance) then
+                                OldDistance = Distance
+                                Target = GameRoot
+                                Attacker = LocalRoot
+                            end
+                        end
+                    end
+                end
+            end
+
+            return Target, Attacker
         end
 
         getgenv()["UpdateCache"].AimBot = nil
@@ -530,33 +574,19 @@ do
         MetaTable.Start = function()
             getgenv()["UpdateCache"].AimBot = nil
             if getgenv()["UpdateCache"].AimBot == nil then
-
                 getgenv()["UpdateCache"].AimBot = function()
-                    local LastDistance = 999999
-                    for _, FPlayer in ipairs(Players:GetPlayers()) do
-                        if FPlayer ~= LPlayer then
+                    local Target, Attacker = GetNearPlayer("Head")
 
-                            local TeamCheck = tostring(GetPlrTeam(FPlayer)) == tostring(GetPlrTeam(LPlayer)) and getgenv()["ESP_CACHE"].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED == true and true or false
-                            if not TeamCheck then
-                                local FChar = GetChar_Ez(FPlayer)
+                    print(Target and Attacker)
 
-                                if FChar then
-                                    local HeadCheck = FChar:FindFirstChild(type(PartNames[game.PlaceId]) == "table" and PartNames[game.PlaceId].Head or "Head")
+                    if Target and Attacker then
+                        local TARGETPOS, TARGET_VISIBLE = Camera:WorldToScreenPoint(Target.Position)
 
-                                    if HeadCheck then
-                                        local HeadPos, HeadVisible = Camera:WorldToViewportPoint(HeadCheck.Position);
-                                        
-                                        if HeadVisible then
-                                            local Mag = math.floor((Vector2.new(HeadPos.X, HeadPos.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude)
+                        if TARGET_VISIBLE then
+                            local Smoothness = 10
+                            TARGETPOS -= Camera:WorldToScreenPoint(Mouse.Hit.p)
 
-                                            if Mag <= 100 and Mag <= LastDistance then
-                                                LastDistance = Mag
-                                                AimAtPlayer(Camera, Mouse, HeadCheck)
-                                            end
-                                        end
-                                    end
-                                end
-                            end
+                            mousemoverel(TARGETPOS.X / Smoothness, TARGETPOS.Y / Smoothness)
                         end
                     end
                 end
@@ -569,6 +599,14 @@ do
 
         MetaTable.TeamCheck = function(Bool)
             getgenv()["ESP_CACHE"].SETTINGS.AIMBOT_TEAM_CHECK_ENABLED = Bool
+        end
+
+        MetaTable.Health = function(Val)
+            getgenv()["ESP_CACHE"].SETTINGS.HealthCheck = Val
+        end
+
+        MetaTable.Distance = function(Val)
+            getgenv()["ESP_CACHE"].SETTINGS.AimDistance = Val
         end
 
         return MetaTable
